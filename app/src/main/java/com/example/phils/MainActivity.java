@@ -1,8 +1,17 @@
 package com.example.phils;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +19,54 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+                    case R.id.ghar:
+                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.user:
+                        Toast.makeText(MainActivity.this, "User", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.category_stock:
+                        Toast.makeText(MainActivity.this, "Category", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.type_stock:
+                        Toast.makeText(MainActivity.this, "Type", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.size_stock:
+                        Toast.makeText(MainActivity.this, "Size", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.make_stock:
+                        Toast.makeText(MainActivity.this, "Make", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.umo_stock:
+                        Toast.makeText(MainActivity.this, "UMO", Toast.LENGTH_SHORT).show();break;
+
+                    case R.id.list_stock:
+                        Toast.makeText(MainActivity.this, "List", Toast.LENGTH_SHORT).show();break;
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
     }
 }

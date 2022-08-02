@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 <item
-    android:id="@+id/home"
+    android:id="@+id/ghar"
     android:title="Home"
     android:icon="@drawable/ic_baseline_home_24"
     />

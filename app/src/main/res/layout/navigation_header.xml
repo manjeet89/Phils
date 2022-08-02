@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="20sp"
+        android:src="@drawable/download"
+        android:id="@+id/profilepic"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/admin_name"
+        android:text="Phils Admin"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_below="@id/profilepic"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:fontFamily="casual"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
