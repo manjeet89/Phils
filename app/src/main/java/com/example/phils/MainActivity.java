@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,25 +43,32 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.user:
-                        Toast.makeText(MainActivity.this, "User", Toast.LENGTH_SHORT).show();break;
+                            startActivity(new Intent(getApplicationContext(),UserActivity.class));
+                            break;
 
                     case R.id.category_stock:
-                        Toast.makeText(MainActivity.this, "Category", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Category", Toast.LENGTH_SHORT).show();
+                        break;
 
                     case R.id.type_stock:
-                        Toast.makeText(MainActivity.this, "Type", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Type", Toast.LENGTH_SHORT).show();
+                        break;
 
                     case R.id.size_stock:
-                        Toast.makeText(MainActivity.this, "Size", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Size", Toast.LENGTH_SHORT).show();
+                        break;
 
                     case R.id.make_stock:
-                        Toast.makeText(MainActivity.this, "Make", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "Make", Toast.LENGTH_SHORT).show();
+                        break;
 
                     case R.id.umo_stock:
-                        Toast.makeText(MainActivity.this, "UMO", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "UMO", Toast.LENGTH_SHORT).show();
+                        break;
 
                     case R.id.list_stock:
-                        Toast.makeText(MainActivity.this, "List", Toast.LENGTH_SHORT).show();break;
+                        Toast.makeText(MainActivity.this, "List", Toast.LENGTH_SHORT).show();
+                        break;
                     default:
                         return true;
                 }

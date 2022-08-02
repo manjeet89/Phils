@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F2F2F9"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="20sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="30sp"
         android:src="@drawable/download"
         android:id="@+id/profilepic"
+        android:layout_marginBottom="10sp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -21,7 +24,12 @@
         android:layout_below="@id/profilepic"
         android:layout_marginStart="15sp"
         android:layout_marginTop="5sp"
-        android:fontFamily="casual"
-        android:textStyle="bold"/>
-
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:layout_marginBottom="12sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/admin_name"
+        style="@style/line"/>
 </RelativeLayout>
