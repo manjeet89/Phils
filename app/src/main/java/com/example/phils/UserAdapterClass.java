@@ -12,6 +12,9 @@ import java.util.List;
 
 public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyViewHolder> {
     List<ResponseModelUser> data;
+     static int i=0;
+
+
 
     public UserAdapterClass(List<ResponseModelUser> data) {
         this.data = data;
@@ -24,17 +27,32 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
         return  new MyViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.sn.setText(data.get(position).getUser_id());
+
+        if (i >= 0) {
+            i++;
+            String j = String.valueOf(i);
+            holder.sn.setText(j);
+        }
         holder.emp_name.setText(data.get(position).getUser_name());
         holder.post.setText(data.get(position).getEmp_type_name());
         holder.username.setText(data.get(position).getUser_name());
         holder.number.setText(data.get(position).getUser_phone_number());
         holder.otp.setText(data.get(position).getUser_otp());
         holder.worker.setText(data.get(position).getEmployee_type());
-        holder.status.setText(data.get(position).getUser_status());
+        if(data.get(position).getUser_status().equals(String.valueOf(0)))
+        {
+          holder.status.setText("Disable");
+        }
+        else
+        {
+            holder.status.setText("Enable");
+
+        }
+       //    holder.status.setText(data.get(position).getUser_status());
         holder.id.setText(data.get(position).getUser_id());
 
     }
@@ -59,6 +77,7 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
             worker = itemView.findViewById(R.id.worker);
             status = itemView.findViewById(R.id.status);
             id = itemView.findViewById(R.id.id);
+
         }
     }
 }

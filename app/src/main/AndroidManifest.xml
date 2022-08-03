@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".StockCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserActivity"
             android:exported="false" />
         <activity

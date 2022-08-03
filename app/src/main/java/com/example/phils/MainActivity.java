@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                     case R.id.category_stock:
-                        Toast.makeText(MainActivity.this, "Category", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
                         break;
 
                     case R.id.type_stock:

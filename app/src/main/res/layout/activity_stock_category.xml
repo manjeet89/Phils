@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
+    tools:context=".StockCategoryActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightgray"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="PHILS"
+                android:background="@color/white"
+                app:navigationIcon="@drawable/ic_baseline_menu_24"
+                />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:orientation="vertical"
+            android:layout_margin="15sp"
+            android:background="@color/white"
+            android:id="@+id/lay1">
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/search"
+                android:layout_marginTop="5sp"
+                android:layout_marginStart="10sp"
+                android:background="@color/purple_700"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add User"
+                android:textSize="10sp"
+                android:drawableEnd="@drawable/ic_baseline_add_24"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/purple_700"
+                android:layout_margin="10sp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lay1"
+                android:layout_margin="15sp"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@id/lay1"
+                    android:id="@+id/table">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="MissingConstraints"
+                        >
+                        <TableRow>
+                            <TextView
+                                android:id="@+id/sn"
+                                android:layout_width="50sp"
+                                android:layout_height="wrap_content"
+                                android:text="Sr.No."
+                                android:textColor="@color/lightgray"
+                                android:textStyle="bold"
+                                android:layout_margin="7sp"/>
+                            <TextView
+                                android:id="@+id/category"
+                                android:layout_width="120sp"
+                                android:layout_height="wrap_content"
+                                android:text="CATEGORY"
+                                android:textColor="@color/lightgray"
+                                android:textStyle="bold"
+                                android:layout_margin="7sp"/>
+
+                            <TextView
+                                android:id="@+id/cat_group"
+                                android:layout_width="140sp"
+                                android:layout_height="wrap_content"
+                                android:text="CATEGORY GROUP"
+                                android:textColor="@color/lightgray"
+                                android:textStyle="bold"
+                                android:layout_margin="7sp"/>
+
+                            <TextView
+                                android:id="@+id/status"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:text="STATUS"
+                                android:textColor="@color/lightgray"
+                                android:textStyle="bold"
+                                android:layout_margin="7sp"/>
+
+                            <TextView
+                                android:id="@+id/id"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:text="ACtiON"
+                                android:textColor="@color/lightgray"
+                                android:textStyle="bold"
+                                android:layout_margin="7sp"/>
+                        </TableRow>
+                    </TableLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
