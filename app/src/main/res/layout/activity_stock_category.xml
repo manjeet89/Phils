@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightgray"
+        android:background="#f5eeed"
         >
 
         <com.google.android.material.appbar.AppBarLayout
@@ -30,31 +30,38 @@
 
 
         <LinearLayout
+            android:id="@+id/lay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-            android:orientation="vertical"
-            android:layout_margin="15sp"
-            android:background="@color/white"
-            android:id="@+id/lay1">
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="15sp"
+            android:background="@drawable/curve_shap"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.SearchView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/search"
-                android:layout_marginTop="5sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
-                android:background="@color/purple_700"
-                />
+                android:layout_marginTop="12sp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#f5eeed"
+                android:background="@drawable/curve_shap"
+                app:queryHint="Search Category..." />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add User"
-                android:textSize="10sp"
-                android:drawableEnd="@drawable/ic_baseline_add_24"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/purple_700"
-                android:layout_margin="10sp"/>
+                android:layout_margin="10sp"
+                android:padding="10dp"
+                android:backgroundTint="#1ca6eb"
+                android:drawableLeft="@drawable/ic_baseline_add_24"
+                android:text=" Add Stock Category"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -62,66 +69,79 @@
                 android:layout_below="@id/lay1"
                 android:layout_margin="15sp"
                 android:background="@color/white"
-                android:backgroundTint="@color/white"
-                >
+                android:backgroundTint="@color/white">
+
                 <LinearLayout
+                    android:id="@+id/table"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_below="@id/lay1"
-                    android:id="@+id/table">
+                    android:orientation="vertical">
+
                     <TableLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        tools:ignore="MissingConstraints"
-                        >
-                        <TableRow>
+                        tools:ignore="MissingConstraints">
+
+                        <TableRow  android:id="@+id/line1">
+
                             <TextView
                                 android:id="@+id/sn"
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
                                 android:text="Sr.No."
                                 android:textColor="@color/lightgray"
-                                android:textStyle="bold"
-                                android:layout_margin="7sp"/>
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:id="@+id/category"
                                 android:layout_width="120sp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
                                 android:text="CATEGORY"
                                 android:textColor="@color/lightgray"
-                                android:textStyle="bold"
-                                android:layout_margin="7sp"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/cat_group"
                                 android:layout_width="140sp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
                                 android:text="CATEGORY GROUP"
                                 android:textColor="@color/lightgray"
-                                android:textStyle="bold"
-                                android:layout_margin="7sp"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/status"
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
                                 android:text="STATUS"
                                 android:textColor="@color/lightgray"
-                                android:textStyle="bold"
-                                android:layout_margin="7sp"/>
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/id"
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
                                 android:text="ACtiON"
                                 android:textColor="@color/lightgray"
-                                android:textStyle="bold"
-                                android:layout_margin="7sp"/>
+                                android:textStyle="bold" />
                         </TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/line1"
+                            style="@style/line"
+                            tools:ignore="MissingConstraints"
+                            />
                     </TableLayout>
+
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recview"
                         android:layout_width="match_parent"

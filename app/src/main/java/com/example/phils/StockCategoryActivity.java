@@ -1,6 +1,7 @@
 package com.example.phils;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,9 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class StockCategoryActivity extends AppCompatActivity {
     RecyclerView recview;
+    SearchView searchView;
 
     StockCategoryAdapterClass stockCategoryAdapterClass;
     List<ResponseModelStockCategory> data;
@@ -34,6 +37,24 @@ public class StockCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_category);
         recview = findViewById(R.id.recview);
+        searchView = findViewById(R.id.search);
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fileList(newText);
+                return true;
+            }
+        });
+
+
+
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
         data = new ArrayList<>();
@@ -43,7 +64,27 @@ public class StockCategoryActivity extends AppCompatActivity {
         fatchdata();
     }
 
+    private void fileList(String newText) {
+
+        List<ResponseModelStockCategory> modelStockCategories = new ArrayList<>();
+        for(ResponseModelStockCategory responseModelStockCategory : data)
+        {
+            if(responseModelStockCategory.getStock_category_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
+                modelStockCategories.add(responseModelStockCategory);
+            }
+        }
+
+        if (modelStockCategories.isEmpty()){
+            Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            stockCategoryAdapterClass.setFilteredList(modelStockCategories);
+        }
+    }
+
     private void fatchdata() {
+
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
                 new Response.Listener<String>() {
                     @Override
@@ -52,6 +93,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                             String status;
                             int stat = 0;
                             int j=0;
+                            String cat_group;
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
@@ -65,7 +107,16 @@ public class StockCategoryActivity extends AppCompatActivity {
 //                                    String sn = object.getString("stock_category_id");
                                     String sn = String.valueOf(j);
                                     String category = object.getString("stock_category_name");
-                                    String cat_group = object.getString("emp_type_name");
+
+                                     cat_group = object.getString("emp_type_name");
+                                    if(cat_group.equals("null"))
+                                    {
+                                        cat_group = "Other";
+                                    }
+                                    else
+                                    {
+                                        cat_group = object.getString("emp_type_name");
+                                    }
                                      status = object.getString("stock_category_status");
                                     if(status.equals(String.valueOf(0)))
                                     {

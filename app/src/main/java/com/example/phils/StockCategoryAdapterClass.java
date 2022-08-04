@@ -16,6 +16,12 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
     private Context context;
     private List<ResponseModelStockCategory> data;
 
+    public void setFilteredList(List<ResponseModelStockCategory> filteredList)
+    {
+        this.data = filteredList;
+        notifyDataSetChanged();
+    }
+
     public StockCategoryAdapterClass(Context context, List<ResponseModelStockCategory> data) {
         this.context = context;
         this.data = data;

@@ -22,7 +22,7 @@
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:text="Sr.No."
-                    android:textColor="@color/black"
+                    android:textColor="#696b6a"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
                 <TextView
@@ -30,7 +30,7 @@
                     android:layout_width="120sp"
                     android:layout_height="wrap_content"
                     android:text="CATEGORY"
-                    android:textColor="@color/black"
+                    android:textColor="#696b6a"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
                 <TextView
@@ -38,7 +38,7 @@
                     android:layout_width="140sp"
                     android:layout_height="wrap_content"
                     android:text="CATEGORY GROUP"
-                    android:textColor="@color/black"
+                    android:textColor="#696b6a"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
 
@@ -47,17 +47,17 @@
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:text="STATUS"
-                    android:textColor="@color/black"
+                    android:textColor="#696b6a"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
 
                 <Button
                     android:id="@+id/id"
-                    android:layout_width="100sp"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
                     android:text="Edit"
-                    android:backgroundTint="@color/white"
-                    android:textColor="@color/black"
+                    android:backgroundTint="#1ca6eb"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
             </TableRow>
