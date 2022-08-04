@@ -1,0 +1,47 @@
+package com.example.phils.ResponseModels;
+
+public class ResponseModelStockType {
+    String stock_type_id,stock_category_id,stock_type_name,stock_type_status;
+
+    public ResponseModelStockType() {
+    }
+
+    public ResponseModelStockType(String stock_type_id, String stock_category_id, String stock_type_name, String stock_type_status) {
+        this.stock_type_id = stock_type_id;
+        this.stock_category_id = stock_category_id;
+        this.stock_type_name = stock_type_name;
+        this.stock_type_status = stock_type_status;
+    }
+
+    public String getStock_type_id() {
+        return stock_type_id;
+    }
+
+    public void setStock_type_id(String stock_type_id) {
+        this.stock_type_id = stock_type_id;
+    }
+
+    public String getStock_category_id() {
+        return stock_category_id;
+    }
+
+    public void setStock_category_id(String stock_category_id) {
+        this.stock_category_id = stock_category_id;
+    }
+
+    public String getStock_type_name() {
+        return stock_type_name;
+    }
+
+    public void setStock_type_name(String stock_type_name) {
+        this.stock_type_name = stock_type_name;
+    }
+
+    public String getStock_type_status() {
+        return stock_type_status;
+    }
+
+    public void setStock_type_status(String stock_type_status) {
+        this.stock_type_status = stock_type_status;
+    }
+}

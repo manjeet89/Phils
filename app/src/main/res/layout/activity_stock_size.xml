@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".StockCategoryActivity">
+    tools:context=".StockSizeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Category"
+                android:text="Stock Size"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Category"
+                android:text="  | Home - Size"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -78,7 +78,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/curve_shap"
                 android:backgroundTint="#f5eeed"
-                app:queryHint="Search Category..." />
+                app:queryHint="Search Type..." />
 
             <Button
                 android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
                 android:backgroundTint="#1ca6eb"
                 android:drawableLeft="@drawable/ic_baseline_add_24"
                 android:padding="10dp"
-                android:text=" Add Stock Category"
+                android:text=" Add Stock Size"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -136,11 +136,21 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/cat_group"
+                                android:id="@+id/type"
                                 android:layout_width="140sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="CATEGORY GROUP"
+                                android:text="TYPE "
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/size"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="SIZE "
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

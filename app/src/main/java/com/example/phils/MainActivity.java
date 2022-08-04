@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.type_stock:
-                        Toast.makeText(MainActivity.this, "Type", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
                         break;
 
                     case R.id.size_stock:
-                        Toast.makeText(MainActivity.this, "Size", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:

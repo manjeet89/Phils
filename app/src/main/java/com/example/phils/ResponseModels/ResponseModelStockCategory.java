@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.ResponseModels;
 
 public class ResponseModelStockCategory {
     String stock_category_id,stock_category_name,stock_category_status,emp_type_name;

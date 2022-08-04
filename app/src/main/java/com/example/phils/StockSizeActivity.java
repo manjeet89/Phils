@@ -14,8 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockCategoryAdapterClass;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
+import com.example.phils.Adapter.StockTypeAdapterClass;
+import com.example.phils.ResponseModels.ResponseModelStockType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,19 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class StockCategoryActivity extends AppCompatActivity {
+public class StockSizeActivity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
 
-    StockCategoryAdapterClass stockCategoryAdapterClass;
-    List<ResponseModelStockCategory> data;
-    ResponseModelStockCategory responseModelStockCategory;
+    StockSizeAdapterClass stockSizeAdapterClass;
+    List<ResponseModelStockSize> data;
+    ResponseModelStockSize responseModelStockSize;
     LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_category);
+        setContentView(R.layout.activity_stock_size);
+
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
@@ -55,39 +56,20 @@ public class StockCategoryActivity extends AppCompatActivity {
             }
         });
 
-
-
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
+
         data = new ArrayList<>();
-        stockCategoryAdapterClass = new StockCategoryAdapterClass(this,data);
-        recview.setAdapter(stockCategoryAdapterClass);
+
+        stockSizeAdapterClass = new StockSizeAdapterClass(this,data);
+        recview.setAdapter(stockSizeAdapterClass);
 
         fatchdata();
-    }
 
-    private void fileList(String newText) {
-
-        List<ResponseModelStockCategory> modelStockCategories = new ArrayList<>();
-        for(ResponseModelStockCategory responseModelStockCategory : data)
-        {
-            if(responseModelStockCategory.getStock_category_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
-                modelStockCategories.add(responseModelStockCategory);
-            }
-        }
-
-        if (modelStockCategories.isEmpty()){
-            Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            stockCategoryAdapterClass.setFilteredList(modelStockCategories);
-        }
     }
 
     private void fatchdata() {
-
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
+        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_size.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -95,7 +77,6 @@ public class StockCategoryActivity extends AppCompatActivity {
                             String status;
                             int stat = 0;
                             int j=0;
-                            String cat_group;
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
@@ -108,18 +89,11 @@ public class StockCategoryActivity extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 //                                    String sn = object.getString("stock_category_id");
                                     String sn = String.valueOf(j);
-                                    String category = object.getString("stock_category_name");
 
-                                     cat_group = object.getString("emp_type_name");
-                                    if(cat_group.equals("null"))
-                                    {
-                                        cat_group = "Other";
-                                    }
-                                    else
-                                    {
-                                        cat_group = object.getString("emp_type_name");
-                                    }
-                                     status = object.getString("stock_category_status");
+                                    String category = object.getString("stock_category_name");
+                                    String type = object.getString("stock_type_name");
+                                    String size = object.getString("stock_size_name");
+                                    status = object.getString("stock_size_status");
                                     if(status.equals(String.valueOf(0)))
                                     {
                                         status = "Disable";
@@ -129,10 +103,9 @@ public class StockCategoryActivity extends AppCompatActivity {
                                         status = "Enable";
                                     }
 
-                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,status,cat_group);
-                                    data.add(responseModelStockCategory);
-                                    stockCategoryAdapterClass.notifyDataSetChanged();
-
+                                    responseModelStockSize = new ResponseModelStockSize(sn,category,type,size,status);
+                                    data.add(responseModelStockSize);
+                                    stockSizeAdapterClass.notifyDataSetChanged();
                                 }
                             }
 
@@ -143,10 +116,28 @@ public class StockCategoryActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StockCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(StockSizeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    private void fileList(String newText) {
+        List<ResponseModelStockSize> modelStockCategories = new ArrayList<>();
+        for(ResponseModelStockSize responseModelStockSize : data)
+        {
+            if(responseModelStockSize.getStock_type_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
+                modelStockCategories.add(responseModelStockSize);
+            }
+        }
+
+        if (modelStockCategories.isEmpty()){
+            Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            stockSizeAdapterClass.setFilteredList(modelStockCategories);
+        }
     }
 }
