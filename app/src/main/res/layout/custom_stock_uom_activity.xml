@@ -18,7 +18,7 @@
             android:id="@+id/table_layout">
             <TableRow>
                 <TextView
-                    android:id="@+id/snsize"
+                    android:id="@+id/uom_id"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:text="Sr.No."
@@ -27,37 +27,18 @@
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
                 <TextView
-                    android:id="@+id/categorysize"
-                    android:layout_width="120sp"
+                    android:id="@+id/uom_name"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="CATEGORY"
+                    android:text="UOM NAME"
                     android:textSize="12dp"
                     android:textColor="#696b6a"
-                    android:textStyle="bold"
-                    android:layout_margin="7sp"/>
-                <TextView
-                    android:id="@+id/typesize"
-                    android:layout_width="140sp"
-                    android:layout_height="wrap_content"
-                    android:text="TYPE"
-                    android:textColor="#696b6a"
-                    android:textSize="12dp"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
 
                 <TextView
-                    android:id="@+id/size"
-                    android:layout_width="100sp"
-                    android:layout_height="wrap_content"
-                    android:text="SIZE"
-                    android:textColor="#696b6a"
-                    android:textSize="12dp"
-                    android:textStyle="bold"
-                    android:layout_margin="7sp"/>
-
-                <TextView
-                    android:id="@+id/statussize"
-                    android:layout_width="100sp"
+                    android:id="@+id/uom_status"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
                     android:text="STATUS"
                     android:textSize="12dp"
@@ -67,7 +48,7 @@
 
                 <Button
                     android:id="@+id/id"
-                    android:layout_width="70sp"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
                     android:text="Edit"
                     android:textSize="12dp"

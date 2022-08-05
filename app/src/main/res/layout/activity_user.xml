@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightgray"
+        android:background="#f5eeed"
         >
 
         <com.google.android.material.appbar.AppBarLayout
@@ -27,147 +27,222 @@
                 />
 
         </com.google.android.material.appbar.AppBarLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-            android:orientation="vertical"
-            android:layout_margin="15sp"
-            android:background="@color/white"
-            android:id="@+id/lay1">
-
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/search"
-                android:layout_marginTop="5sp"
-                android:layout_marginStart="10sp"
-                android:background="@color/purple_700"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add User"
-                android:textSize="10sp"
-                android:drawableEnd="@drawable/ic_baseline_add_24"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/purple_700"
-                android:layout_margin="10sp"/>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lay1"
-            android:layout_margin="15sp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:orientation="horizontal"
+            android:layout_margin="5sp"
             >
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@id/lay1"
-                android:id="@+id/table">
-            <TableLayout
-                android:layout_width="match_parent"
+                android:text="User"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif"
+                android:layout_marginStart="15sp"
+                android:layout_marginTop="5dp"
+
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints"
-                >
-                <TableRow>
-                    <TextView
-                        android:id="@+id/sn"
-                        android:layout_width="50sp"
-                        android:layout_height="wrap_content"
-                        android:text="Sr.No."
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-                    <TextView
-                        android:id="@+id/emp_name"
-                        android:layout_width="140sp"
-                        android:layout_height="wrap_content"
-                        android:text="EMPLOYEE NAME"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-                    <TextView
-                        android:id="@+id/post"
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:text="POST"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-                    <TextView
-                        android:id="@+id/username"
-                        android:layout_width="120sp"
-                        android:layout_height="wrap_content"
-                        android:text="USER NAME"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-
-                    <TextView
-                        android:id="@+id/number"
-                        android:layout_width="120sp"
-                        android:layout_height="wrap_content"
-                        android:text="PHONE NUMBER"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-
-                    <TextView
-                        android:id="@+id/otp"
-                        android:layout_width="80sp"
-                        android:layout_height="wrap_content"
-                        android:text="OTP"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-
-                    <TextView
-                        android:id="@+id/worker"
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:text="WORKER"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-
-                    <TextView
-                        android:id="@+id/status"
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:text="STATUS"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-
-                    <TextView
-                        android:id="@+id/id"
-                        android:layout_width="100sp"
-                        android:layout_height="wrap_content"
-                        android:text="ACtiON"
-                        android:textColor="@color/lightgray"
-                        android:textStyle="bold"
-                        android:layout_margin="7sp"/>
-                </TableRow>
-            </TableLayout>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
+                android:text="  | Home - User"
+                android:textColor="@color/lightgray"
+                android:fontFamily="sans-serif"
+                android:textSize="11sp"
+                android:layout_margin="5sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/lay1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="55dp"
+            android:background="@drawable/curve_shap"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="12sp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/curve_shap"
+                android:backgroundTint="#f5eeed"
+                app:queryHint="Search Type..." />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:backgroundTint="#1ca6eb"
+                android:drawableLeft="@drawable/ic_baseline_add_24"
+                android:padding="10dp"
+                android:text=" Add User"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lay1"
+                android:layout_margin="15sp"
+                android:background="@color/white"
+                android:backgroundTint="@color/white">
+
+                <LinearLayout
+                    android:id="@+id/table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TableLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:ignore="MissingConstraints">
+
+                        <TableRow android:id="@+id/line1">
+
+                            <TextView
+                                android:id="@+id/sn"
+                                android:layout_width="50sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="Sr.No."
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+
+                                android:layout_width="120sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="EMPLOYEE NAME"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/type"
+                                android:layout_width="140sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="POST "
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/size"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="USER NAME "
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="120sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="PHONE NUMBER "
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="OTP"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="WORKER"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/status"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="STATUS"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/id"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="Action"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+                        </TableRow>
+
+                        <View
+                            style="@style/line"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/line1"
+                            tools:ignore="MissingConstraints" />
+                    </TableLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_below="@id/lay1"
+            android:layout_marginTop="-30dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="2022©"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="Sarvi Solution Pvt Ltd."/>
+        </LinearLayout>
 
     </RelativeLayout>
 

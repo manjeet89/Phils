@@ -18,7 +18,7 @@
             android:id="@+id/table_layout">
             <TableRow>
                 <TextView
-                    android:id="@+id/user_id"
+                    android:id="@+id/list_id"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
@@ -28,68 +28,99 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/user_full_name"
-                    android:layout_width="120sp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="7sp"
-                    android:text="EMPLOYEE NAME"
-                    android:textColor="@color/lightgray"
-                    android:textSize="12dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/emp_type_name"
-                    android:layout_width="140sp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="7sp"
-                    android:text="POST "
-                    android:textColor="@color/lightgray"
-                    android:textSize="12dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/list_category_name"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
-                    android:text="USER NAME "
+                    android:text="CATEGORY NAME"
                     android:textColor="@color/lightgray"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/user_phone_number"
-                    android:layout_width="120sp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="7sp"
-                    android:text="PHONE NUMBER "
-                    android:textColor="@color/lightgray"
-                    android:textSize="12dp"
-                    android:textStyle="bold" />
+
 
                 <TextView
-                    android:id="@+id/user_otp"
+                    android:id="@+id/list_type_name"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
-                    android:text="OTP"
+                    android:text="TYPE"
                     android:textColor="@color/lightgray"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/employee_type"
+                    android:id="@+id/list_size_name"
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="SIZE"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/list_batch_number"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
-                    android:text="WORKER"
+                    android:text="BATCH NUMBER "
                     android:textColor="@color/lightgray"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/user_status"
+                    android:id="@+id/list_make_name"
                     android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="MAKE"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/list_uom_name"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="UOM"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/list_safety"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="SAFETY"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/list_quantity"
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="QUANTITY"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/list_price"
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="PRICE"
+                    android:textColor="@color/lightgray"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/list_status"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="STATUS"
@@ -99,13 +130,14 @@
 
                 <Button
                     android:id="@+id/id"
-                    android:layout_width="100sp"
+                    android:layout_width="80sp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="7sp"
-                    android:text="Action"
-                    android:textColor="@color/lightgray"
+                    android:text="Edit"
                     android:textSize="12dp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="#1ca6eb"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_margin="7sp"/>
             </TableRow>
         </TableLayout>
         <View

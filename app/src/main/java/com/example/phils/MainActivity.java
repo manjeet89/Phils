@@ -59,15 +59,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.make_stock:
-                        Toast.makeText(MainActivity.this, "Make", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
                         break;
 
                     case R.id.umo_stock:
-                        Toast.makeText(MainActivity.this, "UMO", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockUomActivity.class));
                         break;
 
                     case R.id.list_stock:
-                        Toast.makeText(MainActivity.this, "List", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
                         break;
                     default:
                         return true;

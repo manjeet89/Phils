@@ -14,8 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockSizeAdapterClass;
-import com.example.phils.ResponseModels.ResponseModelStockSize;
+import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.ResponseModels.ResponseModelStockMake;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,19 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class StockSizeActivity extends AppCompatActivity {
+public class StockMakeActivity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
 
-    StockSizeAdapterClass stockSizeAdapterClass;
-    List<ResponseModelStockSize> data;
-    ResponseModelStockSize responseModelStockSize;
+    StockMakeAdapterClass stockMakeAdapterClass;
+    List<ResponseModelStockMake> data;
+    ResponseModelStockMake responseModelStockMake;
     LinearLayoutManager linearLayoutManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_size);
+        setContentView(R.layout.activity_stock_make);
 
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
@@ -60,21 +59,20 @@ public class StockSizeActivity extends AppCompatActivity {
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
-        stockSizeAdapterClass = new StockSizeAdapterClass(this,data);
-        recview.setAdapter(stockSizeAdapterClass);
+
+        stockMakeAdapterClass = new StockMakeAdapterClass(this,data);
+        recview.setAdapter(stockMakeAdapterClass);
 
         fatchdata();
-
-
     }
 
     private void fileList(String newText) {
 
-        List<ResponseModelStockSize> modelStockCategories = new ArrayList<>();
-        for(ResponseModelStockSize responseModelStockSize : data)
+        List<ResponseModelStockMake> modelStockCategories = new ArrayList<>();
+        for(ResponseModelStockMake responseModelStockMake : data)
         {
-            if(responseModelStockSize.getStock_size_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
-                modelStockCategories.add(responseModelStockSize);
+            if(responseModelStockMake.getMake_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
+                modelStockCategories.add(responseModelStockMake);
             }
         }
 
@@ -83,19 +81,18 @@ public class StockSizeActivity extends AppCompatActivity {
         }
         else
         {
-            stockSizeAdapterClass.setFilteredList(modelStockCategories);
+            stockMakeAdapterClass.setFilteredList(modelStockCategories);
         }
     }
 
-
     private void fatchdata() {
 
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_size.php",
+        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_make.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            String stock_size_status;
+                            String make_status;
                             int stat = 0;
                             int j=0;
                             JSONObject jsonObject = new JSONObject(response);
@@ -109,24 +106,22 @@ public class StockSizeActivity extends AppCompatActivity {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
 //                                    String sn = object.getString("stock_category_id");
-                                    String stock_size_id = String.valueOf(j);
-                                    String stock_category_name = object.getString("stock_category_name");
-                                    String stock_type_name = object.getString("stock_type_name");
-                                    String stock_size_name = object.getString("stock_size_name");
-                                    stock_size_status = object.getString("stock_size_status");
+                                    String make_id = String.valueOf(j);
+                                    String make_name = object.getString("make_name");
 
-                                    if(stock_size_status.equals(String.valueOf(0)))
+                                    make_status = object.getString("make_status");
+                                    if(make_status.equals(String.valueOf(0)))
                                     {
-                                        stock_size_status = "Disable";
+                                        make_status = "Disable";
                                     }
                                     else
                                     {
-                                        stock_size_status = "Enable";
+                                        make_status = "Enable";
                                     }
 
-                                    responseModelStockSize = new ResponseModelStockSize(stock_size_id,stock_category_name,stock_type_name,stock_size_name,stock_size_status);
-                                    data.add(responseModelStockSize);
-                                    stockSizeAdapterClass.notifyDataSetChanged();
+                                    responseModelStockMake = new ResponseModelStockMake(make_id,make_name,make_status);
+                                    data.add(responseModelStockMake);
+                                    stockMakeAdapterClass.notifyDataSetChanged();
 
                                 }
                             }
@@ -138,7 +133,7 @@ public class StockSizeActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StockSizeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(StockMakeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);

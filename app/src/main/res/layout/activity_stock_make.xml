@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".StockSizeActivity">
+    tools:context=".StockMakeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Size"
+                android:text="Stock Make"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Size"
+                android:text="  | Home - Make"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -87,7 +87,7 @@
                 android:backgroundTint="#1ca6eb"
                 android:drawableLeft="@drawable/ic_baseline_add_24"
                 android:padding="10dp"
-                android:text=" Add Stock Size"
+                android:text=" Add Stock Make"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -116,7 +116,7 @@
                         <TableRow android:id="@+id/line1">
 
                             <TextView
-                                android:id="@+id/sn"
+                                android:id="@+id/make_id"
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
@@ -126,38 +126,20 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/category"
-                                android:layout_width="120sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="CATEGORY"
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/type"
-                                android:layout_width="140sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="TYPE "
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/size"
+                                android:id="@+id/make_name"
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="SIZE "
+                                android:text="MAKE NAME"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
+
+
                             <TextView
-                                android:id="@+id/status"
-                                android:layout_width="100sp"
+                                android:id="@+id/make_status"
+                                android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="STATUS"
@@ -167,10 +149,10 @@
 
                             <TextView
                                 android:id="@+id/id"
-                                android:layout_width="100sp"
+                                android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Action"
+                                android:text="ActiON"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

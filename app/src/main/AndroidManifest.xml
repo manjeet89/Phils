@@ -17,6 +17,15 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".StockListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StockUomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StockMakeActivity"
+            android:exported="false" />
+        <activity
             android:name=".StockSizeActivity"
             android:exported="false" />
         <activity
