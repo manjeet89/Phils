@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.ResponseModels;
 
 public class ResponseModelUser {
     String user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status;

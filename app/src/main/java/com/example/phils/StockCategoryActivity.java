@@ -5,7 +5,10 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,7 +31,7 @@ import java.util.Locale;
 public class StockCategoryActivity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
-
+    Button btn;
     StockCategoryAdapterClass stockCategoryAdapterClass;
     List<ResponseModelStockCategory> data;
     ResponseModelStockCategory responseModelStockCategory;
@@ -39,6 +42,13 @@ public class StockCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_category);
         recview = findViewById(R.id.recview);
+        btn = findViewById(R.id.add_category);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Add_category();
+            }
+        });
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
 
@@ -64,6 +74,12 @@ public class StockCategoryActivity extends AppCompatActivity {
         recview.setAdapter(stockCategoryAdapterClass);
 
         fatchdata();
+    }
+
+    private void Add_category() {
+        Intent intent = new Intent(getApplicationContext(),Add_Stock_Category_Activity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void fileList(String newText) {
