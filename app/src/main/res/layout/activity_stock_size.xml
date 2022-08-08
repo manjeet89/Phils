@@ -177,7 +177,7 @@
                         </TableRow>
 
                         <View
-                            style="@style/line"
+                            style="@style/underlines"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_below="@id/line1"
@@ -218,6 +218,16 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/navigation_bar"
+
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

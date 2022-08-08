@@ -19,4 +19,9 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_margin">1dp</item>
     </style>
+    <style name="underlines">
+        <item name="android:background">#f7f7f5</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_margin">1dp</item>
+    </style>
 </resources>

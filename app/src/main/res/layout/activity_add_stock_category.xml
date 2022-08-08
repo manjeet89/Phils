@@ -87,21 +87,33 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"/>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="30sp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.498" />
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30sp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:layout_marginEnd="40dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="1dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.502"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.498" />-->
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/testView"
+            android:hint="Select Category"
+            android:padding="10dp"
+            android:background="#f2ebeb"
+            android:textColor="@color/black"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+            />
       </LinearLayout>
       <LinearLayout
           android:layout_width="match_parent"
@@ -122,18 +134,18 @@
             android:layout_marginTop="0dp"/>
 
        <EditText
-         android:layout_width="match_parent"
-         android:layout_height="30sp"
-         android:hint="Name"
-           android:layout_marginBottom="8dp"
-           android:layout_marginEnd="8dp"
-           android:layout_marginStart="8dp"
-           android:layout_marginTop="0dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/category_insert"
+           android:hint="Category Name"
+           android:textSize="15sp"
+           android:padding="10dp"
+           android:background="#f2ebeb"
            android:textColor="@color/black"
-         android:textSize="15sp"
-           android:backgroundTint="#f2ebeb"
-         android:background="@drawable/curve_shap"/>
+           android:layout_marginTop="1dp"
+           android:gravity="center_vertical"
 
+/>
       </LinearLayout>
 
       <LinearLayout
@@ -154,22 +166,36 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"/>
 
-        <Spinner
-            android:id="@+id/spinner_status"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="30sp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/status_check"
+            android:hint="Status"
+            android:padding="10dp"
+            android:background="#f2ebeb"
+            android:textColor="@color/black"
             android:layout_marginTop="1dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.498" />
+            android:gravity="center_vertical"
+            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+            />
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/curve_shap">
 
-
+      <Button
+          android:layout_width="150sp"
+          android:layout_height="wrap_content"
+          android:id="@+id/insert_cat"
+        android:layout_marginStart="110sp"
+        android:layout_marginTop="20sp"
+        android:text="Submit"
+        android:backgroundTint="#1ca6eb"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        />
       </LinearLayout>
 
 
@@ -198,5 +224,15 @@
 
   </RelativeLayout>
 
+
+  <com.google.android.material.navigation.NavigationView
+      android:id="@+id/navigation_view"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      app:headerLayout="@layout/navigation_header"
+      app:menu="@menu/navigation_bar"
+
+      />
 
 </androidx.drawerlayout.widget.DrawerLayout>
