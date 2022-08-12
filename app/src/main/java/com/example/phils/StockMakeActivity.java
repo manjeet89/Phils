@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class StockMakeActivity extends AppCompatActivity {
+    ProgressDialog progressDialog;
+
     RecyclerView recview;
     SearchView searchView;
 
@@ -41,6 +44,13 @@ public class StockMakeActivity extends AppCompatActivity {
     List<ResponseModelStockMake> data;
     ResponseModelStockMake responseModelStockMake;
     LinearLayoutManager linearLayoutManager;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +159,11 @@ public class StockMakeActivity extends AppCompatActivity {
     }
 
     private void fatchdata() {
-
+        progressDialog = new ProgressDialog(StockMakeActivity.this);
+        progressDialog.setTitle("Stock Make");
+        progressDialog.setMessage("Loading... Please Wait!");
+        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+        progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_make.php",
                 new Response.Listener<String>() {
                     @Override
@@ -185,6 +199,7 @@ public class StockMakeActivity extends AppCompatActivity {
                                     responseModelStockMake = new ResponseModelStockMake(make_id,make_name,make_status);
                                     data.add(responseModelStockMake);
                                     stockMakeAdapterClass.notifyDataSetChanged();
+                                    progressDialog.dismiss();
 
                                 }
                             }

@@ -1,15 +1,20 @@
 package com.example.phils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +31,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +44,13 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
     Dialog dialog;
     Button button;
     EditText category_name;
-        @Override
+
+    @Override
+    public void onBackPressed() {
+    startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_category);
@@ -45,6 +58,64 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
             check_status = findViewById(R.id.status_check);
             button = findViewById(R.id.insert_cat);
             category_name = findViewById(R.id.category_insert);
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+                    case R.id.ghar:
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        break;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(),UserActivity.class));
+                        break;
+
+                    case R.id.category_stock:
+                        startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+                        break;
+
+                    case R.id.type_stock:
+                        startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
+                        break;
+
+                    case R.id.size_stock:
+                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        break;
+
+                    case R.id.make_stock:
+                        startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                        break;
+
+                    case R.id.umo_stock:
+                        startActivity(new Intent(getApplicationContext(),StockUomActivity.class));
+                        break;
+
+                    case R.id.list_stock:
+                        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+                        break;
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
+
+
 
             // initialize array list
             arrayList=new ArrayList<>();

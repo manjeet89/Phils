@@ -6,7 +6,13 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/drawable/button_shap.xml" value="0.1945" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/drawable/curve_shap.xml" value="0.1945" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1945" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_job_category.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_job_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_category.xml" value="0.2" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_size.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_type.xml" value="0.21" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_category.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_category.xml" value="0.21" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_list.xml" value="0.17074275362318841" />
@@ -15,6 +21,8 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_type.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_uom.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_user.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_job_category_activity.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_job_size_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_stock_category_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_stock_list_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_stock_make_activity.xml" value="0.17074275362318841" />
@@ -24,9 +32,11 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_user_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_status.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_stock_type.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/navigation_header.xml" value="0.25" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/status_select.xml" value="0.15534420289855072" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/navigation_bar.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/navigation_bar.xml" value="0.5" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/xml/network_security_config.xml" value="0.17074275362318841" />
       </map>
     </option>
   </component>

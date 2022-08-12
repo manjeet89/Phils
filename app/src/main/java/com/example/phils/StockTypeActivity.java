@@ -8,10 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class StockTypeActivity extends AppCompatActivity {
+    ProgressDialog progressDialog;
+
     RecyclerView recview;
     SearchView searchView;
 
@@ -41,6 +45,16 @@ public class StockTypeActivity extends AppCompatActivity {
     List<ResponseModelStockType> data;
     ResponseModelStockType responseModelStockType;
     LinearLayoutManager linearLayoutManager;
+
+    Button button;
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +63,13 @@ public class StockTypeActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+        button = findViewById(R.id.add_type);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Add_Stock_Type_Activity.class));
+            }
+        });
 
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
@@ -131,7 +152,11 @@ public class StockTypeActivity extends AppCompatActivity {
     }
 
     private void fatchdata() {
-
+        progressDialog = new ProgressDialog(StockTypeActivity.this);
+        progressDialog.setTitle("Stock Tyoe");
+        progressDialog.setMessage("Loading... Please Wait!");
+        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+        progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_type.php",
                 new Response.Listener<String>() {
                     @Override
@@ -169,6 +194,7 @@ public class StockTypeActivity extends AppCompatActivity {
                                     responseModelStockType = new ResponseModelStockType(sn,category,type,status);
                                     data.add(responseModelStockType);
                                     stockTypeAdapterClass.notifyDataSetChanged();
+                                    progressDialog.dismiss();
 
                                 }
                             }

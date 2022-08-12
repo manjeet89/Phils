@@ -8,10 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class StockSizeActivity extends AppCompatActivity {
+    ProgressDialog progressDialog;
+
     RecyclerView recview;
     SearchView searchView;
 
@@ -41,6 +45,13 @@ public class StockSizeActivity extends AppCompatActivity {
     List<ResponseModelStockSize> data;
     ResponseModelStockSize responseModelStockSize;
     LinearLayoutManager linearLayoutManager;
+    Button button;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,13 @@ public class StockSizeActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+        button = findViewById(R.id.add_size);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Add_Stock_Size_Activity.class));
+            }
+        });
 
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
@@ -153,7 +171,11 @@ public class StockSizeActivity extends AppCompatActivity {
 
 
     private void fatchdata() {
-
+        progressDialog = new ProgressDialog(StockSizeActivity.this);
+        progressDialog.setTitle("Stock Size");
+        progressDialog.setMessage("Loading... Please Wait!");
+        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+        progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_size.php",
                 new Response.Listener<String>() {
                     @Override
@@ -191,6 +213,7 @@ public class StockSizeActivity extends AppCompatActivity {
                                     responseModelStockSize = new ResponseModelStockSize(stock_size_id,stock_category_name,stock_type_name,stock_size_name,stock_size_status);
                                     data.add(responseModelStockSize);
                                     stockSizeAdapterClass.notifyDataSetChanged();
+                                    progressDialog.dismiss();
 
                                 }
                             }

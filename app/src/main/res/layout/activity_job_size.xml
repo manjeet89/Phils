@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".StockTypeActivity">
+    tools:context=".Job_Size_Activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Type"
+                android:text="Job Size"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Type"
+                android:text="  | Home - Job Size"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -78,17 +78,17 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/curve_shap"
                 android:backgroundTint="#f5eeed"
-                app:queryHint="Search Type..." />
+                app:queryHint="Search Category..." />
 
             <Button
-                android:id="@+id/add_type"
+                android:id="@+id/add_job_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
                 android:backgroundTint="#1ca6eb"
                 android:drawableLeft="@drawable/ic_baseline_add_24"
                 android:padding="10dp"
-                android:text=" Add Stock Type"
+                android:text=" Add job Size"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -128,23 +128,14 @@
 
                             <TextView
                                 android:id="@+id/category"
-                                android:layout_width="120sp"
+                                android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="CATEGORY"
+                                android:text="Size"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/cat_group"
-                                android:layout_width="140sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="TYPE "
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/status"
@@ -161,7 +152,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="ActiON"
+                                android:text="Action"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -219,5 +210,6 @@
         app:menu="@menu/navigation_bar"
 
         />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

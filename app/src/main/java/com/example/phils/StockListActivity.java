@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class StockListActivity extends AppCompatActivity {
+    ProgressDialog progressDialog;
+
     RecyclerView recview;
     SearchView searchView;
 
@@ -41,6 +44,13 @@ public class StockListActivity extends AppCompatActivity {
     List<ResponseModelStockList> data;
     ResponseModelStockList responseModelStockList;
     LinearLayoutManager linearLayoutManager;
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +162,11 @@ public class StockListActivity extends AppCompatActivity {
     }
 
     private void fatchdata() {
-
+        progressDialog = new ProgressDialog(StockListActivity.this);
+        progressDialog.setTitle("Stock List");
+        progressDialog.setMessage("Loading... Please Wait!");
+        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+        progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_list.php",
                 new Response.Listener<String>() {
                     @Override
@@ -195,6 +209,7 @@ public class StockListActivity extends AppCompatActivity {
                                    responseModelStockList = new ResponseModelStockList(stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status);
                                     data.add(responseModelStockList);
                                     stockListAdapterClass.notifyDataSetChanged();
+                                    progressDialog.dismiss();
 
                                 }
                             }

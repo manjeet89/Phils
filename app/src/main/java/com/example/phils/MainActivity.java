@@ -16,10 +16,24 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static long back_pressed;
+    @Override
+    public void onBackPressed(){
+        if (back_pressed + 2000 > System.currentTimeMillis()){
+            finishAffinity();
+        }
+        else{
+            Toast.makeText(getBaseContext(), "Press once again to exit",
+                    Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
@@ -69,6 +83,20 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.list_stock:
                         startActivity(new Intent(getApplicationContext(),StockListActivity.class));
                         break;
+
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(),Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(),Job_Size_Activity.class));
+                        break;
+
+                    case R.id.List_job:
+                        startActivity(new Intent(getApplicationContext(),Job_List_Activity.class));
+                        break;
+
                     default:
                         return true;
                 }
