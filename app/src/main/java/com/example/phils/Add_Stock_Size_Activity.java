@@ -1,14 +1,13 @@
 package com.example.phils;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,124 +23,175 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Add_Stock_Size_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Spinner Country , city;
-    ArrayList<String> category = new ArrayList<>();
-    ArrayList<String> id = new ArrayList<>();
-    ArrayList<String> citylist = new ArrayList<>();
 
-    ArrayAdapter<String> categoryAdapter,cityAdaptor;
+
+    Spinner city,country;
+    TextView id_type;
+    ArrayList<String> countryList = new ArrayList<>();
+    ArrayList<String> cityList = new ArrayList<>();
+    ArrayAdapter<String> countryAdapter ;
+    ArrayAdapter<String> cityAdapter;
     RequestQueue requestQueue;
     String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_data_in_tbl_type.php";
-
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_size);
         requestQueue = Volley.newRequestQueue(this);
-        Country = findViewById(R.id.country);
+
+        country = findViewById(R.id.country);
         city = findViewById(R.id.city);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url
-                , null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+        id_type = findViewById(R.id.id_type);
 
-                    for(int i=0;i<jsonArray.length();i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String category_name = jsonObject.optString("stock_category_name");
-                        String category_id = jsonObject.optString("stock_category_id");
-                        category.add(category_name);
-                                id.add(category_id);
-
-                        categoryAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-                                android.R.layout.simple_list_item_1, category);
-                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        Country.setAdapter(categoryAdapter);
-
-//                        listView.setAdapter(categoryAdapter);
-//                        editText.addTextChangedListener(new TextWatcher() {
-//                            @Override
-//                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                                categoryAdapter.getFilter().filter(charSequence);
-//                            }
-//
-//                            @Override
-//                            public void afterTextChanged(Editable editable) {
-//
-//                            }
-//
-//                        });
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
 
 
-//                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                // when item selected from list
-//                                // set selected item on textView
-//                                select_type.setText(categoryAdapter.getItem(position));
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                String category_id= jsonObject.optString("stock_category_id");
+                                String category_name= jsonObject.optString("stock_category_name");
+                                countryList.add(category_name);
+                                countryAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
+                                        android.R.layout.simple_list_item_1,countryList);
+                                countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                country.setAdapter(countryAdapter);
+
+//                                country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                                    @Override
+//                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                                        Object obj =   country.getAdapter().getItem(i);
+//                                       //country.getId();
 //
-//                                // Dismiss dialog
-//                                dialog.dismiss();
-//                            }
-//                        });
+//                                        String value = obj.toString();
+//
+//                                        //Toast.makeText(Add_Stock_Size_Activity.this, value, Toast.LENGTH_SHORT).show();
+//                                        try {
+//                                            JSONArray jsonArray = response.getJSONArray("data");
+//                                            for(int j=0;j<jsonArray.length();j++) {
+//                                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                                String category_id = jsonObject.optString("stock_category_id");
+//                                                String category_name = jsonObject.optString("stock_category_name");
+//                                                if(value.equals(category_name)){
+//                                                  id = category_id;
+//                                                     // Toast.makeText(Add_Stock_Size_Activity.this, id, Toast.LENGTH_SHORT).show();
+//                                                    String d = id;
+//                                                    id_type.setText(d);
+//
+//                                                }
+//                                            }
+//                                        } catch (JSONException e) {
+//                                            e.printStackTrace();
+//                                        }
+//
+//
+//
+//
+//
+//
+//
+//                                    }
+//
+//
+//                                    @Override
+//                                    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                                    }
+//                                });
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
         });
+        String sp = id_type.getText().toString();
 
         requestQueue.add(jsonObjectRequest);
-        Country.setOnItemSelectedListener(this);
+        country.setOnItemSelectedListener(this);
+
+
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(adapterView.getId() == R.id.country){
-            citylist.clear();
-            String selectCategory = adapterView.getSelectedItem().toString();
-            String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_and_type_data_in_tbl_size.php?stock_category_id="+selectCategory;
+            cityList.clear();
+            String selectCountry = adapterView.getSelectedItem().toString();
+            String url1 = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_and_type_data_in_tbl_size.php?stock_category_id="+selectCountry;
             requestQueue = Volley.newRequestQueue(this);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                    url1, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         JSONArray jsonArray = response.getJSONArray("data");
-                        for(int i=0;i<jsonArray.length();i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String type_name = jsonObject.optString("stock_type_name");
-//                            String category_id = jsonObject.optString("stock_category_id");
-                            citylist.add(type_name);
-//                            category.add(category_id);
 
-                            cityAdaptor = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-                                    android.R.layout.simple_list_item_1, citylist);
-                            cityAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                          if(cityAdaptor.isEmpty()) {
-                              city.setAdapter(cityAdaptor);
-                          }
-                            {
-                                citylist.add("Null");
-                                ArrayAdapter<String> add = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-                                        android.R.layout.simple_list_item_1,citylist);
-                                city.setAdapter(add);
-                            }
+                        for(int i=0;i<jsonArray.length();i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String category_id= jsonObject.optString("stock_type_id");
+                            String type_name= jsonObject.optString("stock_type_name");
+                            cityList.add(type_name);
+                            cityAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
+                                    android.R.layout.simple_list_item_1,cityList);
+                            cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            country.setAdapter(cityAdapter);
+
+                            city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Object obj1 =   city.getAdapter().getItem(i);
+                                    //country.getId();
+
+                                    String value1 = obj1.toString();
+
+                                    Toast.makeText(Add_Stock_Size_Activity.this, value1, Toast.LENGTH_SHORT).show();
+//                                    try {
+//                                        JSONArray jsonArray = response.getJSONArray("data");
+//                                        for(int j=0;j<jsonArray.length();j++) {
+//                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                            String category_id = jsonObject.optString("stock_category_id");
+//                                            String category_name = jsonObject.optString("stock_category_name");
+//                                            if(value.equals(category_name)){
+//                                                id = category_id;
+//                                                // Toast.makeText(Add_Stock_Size_Activity.this, id, Toast.LENGTH_SHORT).show();
+//                                                String d = id;
+//                                                id_type.setText(d);
+//
+//                                            }
+//                                        }
+//                                    } catch (JSONException e) {
+//                                        e.printStackTrace();
+//                                    }
+
+                                }
+
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+                            });
+
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -149,9 +199,7 @@ public class Add_Stock_Size_Activity extends AppCompatActivity implements Adapte
 
                 }
             });
-
             requestQueue.add(jsonObjectRequest);
-
         }
     }
 

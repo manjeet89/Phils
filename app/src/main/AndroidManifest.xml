@@ -16,7 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Phils"
+
+
         tools:targetApi="31">
+        <activity
+            android:name=".ConsumptionDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConsumptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportsActivity"
+            android:exported="false" />
         <activity
             android:name=".Add_Job_Size_Activity"
             android:exported="false" />
@@ -35,6 +46,7 @@
         <activity
             android:name=".Add_Stock_Size_Activity"
             android:exported="false" />
+
         <activity
             android:name=".Add_Stock_Type_Activity"
             android:exported="false" />

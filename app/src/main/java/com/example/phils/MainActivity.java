@@ -97,6 +97,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(),Job_List_Activity.class));
                         break;
 
+                    case R.id.Report_reports:
+                        startActivity(new Intent(getApplicationContext(),ReportsActivity.class));
+                        break;
+
+                    case R.id.Report_consumption:
+                        startActivity(new Intent(getApplicationContext(),ConsumptionActivity.class));
+                        break;
+
+                    case R.id.Report_consumption_details:
+                        startActivity(new Intent(getApplicationContext(),ConsumptionDetailActivity.class));
+                        break;
+
                     default:
                         return true;
                 }

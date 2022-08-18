@@ -303,7 +303,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
 //            Toast.makeText(this, e4+"  /  "+e5+"  /  "+e6, Toast.LENGTH_SHORT).show();
 
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_category.php",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_category.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

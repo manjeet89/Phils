@@ -73,6 +73,28 @@
         </menu>
     </item>
 
+    <item
+        android:title="Report">
+        <menu>
+
+            <item
+                android:id="@+id/Report_reports"
+                android:title="Reports"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+            <item
+                android:id="@+id/Report_consumption"
+                android:title="Consumption"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+            <item
+                android:id="@+id/Report_consumption_details"
+                android:title="Consumption Details"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+        </menu>
+    </item>
+
 
 
 </menu>

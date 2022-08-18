@@ -30,4 +30,14 @@
         app:layout_constraintTop_toBottomOf="@+id/country"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/country"
+        android:hint="id"
+        android:id="@+id/id_type"/>
+
+
+
+
 </RelativeLayout>

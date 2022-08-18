@@ -11,6 +11,8 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_category.xml" value="0.2" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_type.xml" value="0.21" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_consumption.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_consumption_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_category.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
@@ -34,6 +36,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_status.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_stock_type.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/navigation_header.xml" value="0.25" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/spinner_item_position.xml" value="0.23722627737226276" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/status_select.xml" value="0.15534420289855072" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/navigation_bar.xml" value="0.5" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/xml/network_security_config.xml" value="0.17074275362318841" />
