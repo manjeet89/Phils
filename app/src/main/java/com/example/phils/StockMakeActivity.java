@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ import java.util.Locale;
 
 public class StockMakeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
+    Button btn;
 
     RecyclerView recview;
     SearchView searchView;
@@ -59,6 +61,7 @@ public class StockMakeActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+        btn = findViewById(R.id.btn);
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
@@ -112,6 +115,13 @@ public class StockMakeActivity extends AppCompatActivity {
                         return true;
                 }
                 return true;
+            }
+        });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Add_Stock_Make_Activity.class));
             }
         });
 

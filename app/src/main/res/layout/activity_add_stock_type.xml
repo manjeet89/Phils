@@ -174,13 +174,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:background="@drawable/curve_shap">
 
                 <Button
                     android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:id="@+id/insert_type"
-                    android:layout_marginStart="110sp"
                     android:layout_marginTop="20sp"
                     android:text="Submit"
                     android:backgroundTint="#1ca6eb"

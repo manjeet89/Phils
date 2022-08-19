@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,17 +40,14 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
     TextView check_status,select_type,id12;
     ArrayList<String> arrayList1;
     Dialog dialog;
-    int i=1;
     Button insert_type;
 
     EditText type_insert;
 
 
     ArrayList<String> category = new ArrayList<>();
-    ArrayList<String> category1 = new ArrayList<>();
 
     ArrayAdapter<String> categoryAdapter;
-    ArrayAdapter<String> categoryAdapter1;
 
     RequestQueue requestQueue;
     String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_data_in_tbl_type.php";
@@ -292,35 +290,59 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
     }
 
     private void Insert() {
-        String e1 =  id12.getText().toString().trim();
+        String e1 = id12.getText().toString().trim();
         String e2 = type_insert.getText().toString().trim();
         String e3 = check_status.getText().toString().trim();
-        StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_type.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(Add_Stock_Type_Activity.this, response, Toast.LENGTH_SHORT).show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_Type_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
+        if (TextUtils.isEmpty(e1)) {
+            id12.setError("Please Select Category Group");
+            Toast.makeText(Add_Stock_Type_Activity.this, "Please Select Category Group", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (TextUtils.isEmpty(e2)) {
+            type_insert.setError("Please Enter your type Name");
+            Toast.makeText(Add_Stock_Type_Activity.this, "Please Enter your Category Name", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (TextUtils.isEmpty(e3)) {
+            check_status.setError("Please Select your Status");
+            Toast.makeText(Add_Stock_Type_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+
+            if (e3.equals("Enable")) {
+                e3 = "1";
+            } else {
+                e3 = "0";
             }
-        })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String,String>();
-                params.put("stock_category_id",e1);
-                params.put("stock_type_name",e2);
-                params.put("stock_type_status",e2);
-                return  params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Type_Activity.this);
-        requestQueue.add(request);
-        //Toast.makeText(this,e1+" / "+e2+" / "+e3 , Toast.LENGTH_SHORT).show();
+            String e4 =  e1;
+            String e5 = e2;
+            String e6 = e3;
+
+            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_type.php",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(Add_Stock_Type_Activity.this, response, Toast.LENGTH_SHORT).show();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(Add_Stock_Type_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+            }) {
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("stock_category_id", e4);
+                    params.put("stock_type_name", e5);
+                    params.put("stock_type_status", e6);
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Type_Activity.this);
+            requestQueue.add(request);
+            //Toast.makeText(this,e1+" / "+e2+" / "+e3 , Toast.LENGTH_SHORT).show();
+        }
     }
 }

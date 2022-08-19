@@ -5,13 +5,23 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Add_Job_Size_Activity">
+    tools:context=".Add_Stock_Type_Activity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settext"
+        android:visibility="invisible"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f5eeed"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/set"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -37,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Job Size Add"
+                android:text="Stock Size Add"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -47,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - job size add"
+                android:text="  | Home - stock size add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -69,6 +79,38 @@
             android:background="@drawable/curve_shap"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="15sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stock Category"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#3e403f"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/select_category"
+                    android:hint="select stock category"
+                    android:padding="10dp"
+                    android:background="#f2ebeb"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,7 +121,40 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Job Size Name"
+                    android:text="Stock Type"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#3e403f"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/select_type"
+                    android:hint="select stock type"
+                    android:padding="10dp"
+                    android:background="#f2ebeb"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="15sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stock Size "
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -91,8 +166,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/category_insert"
-                    android:hint="category name"
+                    android:id="@+id/stock_size_name"
+                    android:hint="size name"
                     android:textSize="15sp"
                     android:padding="10dp"
                     android:background="#f2ebeb"
@@ -112,7 +187,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status"
+                    android:text="Status"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -124,8 +199,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/status_check"
-                    android:hint="Status"
+                    android:id="@+id/stock_size_status"
+                    android:hint="status"
                     android:padding="10dp"
                     android:background="#f2ebeb"
                     android:textColor="@color/black"
@@ -142,9 +217,9 @@
                 android:background="@drawable/curve_shap">
 
                 <Button
-                    android:layout_width="150sp"
+                    android:layout_width="120sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/insert_job_cat"
+                    android:id="@+id/insert_size"
                     android:layout_marginTop="20sp"
                     android:text="Submit"
                     android:backgroundTint="#1ca6eb"
