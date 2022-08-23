@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,10 +41,12 @@ public class StockUomActivity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
 
+    Button uom;
     StockUOMAdapterClass stockUOMAdapterClass;
     List<ResponseModelStockUOM> data;
     ResponseModelStockUOM responseModelStockUOM;
     LinearLayoutManager linearLayoutManager;
+
 
 
     @Override
@@ -60,6 +63,14 @@ public class StockUomActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+
+        uom = findViewById(R.id.uom);
+        uom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Add_Stock_UOM_Activity.class));
+            }
+        });
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

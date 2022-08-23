@@ -18,10 +18,17 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".Demo"
+            android:exported="false" />
+        <activity
+            android:name=".Add_Stock_List_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Add_Stock_UOM_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Add_Stock_Make_Activity"
-            android:exported="false"/>
-
-
+            android:exported="false" />
         <activity
             android:name=".ConsumptionDetailActivity"
             android:exported="false" />

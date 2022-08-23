@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,9 +32,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Add_Stock_Make_Activity extends AppCompatActivity {
+public class Add_Stock_UOM_Activity extends AppCompatActivity {
 
-    EditText make_name_add;
+    EditText uom_name_add;
     TextView stock_size_status;
     ArrayList<String> arrayList1;
     Dialog dialog;
@@ -43,10 +42,11 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_stock_make);
-        make_name_add = findViewById(R.id.make_name_add);
+        setContentView(R.layout.activity_add_stock_uom);
+
+        uom_name_add = findViewById(R.id.uom_name_add);
         stock_size_status= findViewById(R.id.stock_size_status);
-        btn = findViewById(R.id.make_insert);
+        btn = findViewById(R.id.uom_insert);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +62,7 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog=new Dialog(Add_Stock_Make_Activity.this);
+                dialog=new Dialog(Add_Stock_UOM_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner_status);
@@ -80,7 +80,7 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
                 EditText editText1=dialog.findViewById(R.id.edit_text1);
                 ListView listViewstatus=dialog.findViewById(R.id.list_view_status);
 
-                ArrayAdapter<String> adapter=new ArrayAdapter<>(Add_Stock_Make_Activity.this, android.R.layout.simple_list_item_1,arrayList1);
+                ArrayAdapter<String> adapter=new ArrayAdapter<>(Add_Stock_UOM_Activity.this, android.R.layout.simple_list_item_1,arrayList1);
                 listViewstatus.setAdapter(adapter);
                 editText1.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -113,20 +113,19 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
         });
         // end Status spinner
     }
-
     private void Insert() {
-        String e1 =  make_name_add.getText().toString().trim();
+        String e1 =  uom_name_add.getText().toString().toUpperCase(Locale.ROOT).trim();
         String e3 = stock_size_status.getText().toString().trim();
         if(TextUtils.isEmpty(e1))
         {
-            make_name_add.setError("Enter Make Name");
-            Toast.makeText(Add_Stock_Make_Activity.this, "Enter Make Name", Toast.LENGTH_SHORT).show();
+            uom_name_add.setError("Enter uom Name");
+            Toast.makeText(Add_Stock_UOM_Activity.this, "Enter UOM Name", Toast.LENGTH_SHORT).show();
             return;
         }
 
         else if(TextUtils.isEmpty(e3))
         {
-            Toast.makeText(Add_Stock_Make_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Add_Stock_UOM_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
             return;
         }
         else
@@ -145,16 +144,16 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
             String e6 = e3;
 
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_make.php",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_uom.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(Add_Stock_Make_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Add_Stock_UOM_Activity.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(Add_Stock_Make_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Add_Stock_UOM_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
             })
@@ -163,12 +162,12 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<String,String>();
-                    params.put("make_name",e4);
-                    params.put("make_status",e6);
+                    params.put("uom_name",e4);
+                    params.put("uom_status",e6);
                     return  params;
                 }
             };
-            RequestQueue  requestQueue = Volley.newRequestQueue(Add_Stock_Make_Activity.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_UOM_Activity.this);
             requestQueue.add(request);
 
         }

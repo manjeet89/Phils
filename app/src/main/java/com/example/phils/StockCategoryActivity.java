@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -44,6 +45,7 @@ public class StockCategoryActivity extends AppCompatActivity {
     List<ResponseModelStockCategory> data;
     ResponseModelStockCategory responseModelStockCategory;
     LinearLayoutManager linearLayoutManager;
+    SwipeRefreshLayout swipe;
 
     @Override
     public void onBackPressed() {
@@ -56,6 +58,14 @@ public class StockCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock_category);
         recview = findViewById(R.id.recview);
         btn = findViewById(R.id.add_category);
+        swipe = findViewById(R.id.swipeLayout);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+                swipe.setRefreshing(false);
+            }
+        });
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
@@ -176,7 +186,6 @@ public class StockCategoryActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(StockCategoryActivity.this);
         progressDialog.setTitle("Stock Category");
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
         StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
                 new Response.Listener<String>() {
@@ -197,7 +206,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
+                                    String stock_category_id = object.getString("stock_category_id");
                                     String sn = String.valueOf(j);
                                     String category = object.getString("stock_category_name");
 
@@ -220,7 +229,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                                         status = "Enable";
                                     }
 
-                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,status,cat_group);
+                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,cat_group,status,stock_category_id);
                                     data.add(responseModelStockCategory);
                                     stockCategoryAdapterClass.notifyDataSetChanged();
                                 progressDialog.dismiss();

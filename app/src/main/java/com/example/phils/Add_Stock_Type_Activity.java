@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Add_Stock_Type_Activity extends AppCompatActivity {
@@ -303,7 +304,6 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
             Toast.makeText(Add_Stock_Type_Activity.this, "Please Enter your Category Name", Toast.LENGTH_SHORT).show();
             return;
         } else if (TextUtils.isEmpty(e3)) {
-            check_status.setError("Please Select your Status");
             Toast.makeText(Add_Stock_Type_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
             return;
         } else {
@@ -314,7 +314,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                 e3 = "0";
             }
             String e4 =  e1;
-            String e5 = e2;
+            String e5 = e2.toUpperCase(Locale.ROOT);
             String e6 = e3;
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_type.php",

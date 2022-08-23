@@ -81,6 +81,7 @@
                 app:queryHint="Search Type..." />
 
             <Button
+                android:id="@+id/uom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"

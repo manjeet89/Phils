@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Add_Stock_Type_Activity">
+    tools:context=".Add_Stock_UOM_Activity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Make"
+                android:text="Stock UOM Add"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - stock Make"
+                android:text="  | Home - stock UOM Add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stock Make Name"
+                    android:text="Stock UOM Name"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -101,8 +101,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/make_name_add"
-                    android:hint="Enter Name Make"
+                    android:id="@+id/uom_name_add"
+                    android:hint="Enter Name Uom"
                     android:padding="10dp"
                     android:textSize="14sp"
                     android:background="#f2ebeb"
@@ -155,7 +155,7 @@
                 <Button
                     android:layout_width="120sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/make_insert"
+                    android:id="@+id/uom_insert"
                     android:layout_marginTop="20sp"
                     android:text="Submit"
                     android:backgroundTint="#1ca6eb"

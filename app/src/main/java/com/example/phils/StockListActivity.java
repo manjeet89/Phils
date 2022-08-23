@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,7 +45,7 @@ public class StockListActivity extends AppCompatActivity {
     List<ResponseModelStockList> data;
     ResponseModelStockList responseModelStockList;
     LinearLayoutManager linearLayoutManager;
-
+    Button stock_add_button;
 
     @Override
     public void onBackPressed() {
@@ -59,6 +60,16 @@ public class StockListActivity extends AppCompatActivity {
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+
+
+
+        stock_add_button = findViewById(R.id.stock_add);
+        stock_add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Add_Stock_List_Activity.class));
+            }
+        });
 
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);

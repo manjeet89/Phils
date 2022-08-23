@@ -40,7 +40,7 @@
 
           <item
               android:id="@+id/umo_stock"
-              android:title="UMO"
+              android:title="UOM"
               android:icon="@drawable/ic_baseline_pie_chart_24"/>
 
           <item

@@ -36,6 +36,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Add_Stock_Category_Activity extends AppCompatActivity {
@@ -252,7 +253,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
 
     private void Insert() {
         String e1 =  textview.getText().toString().trim();
-        String e2 = category_name.getText().toString().trim();
+        String e2 = category_name.getText().toString().toUpperCase(Locale.ROOT).trim();
         String e3 = check_status.getText().toString().trim();
         if(TextUtils.isEmpty(e1))
         {
