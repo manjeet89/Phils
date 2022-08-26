@@ -4,18 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/refrance"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content"
-        android:text="STATUS"
-        android:visibility="invisible"
-        android:textSize="12dp"
-        android:textColor="#696b6a"
-        android:textStyle="bold"
-        android:layout_margin="7sp"
-        tools:ignore="MissingConstraints" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +18,7 @@
             android:id="@+id/table_layout">
             <TableRow>
                 <TextView
-                    android:id="@+id/sn"
+                    android:id="@+id/snlist"
                     android:layout_width="50sp"
                     android:layout_height="wrap_content"
                     android:text="Sr.No."
@@ -39,26 +27,36 @@
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
                 <TextView
-                    android:id="@+id/category"
-                    android:layout_width="120sp"
+                    android:id="@+id/jobclintlist"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
-                    android:text="CATEGORY"
+                    android:text="JOB CLIENT"
                     android:textSize="12dp"
                     android:textColor="#696b6a"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
                 <TextView
-                    android:id="@+id/type"
-                    android:layout_width="140sp"
+                    android:id="@+id/jobnumberlist"
+                    android:layout_width="110sp"
                     android:layout_height="wrap_content"
-                    android:text="TYPE"
+                    android:text="JOB NUMBER"
                     android:textColor="#696b6a"
                     android:textSize="12dp"
                     android:textStyle="bold"
                     android:layout_margin="7sp"/>
 
                 <TextView
-                    android:id="@+id/status"
+                    android:id="@+id/projectmanagerlist"
+                    android:layout_width="135sp"
+                    android:layout_height="wrap_content"
+                    android:text="SIZE"
+                    android:textColor="#696b6a"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_margin="7sp"/>
+
+                <TextView
+                    android:id="@+id/statuslist"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
                     android:text="STATUS"

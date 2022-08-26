@@ -197,7 +197,6 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-
                                 }
 
                             }, new Response.ErrorListener() {
@@ -208,8 +207,6 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                             });
 
                             requestQueue.add(jsonObjectRequest1);
-
-
 
                         }
 

@@ -9,21 +9,89 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="45sp"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="PHILS"
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
 
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_margin="5sp"
+       >
+       <ImageView
+           android:layout_width="120sp"
+           android:layout_height="40sp"
+           android:src="@drawable/logo"/>
+
+   </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5sp"
+            android:gravity="right"
+            >
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="7sp"
+        android:src="@drawable/ic_baseline_message_24"
+        />
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="25sp"
+                android:layout_height="35sp"
+                android:layout_margin="5sp"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                />
+        </LinearLayout>
+</LinearLayout>
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150sp"
+            android:gravity="center" />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/logout"
+            android:text="Logout"
+            android:textColor="@color/white"
+            android:backgroundTint="#f06154"
+            android:layout_marginStart="150sp"
+            android:gravity="center"
+            android:layout_below="@id/test"
+            android:layout_marginTop="20sp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_notification"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="Notification"
+            android:layout_marginTop="270sp"
+            android:layout_marginStart="130sp"/>
       </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

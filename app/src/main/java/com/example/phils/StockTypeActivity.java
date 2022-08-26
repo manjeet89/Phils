@@ -175,7 +175,7 @@ public class StockTypeActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
+                                    String stock_type_id = object.getString("stock_type_id");
                                     String sn = String.valueOf(j);
                                     String category = object.getString("stock_category_id");
 
@@ -191,7 +191,7 @@ public class StockTypeActivity extends AppCompatActivity {
                                         status = "Enable";
                                     }
 
-                                    responseModelStockType = new ResponseModelStockType(sn,category,type,status);
+                                    responseModelStockType = new ResponseModelStockType(sn,category,type,status,stock_type_id);
                                     data.add(responseModelStockType);
                                     stockTypeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();

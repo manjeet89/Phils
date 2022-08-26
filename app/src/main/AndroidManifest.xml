@@ -18,6 +18,24 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".Notification_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Replace_User_Job_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Assign_user_Job_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Demo"
             android:exported="false" />
         <activity
@@ -85,13 +103,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
