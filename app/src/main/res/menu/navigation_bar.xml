@@ -94,7 +94,17 @@
 
         </menu>
     </item>
+    <item
+        android:title="Roles">
+        <menu>
 
+            <item
+                android:id="@+id/roles"
+                android:title="Roles and Privileges"
+                android:icon="@drawable/ic_baseline_album_24"/>
+
+        </menu>
+    </item>
 
 
 </menu>

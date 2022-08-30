@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.phils.Admin.MainActivity;
 import com.example.phils.ResponseModels.ResponseModelLogin;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             String name = appConfig.getNameOfUser();
             String id = appConfig.getIdOfUser();
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("name",name);
             intent.putExtra("id",id);
             startActivity(intent);

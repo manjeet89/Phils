@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+    <item
+        android:id="@+id/ghar"
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"
+        />
+    <item
+        android:id="@+id/user"
+        android:title="User"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+
+    <item
+        android:title="Stock">
+        <menu>
+            <item
+                android:id="@+id/category_stock"
+                android:title="Category"
+                android:icon="@drawable/ic_baseline_category_24"/>
+
+            <item
+                android:id="@+id/type_stock"
+                android:title="Type"
+                android:icon="@drawable/ic_baseline_merge_type_24"/>
+
+            <item
+                android:id="@+id/size_stock"
+                android:title="Size"
+                android:icon="@drawable/ic_baseline_wysiwyg_24"/>
+
+            <item
+                android:id="@+id/make_stock"
+                android:title="Make"
+                android:icon="@drawable/ic_baseline_album_24"/>
+
+
+            <item
+                android:id="@+id/umo_stock"
+                android:title="UOM"
+                android:icon="@drawable/ic_baseline_pie_chart_24"/>
+
+            <item
+                android:id="@+id/list_stock"
+                android:title="List"
+                android:icon="@drawable/ic_baseline_featured_play_list_24"/>
+
+        </menu>
+    </item>
+
+    <item
+        android:title="Job">
+        <menu>
+
+            <item
+                android:id="@+id/category_job"
+                android:title="Category"
+                android:icon="@drawable/ic_baseline_category_24"/>
+
+            <item
+                android:id="@+id/Size_job"
+                android:title="Size"
+                android:icon="@drawable/ic_baseline_wysiwyg_24"/>
+
+            <item
+                android:id="@+id/List_job"
+                android:title="List"
+                android:icon="@drawable/ic_baseline_featured_play_list_24"/>
+
+        </menu>
+    </item>
+
+    <item
+        android:title="Report">
+        <menu>
+
+            <item
+                android:id="@+id/Report_reports"
+                android:title="Reports"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+            <item
+                android:id="@+id/Report_consumption"
+                android:title="Consumption"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+            <item
+                android:id="@+id/Report_consumption_details"
+                android:title="Consumption Details"
+                android:icon="@drawable/ic_baseline_report_24"/>
+
+        </menu>
+    </item>
+
+
+
+</menu>

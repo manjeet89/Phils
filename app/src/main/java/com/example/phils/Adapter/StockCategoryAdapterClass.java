@@ -1,10 +1,8 @@
 package com.example.phils.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
@@ -32,11 +30,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Add_Stock_Category_Activity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
-import com.example.phils.StockCategoryActivity;
-import com.example.phils.StockUomActivity;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 

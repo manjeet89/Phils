@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Admin.MainActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+        android:id="@+id/nav"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -88,43 +89,44 @@
         </LinearLayout>
 </LinearLayout>
 
+
         <TextView
             android:id="@+id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150sp"
             android:gravity="center" />
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/logout"
-            android:text="Logout"
-            android:textColor="@color/white"
-            android:backgroundTint="#f06154"
-            android:layout_marginStart="150sp"
-            android:gravity="center"
-            android:layout_below="@id/test"
-            android:layout_marginTop="20sp"/>
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/location"
-            android:text="location"
-            android:textColor="@color/white"
-            android:backgroundTint="#f06154"
-            android:layout_marginStart="150sp"
-            android:gravity="center"
-            android:layout_below="@id/test"
-            android:layout_marginTop="200sp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_notification"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:text="Notification"
-            android:layout_marginTop="270sp"
-            android:layout_marginStart="130sp"/>
+<!--        <Button-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/logout"-->
+<!--            android:text="Logout"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:backgroundTint="#f06154"-->
+<!--            android:layout_marginStart="150sp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_below="@id/test"-->
+<!--            android:layout_marginTop="20sp"/>-->
+<!--        <Button-->
+<!--            android:layout_width="120dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/location"-->
+<!--            android:text="location"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:backgroundTint="#f06154"-->
+<!--            android:layout_marginStart="150sp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_below="@id/test"-->
+<!--            android:layout_marginTop="200sp"/>-->
+<!--        <Button-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/btn_notification"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:text="Notification"-->
+<!--            android:layout_marginTop="270sp"-->
+<!--            android:layout_marginStart="130sp"/>-->
       </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -136,6 +138,8 @@
         app:menu="@menu/navigation_bar"
 
     />
+
+
 
 
 

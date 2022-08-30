@@ -18,22 +18,25 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".RolesAndPrivilegesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.ChangePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ProjectLocationActivity"
+            android:name=".Admin.ProjectLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".Notification_Activity"
+            android:name=".Admin.Notification_Activity"
             android:exported="false" />
         <activity
-            android:name=".Replace_User_Job_Activity"
+            android:name=".Admin.Replace_User_Job_Activity"
             android:exported="false" />
         <activity
-            android:name=".Assign_user_Job_Activity"
+            android:name=".Admin.Assign_user_Job_Activity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -48,70 +51,70 @@
             android:name=".Demo"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_List_Activity"
+            android:name=".Admin.Add_Stock_List_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_UOM_Activity"
+            android:name=".Admin.Add_Stock_UOM_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_Make_Activity"
+            android:name=".Admin.Add_Stock_Make_Activity"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionDetailActivity"
+            android:name=".Admin.ConsumptionDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ConsumptionActivity"
+            android:name=".Admin.ConsumptionActivity"
             android:exported="false" />
         <activity
-            android:name=".ReportsActivity"
+            android:name=".Admin.ReportsActivity"
             android:exported="false" />
         <activity
-            android:name=".Add_Job_Size_Activity"
+            android:name=".Admin.Add_Job_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Job_Category_Activity"
+            android:name=".Admin.Add_Job_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".Job_List_Activity"
+            android:name=".Admin.Job_List_Activity"
             android:exported="false" />
         <activity
-            android:name=".Job_Size_Activity"
+            android:name=".Admin.Job_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Job_Category_Activity"
+            android:name=".Admin.Job_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_Size_Activity"
+            android:name=".Admin.Add_Stock_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_Type_Activity"
+            android:name=".Admin.Add_Stock_Type_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Stock_Category_Activity"
+            android:name=".Admin.Add_Stock_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".StockListActivity"
+            android:name=".Admin.StockListActivity"
             android:exported="false" />
         <activity
-            android:name=".StockUomActivity"
+            android:name=".Admin.StockUomActivity"
             android:exported="false" />
         <activity
-            android:name=".StockMakeActivity"
+            android:name=".Admin.StockMakeActivity"
             android:exported="false" />
         <activity
-            android:name=".StockSizeActivity"
+            android:name=".Admin.StockSizeActivity"
             android:exported="false" />
         <activity
-            android:name=".StockTypeActivity"
+            android:name=".Admin.StockTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".StockCategoryActivity"
+            android:name=".Admin.StockCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".UserActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Admin.MainActivity"
             android:exported="false" />
     </application>
 

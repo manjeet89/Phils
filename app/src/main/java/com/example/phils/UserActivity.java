@@ -23,6 +23,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.UserAdapterClass;
+import com.example.phils.Admin.MainActivity;
+import com.example.phils.Admin.StockCategoryActivity;
+import com.example.phils.Admin.StockListActivity;
+import com.example.phils.Admin.StockMakeActivity;
+import com.example.phils.Admin.StockSizeActivity;
+import com.example.phils.Admin.StockTypeActivity;
+import com.example.phils.Admin.StockUomActivity;
 import com.example.phils.ResponseModels.ResponseModelUser;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -50,7 +57,7 @@ public class UserActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
 
@@ -95,27 +102,27 @@ public class UserActivity extends AppCompatActivity {
                         break;
 
                     case R.id.category_stock:
-                        startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockCategoryActivity.class));
                         break;
 
                     case R.id.type_stock:
-                        startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockTypeActivity.class));
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
-                        startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockMakeActivity.class));
                         break;
 
                     case R.id.umo_stock:
-                        startActivity(new Intent(getApplicationContext(),StockUomActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockUomActivity.class));
                         break;
 
                     case R.id.list_stock:
-                        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockListActivity.class));
                         break;
                     default:
                         return true;

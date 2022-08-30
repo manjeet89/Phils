@@ -2,6 +2,7 @@ package com.example.phils;
 
 import com.example.phils.ResponseModels.ResponseModelLogin;
 import com.example.phils.ResponseModels.ResponseModelUser;
+import com.example.phils.ResponseModels.ResponseModelUserProfile;
 
 import java.util.List;
 

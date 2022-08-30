@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Add_Stock_Size_Activity">
+    tools:context=".Admin.Add_Stock_Size_Activity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
