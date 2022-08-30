@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockTypeAdapterClass;
 import com.example.phils.ResponseModels.ResponseModelStockType;
+import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -48,6 +50,8 @@ public class StockTypeActivity extends AppCompatActivity {
 
     Button button;
 
+    TextView location_save;
+    AppConfig appConfig;
 
     @Override
     public void onBackPressed() {
@@ -59,6 +63,11 @@ public class StockTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_type);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);

@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,11 +54,19 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
     RequestQueue requestQueue;
     String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_data_in_tbl_type.php";
 
+    TextView location_save;
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_type);
         requestQueue = Volley.newRequestQueue(this);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         type_insert = findViewById(R.id.type_insert);
         id12 = findViewById(R.id.set);

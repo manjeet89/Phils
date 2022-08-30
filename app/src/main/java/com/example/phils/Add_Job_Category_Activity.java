@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Shareprefered.AppConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,10 +38,17 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
     Dialog dialog;
     Button button;
     EditText category_name;
+    TextView location_save;
+    AppConfig appConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_job_category);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         check_status = findViewById(R.id.status_check);
         button = findViewById(R.id.insert_job_cat);

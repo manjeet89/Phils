@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.UserAdapterClass;
 import com.example.phils.ResponseModels.ResponseModelUser;
+import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,7 +45,8 @@ public class UserActivity extends AppCompatActivity {
     List<ResponseModelUser> data;
     ResponseModelUser responseModelUser;
     LinearLayoutManager linearLayoutManager;
-
+    TextView location_save;
+    AppConfig appConfig;
 
     @Override
     public void onBackPressed() {
@@ -55,6 +58,11 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);

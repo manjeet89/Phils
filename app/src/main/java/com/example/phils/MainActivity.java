@@ -7,6 +7,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,6 +15,8 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,13 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static long back_pressed;
     TextView test;
-    Button logout;
+    Button logout,location;
     Button btnnotification;
-    AppConfig appConfig;
+
     private static final String CHANNEL_ID = "My Channel";
     private static final int NOTIFICATION_ID = 100;
-    ImageView img;
-
+    ImageView img,profile;
+    TextView location_save;
+    AppConfig appConfig;
+    Dialog dialog;
 
     @Override
     public void onBackPressed(){
@@ -54,15 +59,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appConfig = new AppConfig(this);
 
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         logout = findViewById(R.id.logout);
 
 
         test = findViewById(R.id.test);
-        String name = getIntent().getStringExtra("name");
-        test.setText(name);
+//        String name = getIntent().getStringExtra("id");
+        String s = appConfig.getUserName();
+        String p = appConfig.getIdOfUser();
+        String fullName = appConfig.getNameOfUser();
+
+        test.setText(s+p+fullName);
+
+
+
+
+        location = findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ProjectLocationActivity.class));
+            }
+        });
 
         img = findViewById(R.id.img);
         img.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +102,65 @@ public class MainActivity extends AppCompatActivity {
                 appConfig.updateUserLoginStatus(false);
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
                 finish();
+            }
+        });
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                 dialog=new Dialog(MainActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,900);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String s = appConfig.getUserName();
+                String p = appConfig.getIdOfUser();
+                String fullName = appConfig.getNameOfUser();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(s);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(),ChangePasswordActivity.class));
+                    }
+                });
+
             }
         });
 

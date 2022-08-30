@@ -9,16 +9,27 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phils.Shareprefered.AppConfig;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class ConsumptionDetailActivity extends AppCompatActivity {
     TextView tvDate,tvDate1;
+    TextView location_save;
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consumption_detail);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
+
         tvDate = findViewById(R.id.tvDate);
         tvDate1 = findViewById(R.id.tvDate1);
 

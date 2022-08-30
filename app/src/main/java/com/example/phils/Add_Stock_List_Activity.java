@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,11 +66,19 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
     String sizeurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_size.php?stock_type_id=";
     String uomurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_uom.php";
     String makeurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_make.php";
+
+    TextView location_save;
+    AppConfig appConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_list);
         requestQueue = Volley.newRequestQueue(this);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         setcategoryid = findViewById(R.id.setcategoryid);
         setypeid = findViewById(R.id.settypeid);

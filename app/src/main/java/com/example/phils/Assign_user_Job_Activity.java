@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +31,18 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
     boolean[] selectedLanguage;
     ArrayList<String> langList = new ArrayList<>();
     String[] langArray = {"Java", "C++", "Kotlin", "C", "Python", "Javascript", "C++", "Kotlin", "C", "Python", "Javascript", "C++", "Kotlin", "C", "Python", "Javascript"};
+    TextView location_save;
+    AppConfig appConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_user_job);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
 
         textView = findViewById(R.id.select_job);

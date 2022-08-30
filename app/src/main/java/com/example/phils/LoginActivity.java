@@ -38,8 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         if(appConfig.isUserLogin())
         {
             String name = appConfig.getNameOfUser();
+            String id = appConfig.getIdOfUser();
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             intent.putExtra("name",name);
+            intent.putExtra("id",id);
             startActivity(intent);
             finish();
         }
@@ -78,18 +80,21 @@ public class LoginActivity extends AppCompatActivity {
                     {
                        if(response.body().getResultCode()==1)
                        {
-                        String name = response.body().getName();
-                        String user = response.body().getUsername();
+                           String id = response.body().getUser_id();
+                           String name = response.body().getName();
+                           String user = response.body().getUsername();
 
                         if(isRememberUserLogin)
                         {
                             appConfig.updateUserLoginStatus(true);
                             appConfig.saveNameOfUser(name);
+                            appConfig.saveUserName(user);
+                            appConfig.saveIdOfUser(id);
                         }
 
                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                            intent.putExtra("name",name);
-                          // intent.putExtra("username",user);
+                           intent.putExtra("id",id);
                            startActivity(intent);
                            finish();
 //                           progressDialog.dismiss();
@@ -109,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    displayUserInformation("Something nikal wrong");
+                    displayUserInformation("Something  wrong");
 
                     // Toast.makeText(LoginActivity.this, "Something Wrong...", Toast.LENGTH_SHORT).show();
                 }

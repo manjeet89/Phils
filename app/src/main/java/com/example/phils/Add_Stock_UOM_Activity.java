@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Shareprefered.AppConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,10 +40,18 @@ public class Add_Stock_UOM_Activity extends AppCompatActivity {
     ArrayList<String> arrayList1;
     Dialog dialog;
     Button btn;
+    TextView location_save;
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_uom);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         uom_name_add = findViewById(R.id.uom_name_add);
         stock_size_status= findViewById(R.id.stock_size_status);

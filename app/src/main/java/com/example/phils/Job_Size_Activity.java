@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobSizeAdapterClass;
 import com.example.phils.ResponseModels.ResponseModelJobSize;
+import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,10 +42,18 @@ public class Job_Size_Activity extends AppCompatActivity {
     ResponseModelJobSize responseModelJobSize;
     LinearLayoutManager linearLayoutManager;
 
+    TextView location_save;
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_size);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         recview = findViewById(R.id.recview);
 

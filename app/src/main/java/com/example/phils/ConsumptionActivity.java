@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.phils.Shareprefered.AppConfig;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -17,10 +19,18 @@ import java.util.Locale;
 public class ConsumptionActivity extends AppCompatActivity {
     TextView tvDate,tvDate1;
     Calendar calendar;
+    TextView location_save;
+    AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consumption);
+
+        appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         tvDate = findViewById(R.id.tvDate);
         tvDate1 = findViewById(R.id.tvDate1);
