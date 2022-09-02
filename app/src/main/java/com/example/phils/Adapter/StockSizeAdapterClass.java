@@ -1,9 +1,9 @@
 package com.example.phils.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +16,18 @@ import java.util.List;
 
 public class StockSizeAdapterClass extends RecyclerView.Adapter<StockSizeAdapterClass.MyViewHolder> {
 
-    private Context context;
+    private StockSizeAdapterClass.RecycleViewClickListener listener;
     List<ResponseModelStockSize> data;
 
-    public StockSizeAdapterClass(Context context, List<ResponseModelStockSize> data) {
-        this.context = context;
+    public StockSizeAdapterClass(RecycleViewClickListener listener, List<ResponseModelStockSize> data) {
+        this.listener = listener;
         this.data = data;
     }
+
+    //    public StockSizeAdapterClass(RecycleViewClickListener listener, List<ResponseModelStockSize> data) {
+//        this.listener = listener;
+//        this.data = data;
+//    }
 
     public void setFilteredList(List<ResponseModelStockSize> filteredList)
     {
@@ -40,7 +45,7 @@ public class StockSizeAdapterClass extends RecyclerView.Adapter<StockSizeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.stock_size_id.setText(data.get(position).getStock_size_id());
+        holder.sn.setText(data.get(position).getSn());
         holder.stock_category_name.setText(data.get(position).getStock_category_name());
         holder.stock_type_name.setText(data.get(position).getStock_type_name());
         holder.stock_size_name.setText(data.get(position).getStock_size_name());
@@ -52,18 +57,31 @@ public class StockSizeAdapterClass extends RecyclerView.Adapter<StockSizeAdapter
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView stock_size_id,stock_category_name,stock_type_name,stock_size_name,stock_size_status;
-
+        TextView sn,stock_category_name,stock_type_name,stock_size_name,stock_size_status;
+        Button btn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            stock_size_id = itemView.findViewById(R.id.snsize);
+            sn = itemView.findViewById(R.id.snsize);
             stock_category_name = itemView.findViewById(R.id.categorysize);
             stock_type_name = itemView.findViewById(R.id.typesize);
             stock_size_name = itemView.findViewById(R.id.size);
+            btn = itemView.findViewById(R.id.id);
             stock_size_status = itemView.findViewById(R.id.statussize);
+            btn.setOnClickListener(this);
+
+
         }
+        @Override
+        public void onClick(View view) {
+
+            listener.onClick(view,getAdapterPosition());
+            // Toast.makeText(context, user_id.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    public interface RecycleViewClickListener{
+        void onClick(View v,int position);
     }
 
 }

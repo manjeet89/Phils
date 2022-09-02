@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +17,15 @@ import java.util.List;
 
 public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapterClass.MyViewHolder>{
 
-    private Context context;
+
+    private StockListAdapterClass.RecycleViewClickListener listener;
     List<ResponseModelStockList> data;
 
-    public StockListAdapterClass(Context context, List<ResponseModelStockList> data) {
-        this.context = context;
+    public StockListAdapterClass(RecycleViewClickListener listener, List<ResponseModelStockList> data) {
+        this.listener = listener;
         this.data = data;
     }
+
     public void setFilteredList(List<ResponseModelStockList> filteredList)
     {
         this.data = filteredList;
@@ -38,7 +41,7 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.list_id.setText(data.get(position).getStock_id());
+        holder.list_id.setText(data.get(position).getSn());
         holder.list_category_name.setText(data.get(position).getStock_category_name());
         holder.list_type_name.setText(data.get(position).getStock_type_name());
         holder.list_size_name.setText(data.get(position).getStock_size_name());
@@ -56,11 +59,11 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-    {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView list_id,list_category_name,list_type_name,list_size_name,
                 list_batch_number,list_make_name,list_uom_name,list_safety,
                 list_quantity,list_price,list_status;
+        Button btn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             list_id = itemView.findViewById(R.id.list_id);
@@ -74,6 +77,17 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
             list_quantity = itemView.findViewById(R.id.list_quantity);
             list_price = itemView.findViewById(R.id.list_price);
             list_status = itemView.findViewById(R.id.list_status);
+            btn = itemView.findViewById(R.id.id);
+            btn.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view,getAdapterPosition());
+
+        }
+    }
+    public interface RecycleViewClickListener{
+        void onClick(View v,int position);
     }
 }

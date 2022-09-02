@@ -24,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockTypeAdapterClass;
-import com.example.phils.Adapter.UserAdapterClass;
 import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockType;
@@ -56,8 +55,8 @@ public class StockTypeActivity extends AppCompatActivity {
 
     TextView location_save;
     AppConfig appConfig;
-    private UserAdapterClass.RecycleViewClickListener listener;
 
+    private StockTypeAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -121,7 +120,7 @@ public class StockTypeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
@@ -251,7 +250,7 @@ public class StockTypeActivity extends AppCompatActivity {
     }
 
     private void recycleClickLister() {
-        listener = new UserAdapterClass.RecycleViewClickListener() {
+        listener = new StockTypeAdapterClass.RecycleViewClickListener() {
             @Override
             public void onClick(View v, int position) {
                 String kk = data.get(position).getStock_type_id();

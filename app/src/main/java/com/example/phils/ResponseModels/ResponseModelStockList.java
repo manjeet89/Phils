@@ -2,12 +2,13 @@ package com.example.phils.ResponseModels;
 
 public class ResponseModelStockList {
 
-    String stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status;
+    String sn,stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status;
 
     public ResponseModelStockList() {
     }
 
-    public ResponseModelStockList(String stock_id, String stock_category_name, String stock_type_name, String stock_size_name, String stock_batch_number, String make_name, String uom_name, String safety_stock, String stock_quantity, String stock_price, String stock_status) {
+    public ResponseModelStockList(String sn, String stock_id, String stock_category_name, String stock_type_name, String stock_size_name, String stock_batch_number, String make_name, String uom_name, String safety_stock, String stock_quantity, String stock_price, String stock_status) {
+        this.sn = sn;
         this.stock_id = stock_id;
         this.stock_category_name = stock_category_name;
         this.stock_type_name = stock_type_name;
@@ -19,6 +20,14 @@ public class ResponseModelStockList {
         this.stock_quantity = stock_quantity;
         this.stock_price = stock_price;
         this.stock_status = stock_status;
+    }
+
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 
     public String getStock_id() {

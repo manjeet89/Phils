@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockCategoryAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
@@ -52,6 +53,7 @@ public class StockCategoryActivity extends AppCompatActivity {
     SwipeRefreshLayout swipe;
     TextView location_save;
     AppConfig appConfig;
+    private StockCategoryAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -115,7 +117,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
@@ -159,15 +161,15 @@ public class StockCategoryActivity extends AppCompatActivity {
             }
         });
 
-
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
         data = new ArrayList<>();
-        stockCategoryAdapterClass = new StockCategoryAdapterClass(this,data);
+        stockCategoryAdapterClass = new StockCategoryAdapterClass(listener,data);
         recview.setAdapter(stockCategoryAdapterClass);
 
-        fatchdata();
     }
 
     private void Add_category() {
@@ -262,5 +264,19 @@ public class StockCategoryActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    private void recycleClickLister() {
+        listener = new StockCategoryAdapterClass.RecycleViewClickListener() {
+
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getStock_category_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username",kk);
+                startActivity(intent);
+                //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

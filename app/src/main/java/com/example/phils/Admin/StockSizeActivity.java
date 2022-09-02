@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockSizeAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockSize;
 import com.example.phils.Shareprefered.AppConfig;
@@ -52,6 +53,8 @@ public class StockSizeActivity extends AppCompatActivity {
     Button button;
     TextView location_save;
     AppConfig appConfig;
+
+    private StockSizeAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -107,11 +110,11 @@ public class StockSizeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.category_stock:
-                        startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockCategoryActivity.class));
                         break;
 
                     case R.id.type_stock:
-                        startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockTypeActivity.class));
                         break;
 
                     case R.id.size_stock:
@@ -119,15 +122,15 @@ public class StockSizeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.make_stock:
-                        startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockMakeActivity.class));
                         break;
 
                     case R.id.umo_stock:
-                        startActivity(new Intent(getApplicationContext(),StockUomActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockUomActivity.class));
                         break;
 
                     case R.id.list_stock:
-                        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockListActivity.class));
                         break;
                     default:
                         return true;
@@ -149,14 +152,14 @@ public class StockSizeActivity extends AppCompatActivity {
             }
         });
 
+        fatchdata();
+        recycleClickLister();
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
-        stockSizeAdapterClass = new StockSizeAdapterClass(this,data);
+        stockSizeAdapterClass = new StockSizeAdapterClass(listener,data);
         recview.setAdapter(stockSizeAdapterClass);
-
-        fatchdata();
 
 
     }
@@ -205,8 +208,8 @@ public class StockSizeActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
-                                    String stock_size_id = String.valueOf(j);
+                                    String sn = String.valueOf(j);
+                                    String stock_size_id = object.getString("stock_size_id");
                                     String stock_category_name = object.getString("stock_category_name");
                                     String stock_type_name = object.getString("stock_type_name");
                                     String stock_size_name = object.getString("stock_size_name");
@@ -221,7 +224,7 @@ public class StockSizeActivity extends AppCompatActivity {
                                         stock_size_status = "Enable";
                                     }
 
-                                    responseModelStockSize = new ResponseModelStockSize(stock_size_id,stock_category_name,stock_type_name,stock_size_name,stock_size_status);
+                                    responseModelStockSize = new ResponseModelStockSize(sn,stock_category_name,stock_type_name,stock_size_name,stock_size_status,stock_size_id);
                                     data.add(responseModelStockSize);
                                     stockSizeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -242,4 +245,18 @@ public class StockSizeActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
+
+    private void recycleClickLister() {
+        listener = new StockSizeAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getStock_size_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username",kk);
+                startActivity(intent);
+                //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
+            }
+        };
+    }
+
 }

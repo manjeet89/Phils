@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockMake;
 import com.example.phils.Shareprefered.AppConfig;
@@ -52,6 +53,9 @@ public class StockMakeActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     TextView location_save;
     AppConfig appConfig;
+
+
+    private StockMakeAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -108,7 +112,7 @@ public class StockMakeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
@@ -148,16 +152,18 @@ public class StockMakeActivity extends AppCompatActivity {
                 return true;
             }
         });
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
 
-        stockMakeAdapterClass = new StockMakeAdapterClass(this,data);
+        stockMakeAdapterClass = new StockMakeAdapterClass(listener,data);
         recview.setAdapter(stockMakeAdapterClass);
 
-        fatchdata();
+
     }
 
     private void fileList(String newText) {
@@ -203,8 +209,8 @@ public class StockMakeActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
-                                    String make_id = String.valueOf(j);
+                                    String sn = String.valueOf(j);
+                                    String make_id = object.getString("make_id");
                                     String make_name = object.getString("make_name");
 
                                     make_status = object.getString("make_status");
@@ -217,7 +223,7 @@ public class StockMakeActivity extends AppCompatActivity {
                                         make_status = "Enable";
                                     }
 
-                                    responseModelStockMake = new ResponseModelStockMake(make_id,make_name,make_status);
+                                    responseModelStockMake = new ResponseModelStockMake(sn,make_name,make_status,make_id);
                                     data.add(responseModelStockMake);
                                     stockMakeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -237,5 +243,17 @@ public class StockMakeActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    private void recycleClickLister() {
+        listener = new StockMakeAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getMake_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username", kk);
+                startActivity(intent);
+            }
+        };
     }
 }

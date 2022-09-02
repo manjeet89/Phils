@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockListAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockList;
 import com.example.phils.Shareprefered.AppConfig;
@@ -52,6 +53,7 @@ public class StockListActivity extends AppCompatActivity {
     Button stock_add_button;
     TextView location_save;
     AppConfig appConfig;
+    private StockListAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -118,7 +120,7 @@ public class StockListActivity extends AppCompatActivity {
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
@@ -151,16 +153,18 @@ public class StockListActivity extends AppCompatActivity {
                 return true;
             }
         });
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
 
-        stockListAdapterClass = new StockListAdapterClass(this,data);
+        stockListAdapterClass = new StockListAdapterClass(listener,data);
         recview.setAdapter(stockListAdapterClass);
 
-        fatchdata();
+
     }
 
     private void fileList(String newText) {
@@ -208,8 +212,8 @@ public class StockListActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
-                                    String stock_id = String.valueOf(j);
+                                    String stock_id = object.getString("stock_id");
+                                    String sn = String.valueOf(j);
                                     String stock_category_name = object.getString("stock_category_name");
                                     String stock_type_name = object.getString("stock_type_name");
                                     String stock_size_name = object.getString("stock_size_name");
@@ -229,7 +233,7 @@ public class StockListActivity extends AppCompatActivity {
                                         stock_status = "Enable";
                                     }
 
-                                   responseModelStockList = new ResponseModelStockList(stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status);
+                                   responseModelStockList = new ResponseModelStockList(sn,stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status);
                                     data.add(responseModelStockList);
                                     stockListAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -249,5 +253,16 @@ public class StockListActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+    private void recycleClickLister() {
+        listener = new StockListAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getStock_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username", kk);
+                startActivity(intent);
+            }
+        };
     }
 }

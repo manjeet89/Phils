@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockUOMAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockUOM;
 import com.example.phils.Shareprefered.AppConfig;
@@ -53,6 +54,7 @@ public class StockUomActivity extends AppCompatActivity {
 
     TextView location_save;
     AppConfig appConfig;
+    private StockUOMAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -116,7 +118,7 @@ public class StockUomActivity extends AppCompatActivity {
                         break;
 
                     case R.id.size_stock:
-                        startActivity(new Intent(getApplicationContext(),StockSizeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
                         break;
 
                     case R.id.make_stock:
@@ -149,16 +151,16 @@ public class StockUomActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        fatchdata();
+        recycleClickLister();
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
-        stockUOMAdapterClass = new StockUOMAdapterClass(this,data);
+        stockUOMAdapterClass = new StockUOMAdapterClass(listener,data);
         recview.setAdapter(stockUOMAdapterClass);
 
-        fatchdata();
-    }
+       }
     private void fileList(String newText) {
 
         List<ResponseModelStockUOM> modelStockCategories = new ArrayList<>();
@@ -202,7 +204,7 @@ public class StockUomActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
+                                    String sn = object.getString("uom_id");
                                     String uom_id = String.valueOf(j);
                                     String uom_name = object.getString("uom_name");
 
@@ -216,7 +218,7 @@ public class StockUomActivity extends AppCompatActivity {
                                         uom_status = "Enable";
                                     }
 
-                                    responseModelStockUOM = new ResponseModelStockUOM(uom_id,uom_name,uom_status);
+                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status);
                                     data.add(responseModelStockUOM);
                                     stockUOMAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -236,5 +238,16 @@ public class StockUomActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+    private void recycleClickLister() {
+        listener = new StockUOMAdapterClass.RecycleViewClickListener(){
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getUom_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username", kk);
+                startActivity(intent);
+            }
+        };
     }
 }
