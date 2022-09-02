@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.ResponseModels;
 
 public class ResponseMdelRoleAndPrivileged {
     String sn,emp_type_id,emp_type_name,emp_type_created_on;

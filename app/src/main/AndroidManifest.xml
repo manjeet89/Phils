@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
-            android:name=".RolesAndPrivilegesActivity"
+            android:name=".Admin.RolesAndPrivilegesActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.ChangePasswordActivity"

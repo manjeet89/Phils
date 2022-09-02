@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.phils.Adapter.JobSizeAdapterClass;
-import com.example.phils.ResponseModels.ResponseModelJobSize;
+import com.example.phils.R;
+import com.example.phils.ResponseModels.ResponseMdelRoleAndPrivileged;
 
 import java.util.List;
 

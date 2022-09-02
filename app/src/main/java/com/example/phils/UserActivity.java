@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,12 +49,15 @@ public class UserActivity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
 
-    UserAdapterClass userAdapterClass;
+//    UserAdapterClass userAdapterClass;
+UserAdapterClass adapter;
     List<ResponseModelUser> data;
     ResponseModelUser responseModelUser;
     LinearLayoutManager linearLayoutManager;
     TextView location_save;
     AppConfig appConfig;
+
+     private UserAdapterClass.RecycleViewClickListener listener;
 
     @Override
     public void onBackPressed() {
@@ -143,15 +147,24 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        fatchdata();
+        recycleClickLister();
+//
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
-        userAdapterClass = new UserAdapterClass(this,data);
-        recview.setAdapter(userAdapterClass);
+        adapter = new UserAdapterClass(listener,data);
+        recview.setAdapter(adapter);
 
-        fatchdata();
+//         adapter  = new UserAdapterClass(listener,data);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        recview.setLayoutManager(layoutManager);
+//        recview.setItemAnimator(new DefaultItemAnimator());
+//        recview.setAdapter(adapter);
+
+
+       //
 
     }
 
@@ -172,7 +185,7 @@ public class UserActivity extends AppCompatActivity {
         }
         else
         {
-            userAdapterClass.setFilteredList(modelStockCategories);
+            adapter.setFilteredList(modelStockCategories);
         }
     }
 
@@ -230,7 +243,7 @@ public class UserActivity extends AppCompatActivity {
 
                                     responseModelUser = new ResponseModelUser(user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status);
                                     data.add(responseModelUser);
-                                    userAdapterClass.notifyDataSetChanged();
+                                    adapter.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
                                 }
@@ -248,5 +261,18 @@ public class UserActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+
+    private void recycleClickLister() {
+        listener = new UserAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getUser_id();
+                Intent intent = new Intent(getApplicationContext(),Demo.class);
+               intent.putExtra("username",kk);
+                startActivity(intent);
+                //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

@@ -2,13 +2,10 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,7 +20,6 @@ import android.widget.Toast;
 import com.example.phils.LoginActivity;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
-import com.example.phils.RolesAndPrivilegesActivity;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;

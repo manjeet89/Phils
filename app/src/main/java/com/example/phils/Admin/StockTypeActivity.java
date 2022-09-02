@@ -24,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockTypeAdapterClass;
+import com.example.phils.Adapter.UserAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockType;
 import com.example.phils.Shareprefered.AppConfig;
@@ -54,6 +56,8 @@ public class StockTypeActivity extends AppCompatActivity {
 
     TextView location_save;
     AppConfig appConfig;
+    private UserAdapterClass.RecycleViewClickListener listener;
+
 
     @Override
     public void onBackPressed() {
@@ -151,15 +155,17 @@ public class StockTypeActivity extends AppCompatActivity {
             }
         });
 
+        fatchdata();
+        recycleClickLister();
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
 
-        stockTypeAdapterClass = new StockTypeAdapterClass(this,data);
+        stockTypeAdapterClass = new StockTypeAdapterClass(listener,data);
         recview.setAdapter(stockTypeAdapterClass);
 
-        fatchdata();
+
     }
 
     private void fatchdata() {
@@ -242,6 +248,19 @@ public class StockTypeActivity extends AppCompatActivity {
         {
             stockTypeAdapterClass.setFilteredList(modelStockCategories);
         }
+    }
+
+    private void recycleClickLister() {
+        listener = new UserAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getStock_type_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username",kk);
+                startActivity(intent);
+                //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
 }

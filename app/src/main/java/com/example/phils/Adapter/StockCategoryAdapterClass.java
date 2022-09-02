@@ -1,8 +1,10 @@
 package com.example.phils.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
@@ -60,8 +62,8 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_stock_category_activity,parent,false);
-       return new MyViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_stock_category_activity,parent,false);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -75,11 +77,11 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   String f = holder.refrance.getText().toString();
+                //   String f = holder.refrance.getText().toString();
 //                Toast.makeText(context, f, Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent();
 //                intent.putExtra("id",f);
-            //    mm(f);
+                //    mm(f);
 
 
 
@@ -124,7 +126,7 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
                         String id = holder.refrance.getText().toString();
 
 
-                         if(TextUtils.isEmpty(category))
+                        if(TextUtils.isEmpty(category))
                         {
                             category_insert.setError("Please Enter your Category Name");
                             Toast.makeText(context, "Please Enter your Category Name", Toast.LENGTH_SHORT).show();
@@ -161,33 +163,33 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
                             String e6 = status;
                             //Toast.makeText(context, e4+"/"+e5+"/"+e6, Toast.LENGTH_SHORT).show();
 
-                             StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_category.php",
-                                     new Response.Listener<String>() {
-                                         @Override
-                                         public void onResponse(String response) {
-                                             Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                                         }
-                                     }, new Response.ErrorListener() {
-                                 @Override
-                                 public void onErrorResponse(VolleyError error) {
-                                     Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_category.php",
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
 
-                                 }
-                             })
-                             {
-                                 @Nullable
-                                 @Override
-                                 protected Map<String, String> getParams() throws AuthFailureError {
-                                     Map<String,String> params = new HashMap<String,String>();
-                                     params.put("stock_category_id",id);
-                                     params.put("stock_category_name",e5);
-                                     params.put("stock_emp_category",e4);
-                                     params.put("stock_category_status",e6);
-                                     return  params;
-                                 }
-                             };
-                             RequestQueue  requestQueue = Volley.newRequestQueue(context);
-                             requestQueue.add(request);
+                                }
+                            })
+                            {
+                                @Nullable
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String,String> params = new HashMap<String,String>();
+                                    params.put("stock_category_id",id);
+                                    params.put("stock_category_name",e5);
+                                    params.put("stock_emp_category",e4);
+                                    params.put("stock_category_status",e6);
+                                    return  params;
+                                }
+                            };
+                            RequestQueue  requestQueue = Volley.newRequestQueue(context);
+                            requestQueue.add(request);
 
                         }
                     }
@@ -199,7 +201,7 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
                     @Override
                     public void onClick(View v) {
                         // Initialize dialog
-                       Dialog dialog=new Dialog(context);
+                        Dialog dialog=new Dialog(context);
 
                         // set custom dialog
                         dialog.setContentView(R.layout.dialog_searchable_spinner);
