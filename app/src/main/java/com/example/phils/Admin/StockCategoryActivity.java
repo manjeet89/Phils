@@ -29,6 +29,7 @@ import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.Update_StockCategory_Activity;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -271,9 +272,16 @@ public class StockCategoryActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v, int position) {
-                String kk = data.get(position).getStock_category_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username",kk);
+                String id = data.get(position).getStock_category_id();
+                String catGroup = data.get(position).getEmp_type_name();
+                String category = data.get(position).getStock_category_name();
+                String status = data.get(position).getStock_category_status();
+
+                Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("catGroup",catGroup);
+                intent.putExtra("category",category);
+                intent.putExtra("status",status);
                 startActivity(intent);
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }

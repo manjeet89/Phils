@@ -334,7 +334,7 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
             status = itemView.findViewById(R.id.status);
             btn = itemView.findViewById(R.id.id);
             refrance = itemView.findViewById(R.id.refrance);
-            itemView.setOnClickListener(this);
+            btn.setOnClickListener(this);
         }
         @Override
         public void onClick(View view) {

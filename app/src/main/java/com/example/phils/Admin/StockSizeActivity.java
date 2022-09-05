@@ -28,6 +28,7 @@ import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockSize;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.Update_StockSize_Activity;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -250,9 +251,18 @@ public class StockSizeActivity extends AppCompatActivity {
         listener = new StockSizeAdapterClass.RecycleViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                String kk = data.get(position).getStock_size_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username",kk);
+                String id = data.get(position).getStock_size_id();
+                String category = data.get(position).getStock_category_name();
+                String type = data.get(position).getStock_type_name();
+                String size = data.get(position).getStock_size_name();
+                String status = data.get(position).getStock_size_status();
+
+                Intent intent = new Intent(getApplicationContext(), Update_StockSize_Activity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("category",category);
+                intent.putExtra("type",type);
+                intent.putExtra("size",size);
+                intent.putExtra("status",status);
                 startActivity(intent);
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,11 +17,11 @@ import com.example.phils.ResponseModels.ResponseModelJobSize;
 import java.util.List;
 
 public class JobSizeAdapterClass extends RecyclerView.Adapter<JobSizeAdapterClass.MyViewHolder> {
-    private Context context;
+    private JobSizeAdapterClass.RecycleViewClickListener listener;
     private List<ResponseModelJobSize> data;
 
-    public JobSizeAdapterClass(Context context, List<ResponseModelJobSize> data) {
-        this.context = context;
+    public JobSizeAdapterClass(RecycleViewClickListener listener, List<ResponseModelJobSize> data) {
+        this.listener = listener;
         this.data = data;
     }
 
@@ -39,7 +40,7 @@ public class JobSizeAdapterClass extends RecyclerView.Adapter<JobSizeAdapterClas
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.sn.setText(data.get(position).getJob_size_id());
+        holder.sn.setText(data.get(position).getSn());
         holder.category.setText(data.get(position).getJob_size_name());
         holder.status.setText(data.get(position).getJob_size_status());
     }
@@ -49,13 +50,26 @@ public class JobSizeAdapterClass extends RecyclerView.Adapter<JobSizeAdapterClas
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView sn,category,cat_group,status;
+        Button btn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             sn = itemView.findViewById(R.id.sn_job);
             category = itemView.findViewById(R.id.category_job);
             status = itemView.findViewById(R.id.status_job);
+            btn = itemView.findViewById(R.id.id);
+            btn.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view,getAdapterPosition());
+
+        }
+    }
+
+    public interface RecycleViewClickListener{
+        void onClick(View v,int position);
     }
 }

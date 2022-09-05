@@ -5,31 +5,39 @@
     android:background="#F2F2F9"
     >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="30sp"
-        android:src="@drawable/download"
-        android:id="@+id/profilepic"
-        android:layout_marginBottom="10sp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/admin_name"
-        android:text="Phils Admin"
-        android:textColor="@color/black"
-        android:textSize="15dp"
-        android:layout_below="@id/profilepic"
-        android:layout_marginStart="15sp"
-        android:layout_marginTop="5sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:layout_marginBottom="12sp"/>
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginStart="20sp"-->
+<!--        android:layout_marginTop="30sp"-->
+<!--        android:src="@drawable/download"-->
+<!--        android:id="@+id/profilepic"-->
+<!--        android:layout_marginBottom="10sp"-->
+<!--        />-->
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="-70dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/logo"
+        android:id="@+id/profilepic"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/admin_name"-->
+<!--        android:text="Phils Admin"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="15dp"-->
+<!--        android:layout_below="@id/profilepic"-->
+<!--        android:layout_marginStart="15sp"-->
+<!--        android:layout_marginTop="5sp"-->
+<!--        android:fontFamily="sans-serif"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginBottom="12sp"/>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/admin_name"
+        android:layout_below="@id/profilepic"
         style="@style/line"/>
 </RelativeLayout>

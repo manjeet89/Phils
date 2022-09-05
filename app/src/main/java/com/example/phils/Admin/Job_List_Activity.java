@@ -24,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobListAdapterClass;
+import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobList;
 import com.example.phils.Shareprefered.AppConfig;
@@ -54,6 +56,7 @@ public class Job_List_Activity extends AppCompatActivity {
     TextView location_save;
     AppConfig appConfig;
 
+    private JobListAdapterClass.RecycleViewClickListener listener;
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -149,15 +152,16 @@ public class Job_List_Activity extends AppCompatActivity {
                 return true;
             }
         });
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<>();
-        jobListAdapterClass = new JobListAdapterClass(this,data);
+        jobListAdapterClass = new JobListAdapterClass(listener,data);
         recview.setAdapter(jobListAdapterClass);
 
-        fatchdata();
 
     }
 
@@ -241,5 +245,16 @@ public class Job_List_Activity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
+    }
+    private void recycleClickLister() {
+        listener = new JobListAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getJob_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username", kk);
+                startActivity(intent);
+            }
+        };
     }
 }

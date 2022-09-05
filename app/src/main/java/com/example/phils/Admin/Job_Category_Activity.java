@@ -20,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobCategoryAdapterClass;
+import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobCategory;
 import com.example.phils.Shareprefered.AppConfig;
@@ -46,6 +48,7 @@ public class Job_Category_Activity extends AppCompatActivity {
     TextView location_save;
     AppConfig appConfig;
 
+    private JobCategoryAdapterClass.RecycleViewClickListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,11 +76,13 @@ public class Job_Category_Activity extends AppCompatActivity {
                 return true;
             }
         });
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
         data = new ArrayList<>();
-        jobCategoryAdapterClass = new JobCategoryAdapterClass(this,data);
+        jobCategoryAdapterClass = new JobCategoryAdapterClass(listener,data);
         recview.setAdapter(jobCategoryAdapterClass);
 
 
@@ -89,7 +94,7 @@ public class Job_Category_Activity extends AppCompatActivity {
             }
         });
 
-        fatchdata();
+
 
 
     }
@@ -127,32 +132,27 @@ public class Job_Category_Activity extends AppCompatActivity {
                         try {
                             String status;
                             int stat = 0;
-                            int j=0;
+                            int j = 0;
                             String cat_group;
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
-                            {
-                                for(int i=0;i<jsonArray.length();i++)
-                                {
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
+                                    String job_category_id = object.getString("job_category_id");
                                     String sn = String.valueOf(j);
                                     String category = object.getString("job_category_name");
                                     status = object.getString("job_category_status");
-                                    if(status.equals(String.valueOf(0)))
-                                    {
+                                    if (status.equals(String.valueOf(0))) {
                                         status = "Disable";
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         status = "Enable";
                                     }
 
-                                    responseModelJobCategory = new ResponseModelJobCategory(sn,category,status);
+                                    responseModelJobCategory = new ResponseModelJobCategory(sn,job_category_id, category, status);
                                     data.add(responseModelJobCategory);
                                     jobCategoryAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -172,4 +172,15 @@ public class Job_Category_Activity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
-}
+        private void recycleClickLister() {
+            listener = new JobCategoryAdapterClass.RecycleViewClickListener() {
+                @Override
+                public void onClick(View v, int position) {
+                    String kk = data.get(position).getOb_category_id();
+                    Intent intent = new Intent(getApplicationContext(), Demo.class);
+                    intent.putExtra("username", kk);
+                    startActivity(intent);
+                }
+            };
+        }
+    }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,13 +17,14 @@ import java.util.List;
 
 public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClass.MyViewHolder> {
 
-    private Context context;
+    private JobListAdapterClass.RecycleViewClickListener listener;
     List<ResponseModelJobList> data;
 
-    public JobListAdapterClass(Context context, List<ResponseModelJobList> data) {
-        this.context = context;
+    public JobListAdapterClass(RecycleViewClickListener listener, List<ResponseModelJobList> data) {
+        this.listener = listener;
         this.data = data;
     }
+
     public void setFilteredList(List<ResponseModelJobList> filteredList)
     {
         this.data = filteredList;
@@ -49,10 +51,10 @@ public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClas
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView sn,jobclint,jobnumber,projectmanager,statuslist;
-
+        Button btn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             sn = itemView.findViewById(R.id.snlist);
@@ -60,6 +62,18 @@ public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClas
             jobnumber = itemView.findViewById(R.id.jobnumberlist);
             projectmanager = itemView.findViewById(R.id.projectmanagerlist);
             statuslist = itemView.findViewById(R.id.statuslist);
+            btn = itemView.findViewById(R.id.id);
+            btn.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            listener.onClick(view,getAdapterPosition());
+
+        }
+    }
+
+    public interface RecycleViewClickListener{
+        void onClick(View v,int position);
     }
 }

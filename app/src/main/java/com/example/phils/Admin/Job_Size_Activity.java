@@ -20,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobSizeAdapterClass;
+import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobSize;
 import com.example.phils.Shareprefered.AppConfig;
@@ -45,6 +47,7 @@ public class Job_Size_Activity extends AppCompatActivity {
 
     TextView location_save;
     AppConfig appConfig;
+    private JobSizeAdapterClass.RecycleViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +84,16 @@ public class Job_Size_Activity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Add_Job_Size_Activity.class));
             }
         });
+        fatchdata();
+        recycleClickLister();
 
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
         data = new ArrayList<>();
-        jobSizeAdapterClass = new JobSizeAdapterClass(this,data);
+        jobSizeAdapterClass = new JobSizeAdapterClass(listener,data);
         recview.setAdapter(jobSizeAdapterClass);
 
-        fatchdata();
+
     }
 
     private void fileList(String newText) {
@@ -136,7 +141,7 @@ public class Job_Size_Activity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
+                                    String job_size_id = object.getString("job_size_id");
                                     String sn = String.valueOf(j);
                                     String category = object.getString("job_size_name");
                                     status = object.getString("job_size_status");
@@ -149,7 +154,7 @@ public class Job_Size_Activity extends AppCompatActivity {
                                         status = "Enable";
                                     }
 
-                                    responseModelJobSize = new ResponseModelJobSize(sn,category,status);
+                                    responseModelJobSize = new ResponseModelJobSize(sn,job_size_id,category,status);
                                     data.add(responseModelJobSize);
                                     jobSizeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -170,4 +175,15 @@ public class Job_Size_Activity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
+    private void recycleClickLister() {
+        listener = new JobSizeAdapterClass.RecycleViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                String kk = data.get(position).getJob_size_id();
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
+                intent.putExtra("username", kk);
+                startActivity(intent);
+            }
+        };
+    }
 }
