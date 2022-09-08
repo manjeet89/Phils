@@ -5,13 +5,23 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Admin.Update_StockCategory_Activity">
+    tools:context=".Admin.Update_StockUom_Activity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/settext"
+        android:visibility="invisible"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f5eeed"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/set"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,18 +88,17 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    android:layout_margin="7sp"
-                    android:src="@drawable/admin"
-                    android:background="@drawable/button_shap"
+                    android:layout_height="35sp"
+                    android:layout_margin="5sp"
+                    android:src="@drawable/ic_baseline_more_vert_24"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -103,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Category Update"
+                android:text="Stock UOM Add"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -113,7 +122,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - stock category Update"
+                android:text="  | Home - stock UOM Add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -144,7 +153,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category Group"
+                    android:text="Stock UOM Name"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -153,51 +162,22 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/testView"
-                    android:hint="select category"
-                    android:padding="10dp"
-                    android:background="#f2ebeb"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="1dp"
-                    android:gravity="center_vertical"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="15sp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stock Category Name"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#3e403f"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="0dp"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/category_insert"
-                    android:hint="category name"
-                    android:textSize="15sp"
+                    android:id="@+id/uom_name_add"
+                    android:hint="Enter Name Uom"
                     android:padding="10dp"
+                    android:textSize="14sp"
                     android:background="#f2ebeb"
                     android:textColor="@color/black"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
-
                     />
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,7 +188,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status"
+                    android:text="Status"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -220,8 +200,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/status_check"
-                    android:hint="Status"
+                    android:id="@+id/stock_size_status"
+                    android:hint="status"
                     android:padding="10dp"
                     android:background="#f2ebeb"
                     android:textColor="@color/black"
@@ -238,9 +218,9 @@
                 android:background="@drawable/curve_shap">
 
                 <Button
-                    android:layout_width="150sp"
+                    android:layout_width="120sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/insert_cat"
+                    android:id="@+id/uom_insert"
                     android:layout_marginTop="20sp"
                     android:text="Submit"
                     android:backgroundTint="#1ca6eb"

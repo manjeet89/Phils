@@ -24,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockMakeAdapterClass;
-import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockMake;
 import com.example.phils.Shareprefered.AppConfig;
@@ -250,8 +249,14 @@ public class StockMakeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 String kk = data.get(position).getMake_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username", kk);
+                String name = data.get(position).getMake_name();
+                String status = data.get(position).getMake_status();
+
+                Intent intent = new Intent(getApplicationContext(), Update_StockMake_Activity.class);
+                intent.putExtra("id", kk);
+                intent.putExtra("name", name);
+                intent.putExtra("status", status);
+
                 startActivity(intent);
             }
         };

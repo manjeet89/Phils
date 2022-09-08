@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,16 +31,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Add_Job_Category_Activity;
-import com.example.phils.Admin.Add_Stock_Category_Activity;
-import com.example.phils.Admin.MainActivity;
-import com.example.phils.Admin.StockCategoryActivity;
-import com.example.phils.Admin.StockListActivity;
-import com.example.phils.Admin.StockMakeActivity;
-import com.example.phils.Admin.StockSizeActivity;
-import com.example.phils.Admin.StockTypeActivity;
-import com.example.phils.Admin.StockUomActivity;
+import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 

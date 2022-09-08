@@ -18,13 +18,29 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
-            android:name=".Update_StockSize_Activity"
+            android:name=".Admin.Update_StockUom_Activity"
             android:exported="false" />
         <activity
-            android:name=".Update_StockType_Activity"
+            android:name=".Admin.Update_StockMake_Activity"
             android:exported="false" />
         <activity
-            android:name=".Update_StockCategory_Activity"
+            android:name=".RequisitionAddActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RequisitionReceiverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RequisitionListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Update_StockSize_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Update_StockType_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.Update_StockCategory_Activity"
             android:exported="false" />
         <activity
             android:name=".Admin.RolesAndPrivilegesActivity"
@@ -56,6 +72,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Demo"
             android:exported="false" />

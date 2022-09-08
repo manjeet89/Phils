@@ -5,7 +5,7 @@
     >
 <item
     android:id="@+id/ghar"
-    android:title="Home"
+    android:title="Dashboards"
     android:icon="@drawable/ic_baseline_home_24"
     />
     <item
@@ -74,6 +74,24 @@
     </item>
 
     <item
+        android:title="Requisition">
+        <menu>
+
+            <item
+                android:id="@+id/resqu_list"
+                android:title="Requisition List"
+                android:icon="@drawable/ic_baseline_category_24"/>
+
+            <item
+                android:id="@+id/resqu_reviever"
+                android:title="Requisition Receiver"
+                android:icon="@drawable/ic_baseline_wysiwyg_24"/>
+
+
+        </menu>
+    </item>
+
+    <item
         android:title="Report">
         <menu>
 
@@ -85,12 +103,12 @@
             <item
                 android:id="@+id/Report_consumption"
                 android:title="Consumption"
-                android:icon="@drawable/ic_baseline_report_24"/>
+                android:icon="@drawable/ic_baseline_content_paste_go_24"/>
 
             <item
                 android:id="@+id/Report_consumption_details"
                 android:title="Consumption Details"
-                android:icon="@drawable/ic_baseline_report_24"/>
+                android:icon="@drawable/ic_baseline_compare_24"/>
 
         </menu>
     </item>

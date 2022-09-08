@@ -24,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockUOMAdapterClass;
-import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockUOM;
 import com.example.phils.Shareprefered.AppConfig;
@@ -204,8 +203,8 @@ public class StockUomActivity extends AppCompatActivity {
                                 {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    String sn = object.getString("uom_id");
-                                    String uom_id = String.valueOf(j);
+                                    String uom_id = object.getString("uom_id");
+                                    String  sn = String.valueOf(j);
                                     String uom_name = object.getString("uom_name");
 
                                     uom_status = object.getString("uom_status");
@@ -244,8 +243,14 @@ public class StockUomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 String kk = data.get(position).getUom_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username", kk);
+                String name = data.get(position).getUom_name();
+                String status = data.get(position).getUom_status();
+
+                Intent intent = new Intent(getApplicationContext(), Update_StockUom_Activity.class);
+                intent.putExtra("id", kk);
+                intent.putExtra("name", name);
+                intent.putExtra("status", status);
+
                 startActivity(intent);
             }
         };

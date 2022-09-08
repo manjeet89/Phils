@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.phils.LoginActivity;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
+import com.example.phils.RequisitionListActivity;
+import com.example.phils.RequisitionReceiverActivity;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setContentView(R.layout.custom_profile_dialog);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650,900);
+                dialog.getWindow().setLayout(750,1050);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -262,6 +264,16 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.roles:
                         startActivity(new Intent(getApplicationContext(), RolesAndPrivilegesActivity.class));
                         break;
+
+                    case R.id.resqu_list:
+                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+                        break;
+
+                    case R.id.resqu_reviever:
+                        startActivity(new Intent(getApplicationContext(), RequisitionReceiverActivity.class));
+                        break;
+
+
 
                     default:
                         return true;

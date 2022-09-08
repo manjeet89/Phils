@@ -29,7 +29,6 @@ import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.Update_StockCategory_Activity;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -261,6 +260,7 @@ public class StockCategoryActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(StockCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(), Demo.class));
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);

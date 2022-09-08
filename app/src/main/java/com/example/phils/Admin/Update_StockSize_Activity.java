@@ -1,13 +1,10 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -36,23 +33,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockSizeAdapterClass;
-import com.example.phils.Admin.Add_Stock_Size_Activity;
-import com.example.phils.Admin.ConsumptionActivity;
-import com.example.phils.Admin.ConsumptionDetailActivity;
-import com.example.phils.Admin.Job_Category_Activity;
-import com.example.phils.Admin.Job_List_Activity;
-import com.example.phils.Admin.Job_Size_Activity;
-import com.example.phils.Admin.MainActivity;
-import com.example.phils.Admin.ReportsActivity;
-import com.example.phils.Admin.StockCategoryActivity;
-import com.example.phils.Admin.StockListActivity;
-import com.example.phils.Admin.StockMakeActivity;
-import com.example.phils.Admin.StockSizeActivity;
-import com.example.phils.Admin.StockTypeActivity;
-import com.example.phils.Admin.StockUomActivity;
-import com.example.phils.ResponseModels.ResponseModelStockSize;
+import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -62,7 +45,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Update_StockSize_Activity extends AppCompatActivity {
