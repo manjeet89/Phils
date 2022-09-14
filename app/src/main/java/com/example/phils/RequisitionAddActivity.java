@@ -132,7 +132,7 @@ public class RequisitionAddActivity extends AppCompatActivity {
         String remarks    = remark.getText().toString();
 
         appConfig = new AppConfig(this);
-        String req_by_user_id = appConfig.getIdOfUser();
+       // String req_by_user_id = appConfig.getIdOfUser();
         //String location_save1 = appConfig.getLocation();
 
 
@@ -177,8 +177,8 @@ public class RequisitionAddActivity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Notification();
-                            //Toast.makeText(RequisitionAddActivity.this, response, Toast.LENGTH_SHORT).show();
+                          // Notification();
+//                            Toast.makeText(RequisitionAddActivity.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -192,7 +192,7 @@ public class RequisitionAddActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("req_user_id", userreq);
-                    params.put("req_by_user_id", req_by_user_id);
+                   // params.put("req_by_user_id", req_by_user_id);
                     params.put("req_job_id", jobnumber);
                     params.put("seam_number", seamList);
                     params.put("req_category_id", category);
@@ -218,19 +218,19 @@ public class RequisitionAddActivity extends AppCompatActivity {
     private void Notification() {
 
         String userreq   = setReqUserid.getText().toString();
-        String nameofuser = appConfig.getNameOfUser();
+       // String nameofuser = appConfig.getNameOfUser();
         String quantity  = quantityreq.getText().toString();
         String category  = categoryreq.getText().toString();
         String type      = typereq.getText().toString();
         String size      = sizereq.getText().toString();
         String req   = "requisition";
-        String notification = nameofuser+" has request "+quantity+" for "+category+" -> "+type+" -> "+size+" please approved the same";
+       // String notification = nameofuser+" has request "+quantity+" for "+category+" -> "+type+" -> "+size+" please approved the same";
        // Toast.makeText(this, notification, Toast.LENGTH_SHORT).show();
         StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_notification.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        SentNotification();
+                        //SentNotification();
                         Toast.makeText(RequisitionAddActivity.this, response, Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
@@ -246,7 +246,7 @@ public class RequisitionAddActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("noti_user_id", userreq);
                 params.put("req_by_user_id", req);
-                params.put("noti_message", notification);
+             //   params.put("noti_message", notification);
 
 
                 return params;
@@ -259,30 +259,63 @@ public class RequisitionAddActivity extends AppCompatActivity {
     }
 
     private void SentNotification() {
-        String userreq   = setReqUserid.getText().toString();
-        String nameofuser = appConfig.getNameOfUser();
-        String quantity  = quantityreq.getText().toString();
-        String category  = categoryreq.getText().toString();
-        String type      = typereq.getText().toString();
-        String size      = sizereq.getText().toString();
-        String req   = "requisition";
-        String notification = nameofuser+" has request "+quantity+" for "+category+" -> "+type+" -> "+size+" please approved the same";
+//        String userreq   = setReqUserid.getText().toString();
+//        String nameofuser = appConfig.getNameOfUser();
+//        String iduser   = appConfig.getIdOfUser();
+//        String quantity  = quantityreq.getText().toString();
+//        String category  = categoryreq.getText().toString();
+//        String type      = typereq.getText().toString();
+//        String size      = sizereq.getText().toString();
+//        String req   = "requisition";
+//        String notification = nameofuser+" has request "+quantity+" for "+category+" -> "+type+" -> "+size+" please approved the same";
+//
+//
+//
+//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/fatch_token.php?user_id="+userId, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//
+//
+//                            JSONArray jsonArray = response.getJSONArray("data");
+//                            for(int i=0;i<jsonArray.length();i++){
+//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                String user_token= jsonObject.optString("user_token");
+//                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(user_token,
+//                                        nameofuser,
+//                                        notification.,getApplicationContext(),RequisitionAddActivity.this);
+//                                notificationsSender.SendNotifications();
+//
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        requestQueue.add(jsonObjectRequest1);
 
-                Intent intent = new Intent(getApplicationContext(), Notification_Activity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("Message",notification);
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
-                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
-                builder.setContentTitle("Notification");
-                builder.setContentText(notification);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setContentIntent(pendingIntent);
-                builder.setAutoCancel(true);
-
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+//                Intent intent = new Intent(getApplicationContext(), Notification_Activity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.putExtra("Message",notification);
+//                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
+//                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
+//                builder.setContentTitle("Notification");
+//                builder.setContentText(notification);
+//                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//                builder.setContentIntent(pendingIntent);
+//                builder.setAutoCancel(true);
+//
+//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+//                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
 
 
 
@@ -742,7 +775,7 @@ public class RequisitionAddActivity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(750, 1100);
+                dialog.getWindow().setLayout(950, 1200);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -805,7 +838,7 @@ public class RequisitionAddActivity extends AppCompatActivity {
                                             setReqUserid.setText(idea);
                                              Toast.makeText(RequisitionAddActivity.this, setReqUserid.getText().toString(), Toast.LENGTH_SHORT).show();
 
-                                            PassJobNumber(idea);
+                                            //PassJobNumber(idea);
                                             //TypeIdPass(idea);
                                         }
 

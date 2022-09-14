@@ -2,10 +2,13 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -69,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
         //test = findViewById(R.id.test);
 //        String name = getIntent().getStringExtra("id");
-        String s = appConfig.getUserName();
-        String p = appConfig.getIdOfUser();
-        String fullName = appConfig.getNameOfUser();
+//        String s = appConfig.getUserName();
+//        String p = appConfig.getIdOfUser();
+//        String fullName = appConfig.getNameOfUser();
 
        // test.setText(s+p+fullName);
 
@@ -123,9 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 // show dialog
                 dialog.show();
 
-                String s = appConfig.getUserName();
-                String p = appConfig.getIdOfUser();
-                String fullName = appConfig.getNameOfUser();
+                String s = appConfig.getuser_name();
+                String fullName = appConfig.getuser_full_name();
 
                 TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
                 TextView post = dialog.findViewById(R.id.postAdmin);
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         appConfig.updateUserLoginStatus(false);
+
                         startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         finish();
                     }
@@ -162,30 +165,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        btnnotification = findViewById(R.id.btn_notification);
-//        btnnotification.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String message = "This is Example notification";
-//                Intent intent = new Intent(getApplicationContext(),Notification_Activity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                intent.putExtra("Message",message);
-//                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
-//                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
-//                builder.setContentTitle("Notification");
-//                builder.setContentText(message);
-//                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//                builder.setContentIntent(pendingIntent);
-//                builder.setAutoCancel(true);
-//
-//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-//                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
-//
-//
-//            }
-//        });
+        btnnotification = findViewById(R.id.btn_notification);
+        btnnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "This is Example notification";
+                Intent intent = new Intent(getApplicationContext(),Notification_Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("Message",message);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
+                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
+                builder.setContentTitle("Phils ERP");
+                builder.setContentText(message);
+                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                builder.setContentIntent(pendingIntent);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+
+
+            }
+        });
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

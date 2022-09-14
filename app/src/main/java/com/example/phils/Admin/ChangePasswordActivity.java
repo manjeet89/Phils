@@ -82,7 +82,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String confirmpassword = confirmnewpass.getText().toString();
         String errorCheck = error.getText().toString();
         appConfig = new AppConfig(this);
-        String userId = appConfig.getIdOfUser();
+        //String userId = appConfig.getIdOfUser();
 
         if(TextUtils.isEmpty(oldpassword))
         {
@@ -122,7 +122,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("user_id", userId);
+                      //  params.put("user_id", userId);
                         params.put("oldpass", oldpassword);
                         params.put("newpass", newpassword);
                         return params;

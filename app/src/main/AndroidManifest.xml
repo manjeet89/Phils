@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".TwoStepVerification"
+            android:exported="false" />
+        <activity
+            android:name=".Add_Job_List_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Admin.Update_StockUom_Activity"
             android:exported="false" />
         <activity
@@ -26,7 +32,6 @@
         <activity
             android:name=".RequisitionAddActivity"
             android:exported="false" />
-
         <activity
             android:name=".RequisitionReceiverActivity"
             android:exported="false" />
@@ -72,7 +77,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Demo"
             android:exported="false" />

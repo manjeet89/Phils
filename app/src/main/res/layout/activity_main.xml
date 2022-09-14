@@ -118,15 +118,15 @@
 <!--            android:gravity="center"-->
 <!--            android:layout_below="@id/test"-->
 <!--            android:layout_marginTop="200sp"/>-->
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/btn_notification"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:text="Notification"-->
-<!--            android:layout_marginTop="270sp"-->
-<!--            android:layout_marginStart="130sp"/>-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_notification"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="Notification"
+            android:layout_marginTop="270sp"
+            android:layout_marginStart="130sp"/>
       </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

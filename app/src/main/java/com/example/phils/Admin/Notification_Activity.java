@@ -116,7 +116,7 @@ public class Notification_Activity extends AppCompatActivity {
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
         appConfig = new AppConfig(this);
-        String user_id = appConfig.getIdOfUser();
+       // String user_id = appConfig.getIdOfUser();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_notification.php",
                 new Response.Listener<String>() {
@@ -175,7 +175,7 @@ public class Notification_Activity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String,String>();
-                params.put("noti_user_id",user_id);
+               // params.put("noti_user_id",user_id);
                 return params;
             }
         }

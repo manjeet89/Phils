@@ -8,4 +8,16 @@
     <string name="save_location">locationProject</string>
     <string name="save_userName">userName</string>
 
+    <string name="user_id">user_id</string>
+    <string name="user_full_name">user_full_name</string>
+    <string name="user_email_id">user_email_id</string>
+    <string name="user_employee_type">user_employee_type</string>
+    <string name="employee_type">employee_type</string>
+    <string name="emp_type_name">emp_type_name</string>
+    <string name="emp_type_id">emp_type_id</string>
+
+    <string name="user_name">user_name</string>
+
+    <string name="user_token">user_token</string>
+
 </resources>

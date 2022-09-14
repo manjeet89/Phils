@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobListAdapterClass;
 import com.example.phils.Adapter.StockMakeAdapterClass;
+import com.example.phils.Add_Job_List_Activity;
 import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobList;
@@ -51,7 +52,7 @@ public class Job_List_Activity extends AppCompatActivity {
     List<ResponseModelJobList> data;
     ResponseModelJobList responseModelJobList;
     LinearLayoutManager linearLayoutManager;
-    Button button;
+    Button button,add_job;
 
     TextView location_save;
     AppConfig appConfig;
@@ -80,6 +81,14 @@ public class Job_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Assign_user_Job_Activity.class));
+            }
+        });
+
+        add_job = findViewById(R.id.add_job);
+        add_job.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Add_Job_List_Activity.class));
             }
         });
 

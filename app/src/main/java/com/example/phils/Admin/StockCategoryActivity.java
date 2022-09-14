@@ -1,6 +1,7 @@
 package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,9 +28,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockCategoryAdapterClass;
 import com.example.phils.Demo;
+import com.example.phils.LoginActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.TwoStepVerification;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -38,8 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class StockCategoryActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -172,6 +178,7 @@ public class StockCategoryActivity extends AppCompatActivity {
 
     }
 
+
     private void Add_category() {
         Intent intent = new Intent(getApplicationContext(), Add_Stock_Category_Activity.class);
         startActivity(intent);
@@ -197,88 +204,179 @@ public class StockCategoryActivity extends AppCompatActivity {
         }
     }
 
-    private void fatchdata() {
 
+    private void fatchdata() {
         progressDialog = new ProgressDialog(StockCategoryActivity.this);
         progressDialog.setTitle("Stock Category");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
-                new Response.Listener<String>() {
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_category",
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
-                            String status;
-                            int stat = 0;
                             int j=0;
-                            String cat_group;
+                            String stock_category_status;
+                            String emp_type_name;
+
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String message = jsonObject.getString("message");
 
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
+                            for(int i=0;i<jsonArray.length();i++)
                             {
-                                for(int i=0;i<jsonArray.length();i++)
-                                {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String stock_category_id = object.getString("stock_category_id");
-                                    String sn = String.valueOf(j);
-                                    String category = object.getString("stock_category_name");
+                                j++;
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String sn = String.valueOf(j);
+                                String stock_category_id = object.getString("stock_category_id");
+                                String stock_category_name = object.getString("stock_category_name");
+                                String stock_emp_category = object.getString("stock_emp_category");
 
-                                     cat_group = object.getString("emp_type_name");
-                                    if(cat_group.equals("null"))
+                                 stock_category_status = object.getString("stock_category_status");
+                                if(stock_category_status.equals(String.valueOf(0)))
                                     {
-                                        cat_group = "Other";
+                                        stock_category_status = "Disable";
                                     }
                                     else
                                     {
-                                        cat_group = object.getString("emp_type_name");
+                                        stock_category_status = "Enable";
                                     }
-                                     status = object.getString("stock_category_status");
-                                    if(status.equals(String.valueOf(0)))
+
+
+                                String stock_category_updated_on = object.getString("stock_category_updated_on");
+                                String stock_category_created_on = object.getString("stock_category_created_on");
+                                 emp_type_name = object.getString("emp_type_name");
+                                if(emp_type_name.equals("null"))
                                     {
-                                        status = "Disable";
+                                        emp_type_name = "Other";
                                     }
                                     else
                                     {
-                                        status = "Enable";
+                                        emp_type_name = object.getString("emp_type_name");
                                     }
 
-                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,cat_group,status,stock_category_id);
+                                    responseModelStockCategory = new ResponseModelStockCategory(sn,stock_category_id,stock_category_name,stock_emp_category,stock_category_status,stock_category_updated_on,stock_category_created_on,emp_type_name);
                                     data.add(responseModelStockCategory);
                                     stockCategoryAdapterClass.notifyDataSetChanged();
-                                progressDialog.dismiss();
-                                }
+                                    progressDialog.dismiss();
+
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(StockCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(getApplicationContext(), Demo.class));
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(StockCategoryActivity.this);
         requestQueue.add(request);
     }
+
+//    private void fatchdata() {
+//
+//        progressDialog = new ProgressDialog(StockCategoryActivity.this);
+//        progressDialog.setTitle("Stock Category");
+//        progressDialog.setMessage("Loading... Please Wait!");
+//        progressDialog.show();
+//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            String status;
+//                            int stat = 0;
+//                            int j=0;
+//                            String cat_group;
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            if(success.equals("1"))
+//                            {
+//                                for(int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    j++;
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    String stock_category_id = object.getString("stock_category_id");
+//                                    String sn = String.valueOf(j);
+//                                    String category = object.getString("stock_category_name");
+//
+//                                     cat_group = object.getString("emp_type_name");
+//                                    if(cat_group.equals("null"))
+//                                    {
+//                                        cat_group = "Other";
+//                                    }
+//                                    else
+//                                    {
+//                                        cat_group = object.getString("emp_type_name");
+//                                    }
+//                                     status = object.getString("stock_category_status");
+//                                    if(status.equals(String.valueOf(0)))
+//                                    {
+//                                        status = "Disable";
+//                                    }
+//                                    else
+//                                    {
+//                                        status = "Enable";
+//                                    }
+//
+//                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,cat_group,status,stock_category_id);
+//                                    data.add(responseModelStockCategory);
+//                                    stockCategoryAdapterClass.notifyDataSetChanged();
+//                                progressDialog.dismiss();
+//                                }
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(StockCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(getApplicationContext(), Demo.class));
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
+//    }
 
     private void recycleClickLister() {
         listener = new StockCategoryAdapterClass.RecycleViewClickListener() {
 
             @Override
             public void onClick(View v, int position) {
-                String id = data.get(position).getStock_category_id();
+               // String id = data.get(position).getStock_category_id();
                 String catGroup = data.get(position).getEmp_type_name();
                 String category = data.get(position).getStock_category_name();
                 String status = data.get(position).getStock_category_status();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
-                intent.putExtra("id",id);
+               // intent.putExtra("id",id);
                 intent.putExtra("catGroup",catGroup);
                 intent.putExtra("category",category);
                 intent.putExtra("status",status);

@@ -10,6 +10,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1965" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/drawable/shap_curve.xml" value="0.1965" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_job_category.xml" value="0.21" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_job_list.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_job_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_category.xml" value="0.2" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_add_stock_list.xml" value="0.20416666666666666" />
@@ -23,7 +24,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_consumption_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_demo.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_category.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_list.xml" value="0.33" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_list.xml" value="0.22" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_job_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_main.xml" value="0.25" />
@@ -42,6 +43,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_size.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_type.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_uom.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_two_step_verification.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_category.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_make.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_size.xml" value="0.20416666666666666" />

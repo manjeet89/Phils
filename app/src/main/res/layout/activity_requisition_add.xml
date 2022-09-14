@@ -201,6 +201,41 @@
                         />
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="15sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seam Number"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#3e403f"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="0dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/seamnumber"
+                        android:hint="select seam number"
+                        android:padding="10dp"
+                        android:background="#f2ebeb"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="1dp"
+                        android:gravity="center_vertical"
+                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        />
+                </LinearLayout>
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -334,37 +369,7 @@
                         />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="15sp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seam Number"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="0dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/seamnumber"
-                        android:hint="select seam number"
-                        android:padding="10dp"
-                        android:background="#f2ebeb"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="1dp"
-                        android:gravity="center_vertical"
-                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
