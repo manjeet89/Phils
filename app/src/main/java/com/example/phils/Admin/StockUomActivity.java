@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockUOMAdapterClass;
 import com.example.phils.R;
+import com.example.phils.ResponseModels.ResponseModelStockMake;
 import com.example.phils.ResponseModels.ResponseModelStockUOM;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
@@ -36,8 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class StockUomActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -79,7 +83,17 @@ public class StockUomActivity extends AppCompatActivity {
         uom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Add_Stock_UOM_Activity.class));
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
+                Intent intent = new Intent(getApplicationContext(), Add_Stock_UOM_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -160,6 +174,9 @@ public class StockUomActivity extends AppCompatActivity {
         recview.setAdapter(stockUOMAdapterClass);
 
        }
+
+
+
     private void fileList(String newText) {
 
         List<ResponseModelStockUOM> modelStockCategories = new ArrayList<>();
@@ -180,64 +197,150 @@ public class StockUomActivity extends AppCompatActivity {
     }
 
     private void fatchdata() {
+
         progressDialog = new ProgressDialog(StockUomActivity.this);
         progressDialog.setTitle("Stock UOM");
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_uom.php",
-                new Response.Listener<String>() {
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_uom",
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
-                            String uom_status;
-                            int stat = 0;
                             int j=0;
+                            String uom_status;
+
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
+                            String message = jsonObject.getString("message");
+                            // Toast.makeText(StockMakeActivity.this, message, Toast.LENGTH_SHORT).show();
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
+                            for(int i=0;i<jsonArray.length();i++)
                             {
-                                for(int i=0;i<jsonArray.length();i++)
+
+                                j++;
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String sn = String.valueOf(j);
+
+                                String uom_id = object.getString("uom_id");
+                                String uom_name = object.getString("uom_name");
+
+                                uom_status = object.getString("uom_status");
+                                if(uom_status.equals(String.valueOf(0)))
                                 {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String uom_id = object.getString("uom_id");
-                                    String  sn = String.valueOf(j);
-                                    String uom_name = object.getString("uom_name");
+                                    uom_status = "Disable";
+                                }
+                                else
+                                {
+                                    uom_status = "Enable";
+                                }
 
-                                    uom_status = object.getString("uom_status");
-                                    if(uom_status.equals(String.valueOf(0)))
-                                    {
-                                        uom_status = "Disable";
-                                    }
-                                    else
-                                    {
-                                        uom_status = "Enable";
-                                    }
 
-                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status);
+                                String uom_updated_on = object.getString("uom_updated_on");
+                                String uom_created_on = object.getString("uom_created_on");
+
+
+                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status,uom_updated_on,uom_created_on);
                                     data.add(responseModelStockUOM);
                                     stockUOMAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
-                                }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(StockUomActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(StockUomActivity.this);
         requestQueue.add(request);
+
     }
+
+//    private void fatchdata() {
+//        progressDialog = new ProgressDialog(StockUomActivity.this);
+//        progressDialog.setTitle("Stock UOM");
+//        progressDialog.setMessage("Loading... Please Wait!");
+//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+//        progressDialog.show();
+//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_uom.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            String uom_status;
+//                            int stat = 0;
+//                            int j=0;
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            if(success.equals("1"))
+//                            {
+//                                for(int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    j++;
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    String uom_id = object.getString("uom_id");
+//                                    String  sn = String.valueOf(j);
+//                                    String uom_name = object.getString("uom_name");
+//
+//                                    uom_status = object.getString("uom_status");
+//                                    if(uom_status.equals(String.valueOf(0)))
+//                                    {
+//                                        uom_status = "Disable";
+//                                    }
+//                                    else
+//                                    {
+//                                        uom_status = "Enable";
+//                                    }
+//
+//                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status);
+//                                    data.add(responseModelStockUOM);
+//                                    stockUOMAdapterClass.notifyDataSetChanged();
+//                                    progressDialog.dismiss();
+//
+//                                }
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(StockUomActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
+//    }
     private void recycleClickLister() {
         listener = new StockUOMAdapterClass.RecycleViewClickListener(){
             @Override
@@ -246,8 +349,16 @@ public class StockUomActivity extends AppCompatActivity {
                 String name = data.get(position).getUom_name();
                 String status = data.get(position).getUom_status();
 
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
                 Intent intent = new Intent(getApplicationContext(), Update_StockUom_Activity.class);
                 intent.putExtra("id", kk);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
                 intent.putExtra("name", name);
                 intent.putExtra("status", status);
 

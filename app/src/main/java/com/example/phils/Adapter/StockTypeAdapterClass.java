@@ -40,8 +40,8 @@ public class StockTypeAdapterClass extends RecyclerView.Adapter<StockTypeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.sn.setText(data.get(position).getStock_type_id());
-        holder.category.setText(data.get(position).getStock_category_id());
+        holder.sn.setText(data.get(position).getSn());
+        holder.category.setText(data.get(position).getStock_category_name());
         holder.type.setText(data.get(position).getStock_type_name());
         holder.status.setText(data.get(position).getStock_type_status());
         holder.refrance.setText(data.get(position).getStock_type_id());

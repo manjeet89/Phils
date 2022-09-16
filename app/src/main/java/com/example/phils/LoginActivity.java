@@ -123,6 +123,8 @@ public class LoginActivity extends AppCompatActivity {
                                     String employee_type = jsonObject1.getString("employee_type");
                                     String emp_type_name = jsonObject1.getString("emp_type_name");
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
+                                    String project_location_id = jsonObject1.getString("project_location_id");
+
 
                                     Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
                                     intent.putExtra("user_id",user_id);
@@ -132,6 +134,8 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("employee_type",employee_type);
                                     intent.putExtra("emp_type_name",emp_type_name);
                                     intent.putExtra("emp_type_id",emp_type_id);
+                                    intent.putExtra("project_location_id",project_location_id);
+
 
                                     startActivity(intent);
                                     finish();
@@ -150,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String employee_type = jsonObject1.getString("employee_type");
                                     String emp_type_name = jsonObject1.getString("emp_type_name");
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
+                                    String project_location_id = jsonObject1.getString("project_location_id");
 
                                     if (isRememberUserLogin) {
                                         appConfig.updateUserLoginStatus(true);
@@ -161,6 +166,8 @@ public class LoginActivity extends AppCompatActivity {
                                         appConfig.Saveemp_type_name(emp_type_name);
                                         appConfig.Saveemp_type_id(emp_type_id);
                                         appConfig.Saveuser_token(user_token);
+                                        appConfig.SaveLocation(project_location_id);
+
 
                                     }
 

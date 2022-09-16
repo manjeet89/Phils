@@ -281,15 +281,15 @@
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/list_status"
-                                android:layout_width="80sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="STATUS"
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:id="@+id/list_status"-->
+<!--                                android:layout_width="80sp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_margin="7sp"-->
+<!--                                android:text="STATUS"-->
+<!--                                android:textColor="@color/lightgray"-->
+<!--                                android:textSize="12dp"-->
+<!--                                android:textStyle="bold" />-->
 
                             <TextView
                                 android:id="@+id/id"

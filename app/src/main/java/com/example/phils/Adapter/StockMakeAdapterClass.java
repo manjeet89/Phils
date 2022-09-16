@@ -39,7 +39,7 @@ public class StockMakeAdapterClass extends RecyclerView.Adapter<StockMakeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.make_id.setText(data.get(position).getMake_id());
+        holder.make_id.setText(data.get(position).getSn());
         holder.make_name.setText(data.get(position).getMake_name());
         holder.make_status.setText(data.get(position).getMake_status());
     }

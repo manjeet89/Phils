@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockTypeAdapterClass;
 import com.example.phils.R;
+import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.ResponseModels.ResponseModelStockType;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
@@ -36,8 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class StockTypeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -77,11 +81,21 @@ public class StockTypeActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
         button = findViewById(R.id.add_type);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Add_Stock_Type_Activity.class));
-            }
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
+                Intent intent = new Intent(getApplicationContext(), Add_Stock_Type_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();            }
         });
 
 
@@ -168,65 +182,153 @@ public class StockTypeActivity extends AppCompatActivity {
 
     private void fatchdata() {
         progressDialog = new ProgressDialog(StockTypeActivity.this);
-        progressDialog.setTitle("Stock Tyoe");
+        progressDialog.setTitle("Stock Type");
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_type.php",
-                new Response.Listener<String>() {
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_type",
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
-                            String status;
-                            int stat = 0;
                             int j=0;
+                            String stock_type_status;
+                            String stock_category_name;
+
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String message = jsonObject.getString("message");
 
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
+                            for(int i=0;i<jsonArray.length();i++)
                             {
-                                for(int i=0;i<jsonArray.length();i++)
+                                j++;
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String sn = String.valueOf(j);
+                                String stock_type_id = object.getString("stock_type_id");
+                                String stock_category_id = object.getString("stock_category_id");
+                                String stock_type_name = object.getString("stock_type_name");
+
+                                stock_type_status = object.getString("stock_type_status");
+                                if(stock_type_status.equals(String.valueOf(0)))
                                 {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String stock_type_id = object.getString("stock_type_id");
-                                    String sn = String.valueOf(j);
-                                    String category = object.getString("stock_category_id");
+                                    stock_type_status = "Disable";
+                                }
+                                else
+                                {
+                                    stock_type_status = "Enable";
+                                }
 
-                                    String type = object.getString("stock_type_name");
 
-                                    status = object.getString("stock_type_status");
-                                    if(status.equals(String.valueOf(0)))
-                                    {
-                                        status = "Disable";
-                                    }
-                                    else
-                                    {
-                                        status = "Enable";
-                                    }
+                                String stock_type_updated_on = object.getString("stock_type_updated_on");
+                                String stock_type_created_on = object.getString("stock_type_created_on");
+                                         stock_category_name = object.getString("stock_category_name");
 
-                                    responseModelStockType = new ResponseModelStockType(sn,category,type,status,stock_type_id);
+
+                                responseModelStockType = new ResponseModelStockType(sn,stock_type_id,stock_category_id,stock_type_name,stock_type_status,
+                                        stock_type_updated_on,stock_type_created_on,stock_category_name);
                                     data.add(responseModelStockType);
                                     stockTypeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
-                                }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(StockTypeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(StockTypeActivity.this);
         requestQueue.add(request);
+
     }
+
+//    private void fatchdata() {
+//        progressDialog = new ProgressDialog(StockTypeActivity.this);
+//        progressDialog.setTitle("Stock Tyoe");
+//        progressDialog.setMessage("Loading... Please Wait!");
+//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+//        progressDialog.show();
+//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_type.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            String status;
+//                            int stat = 0;
+//                            int j=0;
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            if(success.equals("1"))
+//                            {
+//                                for(int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    j++;
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    String stock_type_id = object.getString("stock_type_id");
+//                                    String sn = String.valueOf(j);
+//                                    String category = object.getString("stock_category_id");
+//
+//                                    String type = object.getString("stock_type_name");
+//
+//                                    status = object.getString("stock_type_status");
+//                                    if(status.equals(String.valueOf(0)))
+//                                    {
+//                                        status = "Disable";
+//                                    }
+//                                    else
+//                                    {
+//                                        status = "Enable";
+//                                    }
+//
+//                                    responseModelStockType = new ResponseModelStockType(sn,category,type,status,stock_type_id);
+//                                    data.add(responseModelStockType);
+//                                    stockTypeAdapterClass.notifyDataSetChanged();
+//                                    progressDialog.dismiss();
+//
+//                                }
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(StockTypeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
+//    }
 
 
     private void fileList(String newText) {
@@ -253,12 +355,20 @@ public class StockTypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 String id = data.get(position).getStock_type_id();
-                String category = data.get(position).getStock_category_id();
+                String category = data.get(position).getStock_category_name();
                 String name = data.get(position).getStock_type_name();
                 String status = data.get(position).getStock_type_status();
 
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
                 Intent intent = new Intent(getApplicationContext(), Update_StockType_Activity.class);
                 intent.putExtra("id",id);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
                 intent.putExtra("category",category);
                 intent.putExtra("name",name);
                 intent.putExtra("status",status);

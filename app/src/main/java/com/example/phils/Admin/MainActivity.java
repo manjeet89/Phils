@@ -264,17 +264,17 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), ConsumptionDetailActivity.class));
                         break;
 
-                    case R.id.roles:
-                        startActivity(new Intent(getApplicationContext(), RolesAndPrivilegesActivity.class));
-                        break;
-
-                    case R.id.resqu_list:
-                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
-                        break;
-
-                    case R.id.resqu_reviever:
-                        startActivity(new Intent(getApplicationContext(), RequisitionReceiverActivity.class));
-                        break;
+//                    case R.id.roles:
+//                        startActivity(new Intent(getApplicationContext(), RolesAndPrivilegesActivity.class));
+//                        break;
+//
+//                    case R.id.resqu_list:
+//                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+//                        break;
+//
+//                    case R.id.resqu_reviever:
+//                        startActivity(new Intent(getApplicationContext(), RequisitionReceiverActivity.class));
+//                        break;
 
 
 

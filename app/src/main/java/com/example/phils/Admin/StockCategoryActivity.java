@@ -180,7 +180,15 @@ public class StockCategoryActivity extends AppCompatActivity {
 
 
     private void Add_category() {
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
         Intent intent = new Intent(getApplicationContext(), Add_Stock_Category_Activity.class);
+        intent.putExtra("token",token);
+        intent.putExtra("userId",userId);
+        intent.putExtra("location",location);
+
         startActivity(intent);
         finish();
     }
@@ -210,8 +218,11 @@ public class StockCategoryActivity extends AppCompatActivity {
         progressDialog.setTitle("Stock Category");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
+
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_category",
@@ -253,7 +264,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                                  emp_type_name = object.getString("emp_type_name");
                                 if(emp_type_name.equals("null"))
                                     {
-                                        emp_type_name = "Other";
+                                        emp_type_name = "Others";
                                     }
                                     else
                                     {
@@ -286,6 +297,8 @@ public class StockCategoryActivity extends AppCompatActivity {
                 HashMap headers = new HashMap();
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
                 return headers;
                 //return super.getHeaders();
             }
@@ -370,13 +383,21 @@ public class StockCategoryActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v, int position) {
-               // String id = data.get(position).getStock_category_id();
+                String id = data.get(position).getStock_category_id();
                 String catGroup = data.get(position).getEmp_type_name();
                 String category = data.get(position).getStock_category_name();
                 String status = data.get(position).getStock_category_status();
 
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
                 Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
-               // intent.putExtra("id",id);
+                intent.putExtra("id",id);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
                 intent.putExtra("catGroup",catGroup);
                 intent.putExtra("category",category);
                 intent.putExtra("status",status);

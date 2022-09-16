@@ -85,6 +85,7 @@ public class TwoStepVerification extends AppCompatActivity {
         String employee_type = getIntent().getStringExtra("employee_type");
         String emp_type_name = getIntent().getStringExtra("emp_type_name");
         String emp_type_id = getIntent().getStringExtra("emp_type_id");
+        String project_location_id = getIntent().getStringExtra("project_location_id");
 
         String number =   first.getText().toString()+second.getText().toString()+third.getText().toString()+fourth.getText().toString();
 
@@ -115,6 +116,7 @@ public class TwoStepVerification extends AppCompatActivity {
                                 String employee_type = getIntent().getStringExtra("employee_type");
                                 String emp_type_name = getIntent().getStringExtra("emp_type_name");
                                 String emp_type_id = getIntent().getStringExtra("emp_type_id");
+                                String project_location_id = jsonObject1.getString("project_location_id");
 
 
                                 if (isRememberUserLogin) {
@@ -130,6 +132,7 @@ public class TwoStepVerification extends AppCompatActivity {
                                         appConfig.Saveemp_type_name(emp_type_name);
                                         appConfig.Saveemp_type_id(emp_type_id);
                                         appConfig.Saveuser_token(user_token);
+                                        appConfig.SaveLocation(project_location_id);
 
                                         Intent intent = new Intent(TwoStepVerification.this, MainActivity.class);
                                         startActivity(intent);

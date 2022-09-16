@@ -4,6 +4,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,12 +31,17 @@ import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class Add_Stock_Make_Activity extends AppCompatActivity {
+
+    ProgressDialog progressDialog;
 
     EditText make_name_add;
     TextView stock_size_status;
@@ -141,6 +148,11 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
         }
         else
         {
+            progressDialog = new ProgressDialog(Add_Stock_Make_Activity.this);
+            progressDialog.setTitle("Stock Make");
+            progressDialog.setMessage("Loading... Please Wait!");
+            progressDialog.show();
+
 
             if(e3.equals("Enable"))
             {
@@ -154,12 +166,26 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
             String e4 =  e1.toUpperCase(Locale.ROOT);
             String e6 = e3;
 
+            String token = getIntent().getStringExtra("token");
+            String userId = getIntent().getStringExtra("userId");
+            String location = getIntent().getStringExtra("location");
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_make.php",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/add_stock_make",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(Add_Stock_Make_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(Add_Stock_Make_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                                progressDialog.dismiss();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -169,6 +195,16 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
                 }
             })
             {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("user_token",token);
+                    headers.put("user_id", userId);
+                    headers.put("project_location_id", location);
+
+                    return headers;
+                }
+
                 @Nullable
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -177,9 +213,37 @@ public class Add_Stock_Make_Activity extends AppCompatActivity {
                     params.put("make_status",e6);
                     return  params;
                 }
+
+
             };
             RequestQueue  requestQueue = Volley.newRequestQueue(Add_Stock_Make_Activity.this);
             requestQueue.add(request);
+
+//            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_stock_make.php",
+//                    new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//                            Toast.makeText(Add_Stock_Make_Activity.this, response, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(Add_Stock_Make_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            })
+//            {
+//                @Nullable
+//                @Override
+//                protected Map<String, String> getParams() throws AuthFailureError {
+//                    Map<String,String> params = new HashMap<String,String>();
+//                    params.put("make_name",e4);
+//                    params.put("make_status",e6);
+//                    return  params;
+//                }
+//            };
+//            RequestQueue  requestQueue = Volley.newRequestQueue(Add_Stock_Make_Activity.this);
+//            requestQueue.add(request);
 
         }
     }

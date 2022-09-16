@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockMakeAdapterClass;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockMake;
+import com.example.phils.ResponseModels.ResponseModelStockType;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -36,8 +38,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class StockMakeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -135,8 +139,17 @@ public class StockMakeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Add_Stock_Make_Activity.class));
-            }
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
+                Intent intent = new Intent(getApplicationContext(), Add_Stock_Make_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();               }
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -165,6 +178,7 @@ public class StockMakeActivity extends AppCompatActivity {
 
     }
 
+
     private void fileList(String newText) {
 
         List<ResponseModelStockMake> modelStockCategories = new ArrayList<>();
@@ -185,65 +199,153 @@ public class StockMakeActivity extends AppCompatActivity {
     }
 
     private void fatchdata() {
+
         progressDialog = new ProgressDialog(StockMakeActivity.this);
         progressDialog.setTitle("Stock Make");
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_make.php",
-                new Response.Listener<String>() {
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_make",
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
-                            String make_status;
-                            int stat = 0;
                             int j=0;
+                            String make_status;
+
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
+                            String message = jsonObject.getString("message");
+                           // Toast.makeText(StockMakeActivity.this, message, Toast.LENGTH_SHORT).show();
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
+                            for(int i=0;i<jsonArray.length();i++)
                             {
-                                for(int i=0;i<jsonArray.length();i++)
+
+                                j++;
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String sn = String.valueOf(j);
+
+                                String make_id = object.getString("make_id");
+                                String make_name = object.getString("make_name");
+
+                                make_status = object.getString("make_status");
+                                if(make_status.equals(String.valueOf(0)))
                                 {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String sn = String.valueOf(j);
-                                    String make_id = object.getString("make_id");
-                                    String make_name = object.getString("make_name");
+                                    make_status = "Disable";
+                                }
+                                else
+                                {
+                                    make_status = "Enable";
+                                }
 
-                                    make_status = object.getString("make_status");
-                                    if(make_status.equals(String.valueOf(0)))
-                                    {
-                                        make_status = "Disable";
-                                    }
-                                    else
-                                    {
-                                        make_status = "Enable";
-                                    }
 
-                                    responseModelStockMake = new ResponseModelStockMake(sn,make_name,make_status,make_id);
+                                String make_updated_on = object.getString("make_updated_on");
+                                String make_created_on = object.getString("make_created_on");
+
+
+                                responseModelStockMake = new ResponseModelStockMake(sn,make_id,make_name,make_status,make_updated_on,make_created_on);
                                     data.add(responseModelStockMake);
                                     stockMakeAdapterClass.notifyDataSetChanged();
-                                    progressDialog.dismiss();
+                                progressDialog.dismiss();
 
-                                }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(StockMakeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(StockMakeActivity.this);
         requestQueue.add(request);
+
     }
 
+
+    //    private void fatchdata() {
+//        progressDialog = new ProgressDialog(StockMakeActivity.this);
+//        progressDialog.setTitle("Stock Make");
+//        progressDialog.setMessage("Loading... Please Wait!");
+//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+//        progressDialog.show();
+//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_make.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            String make_status;
+//                            int stat = 0;
+//                            int j=0;
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            if(success.equals("1"))
+//                            {
+//                                for(int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    j++;
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    String sn = String.valueOf(j);
+//                                    String make_id = object.getString("make_id");
+//                                    String make_name = object.getString("make_name");
+//
+//                                    make_status = object.getString("make_status");
+//                                    if(make_status.equals(String.valueOf(0)))
+//                                    {
+//                                        make_status = "Disable";
+//                                    }
+//                                    else
+//                                    {
+//                                        make_status = "Enable";
+//                                    }
+//
+//                                    responseModelStockMake = new ResponseModelStockMake(sn,make_name,make_status,make_id);
+//                                    data.add(responseModelStockMake);
+//                                    stockMakeAdapterClass.notifyDataSetChanged();
+//                                    progressDialog.dismiss();
+//
+//                                }
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(StockMakeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
+//    }
+//
     private void recycleClickLister() {
         listener = new StockMakeAdapterClass.RecycleViewClickListener() {
             @Override
@@ -252,8 +354,16 @@ public class StockMakeActivity extends AppCompatActivity {
                 String name = data.get(position).getMake_name();
                 String status = data.get(position).getMake_status();
 
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
                 Intent intent = new Intent(getApplicationContext(), Update_StockMake_Activity.class);
                 intent.putExtra("id", kk);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
                 intent.putExtra("name", name);
                 intent.putExtra("status", status);
 

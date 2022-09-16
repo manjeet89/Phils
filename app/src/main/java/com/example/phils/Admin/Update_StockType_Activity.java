@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
     ArrayAdapter<String> categoryAdapter;
 
     RequestQueue requestQueue;
-    String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_data_in_tbl_type.php";
+    String url = "https://mployis.com/staging/api/stock/stock_category";
 
     TextView location_save;
     AppConfig appConfig;
@@ -97,42 +98,101 @@ public class Update_StockType_Activity extends AppCompatActivity {
         type_insert.setText(name);
         check_status.setText(status);
 
+        String token = getIntent().getStringExtra("token");
+        String userId = getIntent().getStringExtra("userId");
+        String location = getIntent().getStringExtra("location");
 
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url
-                , null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+                        try {
+                            int j=0;
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String category_name = jsonObject.optString("stock_category_name");
-                        String category_id = jsonObject.optString("stock_category_id");
-                        category.add(category_name);
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
 
-                        categoryAdapter = new ArrayAdapter<>(Update_StockType_Activity.this,
-                                android.R.layout.simple_list_item_1, category);
-                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++)
+                            {
+                                j++;
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String stock_category_id = object.getString("stock_category_id");
+                                String stock_category_name = object.getString("stock_category_name");
+                                category.add(stock_category_name);
+
+                                categoryAdapter = new ArrayAdapter<>(Update_StockType_Activity.this,
+                                        android.R.layout.simple_list_item_1, category);
+                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                            }
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(Update_StockType_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
 
-        requestQueue.add(jsonObjectRequest);
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockType_Activity.this);
+        requestQueue.add(request);
+
+
+
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url
+//                , null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    JSONArray jsonArray = response.getJSONArray("data");
+//
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String category_name = jsonObject.optString("stock_category_name");
+//                        String category_id = jsonObject.optString("stock_category_id");
+//                        category.add(category_name);
+//
+//                        categoryAdapter = new ArrayAdapter<>(Update_StockType_Activity.this,
+//                                android.R.layout.simple_list_item_1, category);
+//                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        requestQueue.add(jsonObjectRequest);
 
 
 
@@ -191,10 +251,63 @@ public class Update_StockType_Activity extends AppCompatActivity {
                         // Dismiss dialog
                         dialog.dismiss();
 
+                        String token = getIntent().getStringExtra("token");
+                        String userId = getIntent().getStringExtra("userId");
+                        String location = getIntent().getStringExtra("location");
 
-//                            String s = select_type.getText().toString();
-//                            Toast.makeText(Add_Stock_Type_Activity.this, s, Toast.LENGTH_SHORT).show();
+                        StringRequest request = new StringRequest(Request.Method.POST, url,
+                                new com.android.volley.Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
 
+                                        try {
+                                            int j=0;
+
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            String message = jsonObject.getString("message");
+
+                                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                            for(int i=0;i<jsonArray.length();i++)
+                                            {
+                                                j++;
+                                                String ss = select_type.getText().toString();
+
+                                                JSONObject object = jsonArray.getJSONObject(i);
+                                                String stock_category_id = object.getString("stock_category_id");
+                                                String stock_category_name = object.getString("stock_category_name");
+                                                if(ss.equals(stock_category_name)){
+                                                    String idea = stock_category_id;
+                                                    id12.setText(idea);
+                                                   // Toast.makeText(Update_StockType_Activity.this, idea, Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        }
+                                        catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(Update_StockType_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        {
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                HashMap headers = new HashMap();
+                                headers.put("user_token",token);
+                                headers.put("user_id", userId);
+                                headers.put("project_location_id", location);
+
+                                return headers;
+                                //return super.getHeaders();
+                            }
+                        };
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockType_Activity.this);
+                        requestQueue.add(request);
 
                     }
 
@@ -277,43 +390,50 @@ public class Update_StockType_Activity extends AppCompatActivity {
 
     private void Insert() {
 
-        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, url
-                , null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String ss = select_type.getText().toString();
-                    JSONArray jsonArray = response.getJSONArray("data");
+//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, url
+//                , null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    String ss = select_type.getText().toString();
+//                    JSONArray jsonArray = response.getJSONArray("data");
+//
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        String category_name = jsonObject.optString("stock_category_name");
+//                        String category_id = jsonObject.optString("stock_category_id");
+//                        if(ss.equals(category_name)){
+//                            String idea = category_id;
+//                            id12.setText(idea);
+//                            //Toast.makeText(Add_Stock_Type_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        requestQueue.add(jsonObjectRequest1);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String category_name = jsonObject.optString("stock_category_name");
-                        String category_id = jsonObject.optString("stock_category_id");
-                        if(ss.equals(category_name)){
-                            String idea = category_id;
-                            id12.setText(idea);
-                            //Toast.makeText(Add_Stock_Type_Activity.this, idea, Toast.LENGTH_SHORT).show();
 
-                        }
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        requestQueue.add(jsonObjectRequest1);
         String e1 = id12.getText().toString().trim();
         String e2 = type_insert.getText().toString().trim();
         String e3 = check_status.getText().toString().trim();
+
+        String token = getIntent().getStringExtra("token");
+        String userId = getIntent().getStringExtra("userId");
 
         if (TextUtils.isEmpty(e1)) {
             id12.setError("Please Select Category Group");
@@ -338,32 +458,88 @@ public class Update_StockType_Activity extends AppCompatActivity {
             String e6 = e3;
             String id = getIntent().getStringExtra("id");
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_type.php",
+
+
+
+            StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock_type",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(Update_StockType_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(Update_StockType_Activity.this, message, Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
+                                //progressDialog.dismiss();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            // Toast.makeText(Update_StockCategory_Activity.this, response, Toast.LENGTH_SHORT).show();
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(Update_StockType_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
+
                 }
-            }) {
+            })
+            {
+
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("user_token",token);
+                    headers.put("user_id", userId);
+                    return headers;
+                }
+
                 @Nullable
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("stock_type_id", id);
-                    params.put("stock_category_id", e4);
-                    params.put("stock_type_name", e5);
-                    params.put("stock_type_status", e6);
-                    return params;
+                    Map<String,String> params = new HashMap<String,String>();
+                    params.put("stock_type_id",id);
+                    params.put("stock_category_id",e4);
+                    params.put("stock_type_name",e5);
+                    params.put("stock_type_status",e6);
+                    return  params;
                 }
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(Update_StockType_Activity.this);
-            requestQueue.add(request);
+            RequestQueue requestQueue1 = Volley.newRequestQueue(this);
+            requestQueue1.add(request1);
+
+
+//            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_type.php",
+//                    new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//                            Toast.makeText(Update_StockType_Activity.this, response, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(Update_StockType_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }) {
+//                @Nullable
+//                @Override
+//                protected Map<String, String> getParams() throws AuthFailureError {
+//                    Map<String, String> params = new HashMap<String, String>();
+//                    params.put("stock_type_id", id);
+//                    params.put("stock_category_id", e4);
+//                    params.put("stock_type_name", e5);
+//                    params.put("stock_type_status", e6);
+//                    return params;
+//                }
+//            };
+//            RequestQueue requestQueue = Volley.newRequestQueue(Update_StockType_Activity.this);
+//            requestQueue.add(request);
 //            Toast.makeText(this,id+"/"+e4+" / "+e5+" / "+e6 , Toast.LENGTH_SHORT).show();
         }
     }

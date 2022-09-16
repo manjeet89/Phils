@@ -4,6 +4,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -43,6 +48,7 @@ public class Update_StockMake_Activity extends AppCompatActivity {
     Button btn;
     TextView location_save;
     AppConfig appConfig;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +153,11 @@ public class Update_StockMake_Activity extends AppCompatActivity {
         else
         {
 
+            progressDialog = new ProgressDialog(Update_StockMake_Activity.this);
+            progressDialog.setTitle("Stock Make");
+            progressDialog.setMessage("Loading... Please Wait!");
+            progressDialog.show();
+
             if(e3.equals("Enable"))
             {
                 e3 = "1";
@@ -160,11 +171,28 @@ public class Update_StockMake_Activity extends AppCompatActivity {
             String e6 = e3;
             String id = getIntent().getStringExtra("id");
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_make.php",
+            String token = getIntent().getStringExtra("token");
+            String userId = getIntent().getStringExtra("userId");
+            String location = getIntent().getStringExtra("location");
+
+            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock_make",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(Update_StockMake_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+
+                                Toast.makeText(Update_StockMake_Activity.this, message, Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                                progressDialog.dismiss();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -174,18 +202,57 @@ public class Update_StockMake_Activity extends AppCompatActivity {
                 }
             })
             {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("user_token",token);
+                    headers.put("user_id", userId);
+                    headers.put("project_location_id", location);
+
+                    return headers;
+                }
+
                 @Nullable
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<String,String>();
-                    params.put("make_id",id);
                     params.put("make_name",e4);
                     params.put("make_status",e6);
+                    params.put("make_id",id);
+
                     return  params;
                 }
+
+
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(Update_StockMake_Activity.this);
+            RequestQueue  requestQueue = Volley.newRequestQueue(Update_StockMake_Activity.this);
             requestQueue.add(request);
+//            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_category/update_stock_make.php",
+//                    new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//                            Toast.makeText(Update_StockMake_Activity.this, response, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(Update_StockMake_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            })
+//            {
+//                @Nullable
+//                @Override
+//                protected Map<String, String> getParams() throws AuthFailureError {
+//                    Map<String,String> params = new HashMap<String,String>();
+//                    params.put("make_id",id);
+//                    params.put("make_name",e4);
+//                    params.put("make_status",e6);
+//                    return  params;
+//                }
+//            };
+//            RequestQueue requestQueue = Volley.newRequestQueue(Update_StockMake_Activity.this);
+//            requestQueue.add(request);
 
         }
     }

@@ -51,7 +51,7 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
         holder.list_safety.setText(data.get(position).getSafety_stock());
         holder.list_quantity.setText(data.get(position).getStock_quantity());
         holder.list_price.setText(data.get(position).getStock_price());
-        holder.list_status.setText(data.get(position).getStock_status());
+//        holder.list_status.setText(data.get(position).getStock_status());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
             list_safety = itemView.findViewById(R.id.list_safety);
             list_quantity = itemView.findViewById(R.id.list_quantity);
             list_price = itemView.findViewById(R.id.list_price);
-            list_status = itemView.findViewById(R.id.list_status);
+//            list_status = itemView.findViewById(R.id.list_status);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
         }
