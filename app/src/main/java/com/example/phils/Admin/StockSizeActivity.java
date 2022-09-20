@@ -8,12 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockSizeAdapterClass;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.ResponseModels.ResponseModelStockSize;
@@ -49,6 +55,7 @@ public class StockSizeActivity extends AppCompatActivity {
 
     RecyclerView recview;
     SearchView searchView;
+    ImageView img,profile;
 
     StockSizeAdapterClass stockSizeAdapterClass;
     List<ResponseModelStockSize> data;
@@ -146,10 +153,77 @@ public class StockSizeActivity extends AppCompatActivity {
                     case R.id.list_stock:
                         startActivity(new Intent(getApplicationContext(), StockListActivity.class));
                         break;
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
                     default:
                         return true;
                 }
                 return true;
+            }
+        });
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(StockSizeActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(StockSizeActivity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
             }
         });
 
@@ -223,41 +297,47 @@ public class StockSizeActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
-                                j++;
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String sn = String.valueOf(j);
-                                String stock_size_id = object.getString("stock_size_id");
-                                String stock_category_id = object.getString("stock_category_id");
-                                String stock_type_id = object.getString("stock_type_id");
-                                String stock_size_name = object.getString("stock_size_name");
-
-                                stock_size_status = object.getString("stock_size_status");
-                                if(stock_size_status.equals(String.valueOf(0)))
-                                {
-                                    stock_size_status = "Disable";
-                                }
-                                else
-                                {
-                                    stock_size_status = "Enable";
-                                }
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(StockSizeActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(StockSizeActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
 
 
-                                String stock_size_updated_on = object.getString("stock_size_updated_on");
-                                String stock_size_created_on = object.getString("stock_size_created_on");
-                                stock_type_name = object.getString("stock_type_name");
-                                String stock_category_name = object.getString("stock_category_name");
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    j++;
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String sn = String.valueOf(j);
+                                    String stock_size_id = object.getString("stock_size_id");
+                                    String stock_category_id = object.getString("stock_category_id");
+                                    String stock_type_id = object.getString("stock_type_id");
+                                    String stock_size_name = object.getString("stock_size_name");
+
+                                    stock_size_status = object.getString("stock_size_status");
+                                    if (stock_size_status.equals(String.valueOf(0))) {
+                                        stock_size_status = "Disable";
+                                    } else {
+                                        stock_size_status = "Enable";
+                                    }
 
 
-                                responseModelStockSize = new ResponseModelStockSize(sn,stock_size_id,stock_category_id,stock_type_id,
-                                        stock_size_name,stock_size_status,stock_size_updated_on,stock_size_created_on,stock_type_name,
-                                        stock_category_name);
+                                    String stock_size_updated_on = object.getString("stock_size_updated_on");
+                                    String stock_size_created_on = object.getString("stock_size_created_on");
+                                    stock_type_name = object.getString("stock_type_name");
+                                    String stock_category_name = object.getString("stock_category_name");
+
+
+                                    responseModelStockSize = new ResponseModelStockSize(sn, stock_size_id, stock_category_id, stock_type_id,
+                                            stock_size_name, stock_size_status, stock_size_updated_on, stock_size_created_on, stock_type_name,
+                                            stock_category_name);
                                     data.add(responseModelStockSize);
                                     stockSizeAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
+                                }
                             }
 
                         }

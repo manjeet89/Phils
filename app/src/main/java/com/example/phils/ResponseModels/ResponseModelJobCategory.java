@@ -1,16 +1,18 @@
 package com.example.phils.ResponseModels;
 
 public class ResponseModelJobCategory {
-    String sn,ob_category_id,job_category_name,job_category_status;
+    String sn,job_category_id,job_category_name,job_category_status,job_category_updated_on, job_category_created_on;
 
     public ResponseModelJobCategory() {
     }
 
-    public ResponseModelJobCategory(String sn, String ob_category_id, String job_category_name, String job_category_status) {
+    public ResponseModelJobCategory(String sn, String job_category_id, String job_category_name, String job_category_status, String job_category_updated_on, String job_category_created_on) {
         this.sn = sn;
-        this.ob_category_id = ob_category_id;
+        this.job_category_id = job_category_id;
         this.job_category_name = job_category_name;
         this.job_category_status = job_category_status;
+        this.job_category_updated_on = job_category_updated_on;
+        this.job_category_created_on = job_category_created_on;
     }
 
     public String getSn() {
@@ -21,12 +23,12 @@ public class ResponseModelJobCategory {
         this.sn = sn;
     }
 
-    public String getOb_category_id() {
-        return ob_category_id;
+    public String getJob_category_id() {
+        return job_category_id;
     }
 
-    public void setOb_category_id(String ob_category_id) {
-        this.ob_category_id = ob_category_id;
+    public void setJob_category_id(String job_category_id) {
+        this.job_category_id = job_category_id;
     }
 
     public String getJob_category_name() {
@@ -44,4 +46,62 @@ public class ResponseModelJobCategory {
     public void setJob_category_status(String job_category_status) {
         this.job_category_status = job_category_status;
     }
+
+    public String getJob_category_updated_on() {
+        return job_category_updated_on;
+    }
+
+    public void setJob_category_updated_on(String job_category_updated_on) {
+        this.job_category_updated_on = job_category_updated_on;
+    }
+
+    public String getJob_category_created_on() {
+        return job_category_created_on;
+    }
+
+    public void setJob_category_created_on(String job_category_created_on) {
+        this.job_category_created_on = job_category_created_on;
+    }
+
+    //    public ResponseModelJobCategory() {
+//    }
+//
+//    public ResponseModelJobCategory(String sn, String ob_category_id, String job_category_name, String job_category_status) {
+//        this.sn = sn;
+//        this.ob_category_id = ob_category_id;
+//        this.job_category_name = job_category_name;
+//        this.job_category_status = job_category_status;
+//    }
+//
+//    public String getSn() {
+//        return sn;
+//    }
+//
+//    public void setSn(String sn) {
+//        this.sn = sn;
+//    }
+//
+//    public String getOb_category_id() {
+//        return ob_category_id;
+//    }
+//
+//    public void setOb_category_id(String ob_category_id) {
+//        this.ob_category_id = ob_category_id;
+//    }
+//
+//    public String getJob_category_name() {
+//        return job_category_name;
+//    }
+//
+//    public void setJob_category_name(String job_category_name) {
+//        this.job_category_name = job_category_name;
+//    }
+//
+//    public String getJob_category_status() {
+//        return job_category_status;
+//    }
+//
+//    public void setJob_category_status(String job_category_status) {
+//        this.job_category_status = job_category_status;
+//    }
 }

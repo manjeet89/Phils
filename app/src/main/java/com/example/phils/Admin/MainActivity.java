@@ -126,13 +126,13 @@ public class MainActivity extends AppCompatActivity {
                 // show dialog
                 dialog.show();
 
-                String s = appConfig.getuser_name();
+                String emp_name = appConfig.getemp_type_name();
                 String fullName = appConfig.getuser_full_name();
 
                 TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
                 TextView post = dialog.findViewById(R.id.postAdmin);
                 nameAdmin.setText(fullName);
-                post.setText(s);
+                post.setText(emp_name);
 
 
 
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         appConfig.updateUserLoginStatus(false);
-
                         startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         finish();
                     }

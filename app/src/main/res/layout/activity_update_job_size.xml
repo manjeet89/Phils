@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Admin.StockSizeActivity">
+    tools:context=".Update_JobSize_Activity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0f2f5"
-
+        android:background="#f5eeed"
         >
 
         <LinearLayout
@@ -54,7 +53,6 @@
                 android:orientation="horizontal"
                 android:layout_margin="5sp"
                 android:gravity="right"
-                android:background="@drawable/curve_shap"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,32 +78,31 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="30sp"
-                    android:layout_height="30sp"
-                    android:layout_margin="7sp"
-                    android:src="@drawable/admin"
+                    android:layout_width="25sp"
+                    android:layout_height="35sp"
+                    android:layout_margin="5sp"
+                    android:src="@drawable/ic_baseline_more_vert_24"
                     />
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
             android:orientation="horizontal"
-            android:layout_margin="5sp"
+            android:layout_margin="15sp"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stock Size"
+                android:text="Job Size Update"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -115,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Size"
+                android:text="  | Home - job size update"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -131,144 +128,103 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/header"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="65dp"
             android:layout_marginEnd="14dp"
             android:layout_marginBottom="55dp"
             android:background="@drawable/curve_shap"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"
-                android:layout_marginTop="12sp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/curve_shap"
-                android:backgroundTint="#f5eeed"
-                app:queryHint="Search Type..." />
+                android:orientation="vertical"
+                android:layout_margin="15sp">
 
-            <Button
-                android:id="@+id/add_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10sp"
-                android:backgroundTint="#1ca6eb"
-                android:drawableLeft="@drawable/ic_baseline_add_24"
-                android:padding="10dp"
-                android:text=" Add Stock Size"
-                android:textColor="@color/white"
-                android:textSize="10sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Job Size Name"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#3e403f"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="0dp"/>
 
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lay1"
-                android:layout_margin="15sp"
-                android:background="@color/white"
-                android:backgroundTint="@color/white">
-
-                <LinearLayout
-                    android:id="@+id/table"
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:id="@+id/category_insert"
+                    android:hint="category name"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:background="#f2ebeb"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center_vertical"
 
-                    <TableLayout
+                    />
+            </LinearLayout>
 
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="15sp">
 
-                        <TableRow android:id="@+id/line1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="status"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#3e403f"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="0dp"/>
 
-                            <TextView
-                                android:id="@+id/sn"
-                                android:layout_width="50sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="Sr.No."
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status_check"
+                    android:hint="Status"
+                    android:padding="10dp"
+                    android:background="#f2ebeb"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="1dp"
+                    android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/curve_shap">
 
-                            <TextView
-                                android:id="@+id/category"
-                                android:layout_width="120sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="CATEGORY"
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/type"
-                                android:layout_width="140sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="TYPE "
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/size"
-                                android:layout_width="100sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="SIZE "
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/status"
-                                android:layout_width="100sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="STATUS"
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/id"
-                                android:layout_width="100sp"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="7sp"
-                                android:text="Action"
-                                android:textColor="@color/lightgray"
-                                android:textSize="12dp"
-                                android:textStyle="bold" />
-                        </TableRow>
-
-                        <View
-                            style="@style/underlines"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_below="@id/line1"
-                            tools:ignore="MissingConstraints" />
-                    </TableLayout>
+                <Button
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/insert_job_cat"
+                    android:layout_marginTop="20sp"
+                    android:text="Submit"
+                    android:backgroundTint="#1ca6eb"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    />
+            </LinearLayout>
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
-            </HorizontalScrollView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#e8e7e3"
+            android:background="@color/white"
             android:gravity="center"
             android:layout_below="@id/lay1"
             android:layout_marginTop="-30dp"
@@ -288,6 +244,7 @@
 
     </RelativeLayout>
 
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
@@ -297,6 +254,5 @@
         app:menu="@menu/navigation_bar"
 
         />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

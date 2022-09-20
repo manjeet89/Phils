@@ -1,18 +1,27 @@
 package com.example.phils.Admin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,17 +31,26 @@ import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobCategoryAdapterClass;
 import com.example.phils.Adapter.StockMakeAdapterClass;
 import com.example.phils.Demo;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobCategory;
+import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.Update_JobCategory_Activity;
+import com.example.phils.UserActivity;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Job_Category_Activity extends AppCompatActivity {
 
@@ -40,6 +58,8 @@ public class Job_Category_Activity extends AppCompatActivity {
     RecyclerView recview;
     SearchView searchView;
     Button btn;
+    ImageView img,profile;
+
     JobCategoryAdapterClass jobCategoryAdapterClass;
     List<ResponseModelJobCategory> data;
     ResponseModelJobCategory responseModelJobCategory;
@@ -54,6 +74,70 @@ public class Job_Category_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_category);
 
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+                    case R.id.ghar:
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        break;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                        break;
+
+                    case R.id.category_stock:
+                        startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+                        break;
+
+                    case R.id.type_stock:
+                        startActivity(new Intent(getApplicationContext(),StockTypeActivity.class));
+                        break;
+
+                    case R.id.size_stock:
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
+                        break;
+
+                    case R.id.make_stock:
+                        startActivity(new Intent(getApplicationContext(),StockMakeActivity.class));
+                        break;
+
+                    case R.id.umo_stock:
+                        startActivity(new Intent(getApplicationContext(),StockUomActivity.class));
+                        break;
+
+                    case R.id.list_stock:
+                        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+                        break;
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
@@ -63,6 +147,64 @@ public class Job_Category_Activity extends AppCompatActivity {
 
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(Job_Category_Activity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Job_Category_Activity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -90,8 +232,17 @@ public class Job_Category_Activity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Add_Job_Category_Activity.class));
-            }
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocation();
+
+                Intent intent = new Intent(getApplicationContext(), Add_Job_Category_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();            }
         });
 
 
@@ -123,62 +274,111 @@ public class Job_Category_Activity extends AppCompatActivity {
         progressDialog = new ProgressDialog(Job_Category_Activity.this);
         progressDialog.setTitle("Job Category");
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_job_category.php",
-                new Response.Listener<String>() {
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_category",
+                new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            String status;
-                            int stat = 0;
-                            int j = 0;
-                            String cat_group;
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if (success.equals("1")) {
+                        try {
+                            int j=0;
+                            String job_category_status;
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(Job_Category_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(Job_Category_Activity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    String job_category_id = object.getString("job_category_id");
                                     String sn = String.valueOf(j);
-                                    String category = object.getString("job_category_name");
-                                    status = object.getString("job_category_status");
-                                    if (status.equals(String.valueOf(0))) {
-                                        status = "Disable";
+
+                                    String job_category_id = object.getString("job_category_id");
+                                    String job_category_name = object.getString("job_category_name");
+
+                                    job_category_status = object.getString("job_category_status");
+                                    if (job_category_status.equals(String.valueOf(0))) {
+                                        job_category_status = "Disable";
                                     } else {
-                                        status = "Enable";
+                                        job_category_status = "Enable";
                                     }
 
-                                    responseModelJobCategory = new ResponseModelJobCategory(sn,job_category_id, category, status);
+
+                                    String job_category_updated_on = object.getString("job_category_updated_on");
+                                    String job_category_created_on = object.getString("job_category_created_on");
+
+
+                                    responseModelJobCategory = new ResponseModelJobCategory(sn, job_category_id, job_category_name, job_category_status, job_category_updated_on, job_category_created_on);
                                     data.add(responseModelJobCategory);
                                     jobCategoryAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
+
                                 }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(Job_Category_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Job_Category_Activity.this);
         requestQueue.add(request);
+
+
     }
         private void recycleClickLister() {
             listener = new JobCategoryAdapterClass.RecycleViewClickListener() {
                 @Override
                 public void onClick(View v, int position) {
-                    String kk = data.get(position).getOb_category_id();
-                    Intent intent = new Intent(getApplicationContext(), Demo.class);
-                    intent.putExtra("username", kk);
+                    String kk = data.get(position).getJob_category_id();
+                    String Jobname =data.get(position).getJob_category_name();
+                    String jobstatus = data.get(position).getJob_category_status();
+
+                    String token = appConfig.getuser_token();
+                    String userId = appConfig.getuser_id();
+                    String location = appConfig.getLocation();
+
+                    Intent intent = new Intent(getApplicationContext(), Update_JobCategory_Activity.class);
+                    intent.putExtra("id", kk);
+                    intent.putExtra("Jobname", Jobname);
+                    intent.putExtra("jobstatus", jobstatus);
+
+                    intent.putExtra("token", token);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("location", location);
+
                     startActivity(intent);
                 }
             };

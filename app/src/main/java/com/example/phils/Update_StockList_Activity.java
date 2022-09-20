@@ -1,4 +1,4 @@
-package com.example.phils.Admin;
+package com.example.phils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,15 +29,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockUOMAdapterClass;
-import com.example.phils.CategorySpinner;
-import com.example.phils.R;
-import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.StockMakeSpinner;
-import com.example.phils.StockSizeSpinner;
-import com.example.phils.StockTypeSpinner;
-import com.example.phils.StockUOMSpinner;
 import com.example.phils.Update_StockList_Activity;
+import com.example.phils.Admin.StockListActivity;
+import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Add_Stock_List_Activity extends AppCompatActivity {
+public class Update_StockList_Activity extends AppCompatActivity {
 
     TextView setcategoryid,setypeid,setsizeid,setmakeid,setuomid;
     TextView select_category,select_type,select_size,select_make,select_uom;
@@ -89,17 +83,18 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
     String categoryIdurl="https://mployis.com/staging/api/stock/get_stock_type_from_category_id";
     String typeIdurl="https://mployis.com/staging/api/stock/get_stock_size_from_type_id";
 
-//    String typeurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_and_type_data_in_tbl_size.php?stock_category_id=";
+    //    String typeurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_and_type_data_in_tbl_size.php?stock_category_id=";
 //    String sizeurl = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_size.php?stock_type_id=";
     String uomurl = "https://mployis.com/staging/api/stock/stock_uom";
     String makeurl = "https://mployis.com/staging/api/stock/stock_make";
 
     TextView location_save;
     AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_stock_list);
+        setContentView(R.layout.activity_update_stock_list);
         requestQueue = Volley.newRequestQueue(this);
 
         appConfig = new AppConfig(this);
@@ -126,6 +121,52 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
         quantity = findViewById(R.id.quantity);
         max_size_alloted = findViewById(R.id.max_size_alloted);
         price = findViewById(R.id.price);
+
+        String stock_category_id = getIntent().getStringExtra("stock_category_id");
+        String stock_type_id = getIntent().getStringExtra("stock_type_id");
+        String stock_size_id = getIntent().getStringExtra("stock_size_id");
+
+        String Stock_category_name = getIntent().getStringExtra("Stock_category_name");
+        String Stock_type_name = getIntent().getStringExtra("Stock_type_name");
+        String Stock_size_name = getIntent().getStringExtra("Stock_size_name");
+
+        String stock_batch_number = getIntent().getStringExtra("stock_batch_number");
+
+        String stock_make_id = getIntent().getStringExtra("stock_make_id");
+        String stock_uom_id = getIntent().getStringExtra("stock_uom_id");
+
+        String Make_name = getIntent().getStringExtra("Make_name");
+        String Uom_name = getIntent().getStringExtra("Uom_name");
+
+        String safety_stock = getIntent().getStringExtra("safety_stock");
+        String stock_quantity = getIntent().getStringExtra("stock_quantity");
+        String stock_lot = getIntent().getStringExtra("stock_lot");
+        String stock_price = getIntent().getStringExtra("stock_price");
+        String stock_invoice_number = getIntent().getStringExtra("stock_invoice_number");
+        String stock_distributor_name = getIntent().getStringExtra("stock_distributor_name");
+
+        setcategoryid.setText(stock_category_id);
+        setypeid.setText(stock_type_id);
+        setsizeid.setText(stock_size_id);
+
+        select_category.setText(Stock_category_name);
+        select_type.setText(Stock_type_name);
+        select_size.setText(Stock_size_name);
+
+        stock_batch_name.setText(stock_batch_number);
+
+        setmakeid.setText(stock_make_id);
+        setuomid.setText(stock_uom_id);
+
+        select_make.setText(Make_name);
+        select_uom.setText(Uom_name);
+
+        safety.setText(safety_stock);
+        quantity.setText(stock_quantity);
+        max_size_alloted.setText(stock_lot);
+        price.setText(stock_price);
+        invoice.setText(stock_invoice_number);
+        distributor.setText(stock_distributor_name);
 
         list_insert = findViewById(R.id.list_insert);
         list_insert.setOnClickListener(new View.OnClickListener() {
@@ -163,13 +204,13 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 String stock_category_name = object.getString("stock_category_name");
 
                                 categorySpinners.add(new CategorySpinner(stock_category_id,stock_category_name));
-                                spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Add_Stock_List_Activity.this,
+                                spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Update_StockList_Activity.this,
                                         android.R.layout.simple_spinner_dropdown_item,categorySpinners);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
 //                                categoryList.add(stock_category_name);
-//                                categoryAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                categoryAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1, categoryList);
 //                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -183,7 +224,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -199,7 +240,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
         requestQueue.add(request);
 
 
@@ -207,7 +248,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog = new Dialog(Add_Stock_List_Activity.this);
+                dialog = new Dialog(Update_StockList_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
@@ -284,7 +325,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                                    String idea = stock_category_id;
 //                                                    setcategoryid.setText(idea);
 //                                                    CategoryIdPass(idea);
-//                                                    Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //
 //                                                }
 //                                            }
@@ -296,7 +337,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                }, new Response.ErrorListener() {
 //                            @Override
 //                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                            }
 //                        })
 //                        {
@@ -312,7 +353,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                            }
 //                        };
 //
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //                        requestQueue.add(request);
 
                         // Dismiss dialog
@@ -385,12 +426,12 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 String uom_name = object.getString("uom_name");
 
                                 stockUOMSpinners.add(new StockUOMSpinner(uom_id,uom_name));
-                                uomSpinnerArrayAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+                                uomSpinnerArrayAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
                                         android.R.layout.simple_list_item_1,stockUOMSpinners);
                                 uomSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                                uomList.add(uom_name);
 //
-//                                uomAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                uomAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,uomList);
 //                                uomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -404,7 +445,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -420,7 +461,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
         requestQueue.add(request);
 //        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, uomurl, null,
 //                new Response.Listener<JSONObject>() {
@@ -434,7 +475,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                String uom_id= jsonObject.optString("uom_id");
 //                                String uom_name= jsonObject.optString("uom_name");
 //                                uomList.add(uom_name);
-//                                uomAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                uomAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,uomList);
 //                                uomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
@@ -456,7 +497,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog = new Dialog(Add_Stock_List_Activity.this);
+                dialog = new Dialog(Update_StockList_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
@@ -535,7 +576,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                                if(ss.equals(uom_name)){
 //                                                    String idea = uom_id;
 //                                                    setuomid.setText(idea);
-//                                                    Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //                                        }
 //                                            }
 //
@@ -547,7 +588,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                }, new Response.ErrorListener() {
 //                            @Override
 //                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                            }
 //                        })
 //                        {
@@ -563,7 +604,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                            }
 //                        };
 //
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //                        requestQueue.add(request);
 
                         // Dismiss dialog
@@ -584,7 +625,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                        if(ss.equals(uom_name)){
 //                                            String idea = uom_id;
 //                                            setuomid.setText(idea);
-//                                            //Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                            //Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //                                        }
 //                                    }
 //
@@ -634,11 +675,11 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 String make_name = object.getString("make_name");
 
                                 stockMakeSpinners.add(new StockMakeSpinner(make_id,make_name));
-                                makeSpinnerArrayAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+                                makeSpinnerArrayAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
                                         android.R.layout.simple_list_item_1, stockMakeSpinners);
                                 makeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                                makeList.add(make_name);
-//                                makeAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                makeAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,makeList);
 //                                makeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
@@ -652,7 +693,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -667,7 +708,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
         requestQueue.add(request);
 
 //        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, makeurl, null,
@@ -682,7 +723,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                String make_id= jsonObject.optString("make_id");
 //                                String make_name= jsonObject.optString("make_name");
 //                                makeList.add(make_name);
-//                                makeAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                makeAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,makeList);
 //                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
@@ -704,7 +745,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog = new Dialog(Add_Stock_List_Activity.this);
+                dialog = new Dialog(Update_StockList_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
@@ -781,7 +822,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                                if(ss.equals(make_name)){
 //                                                    String idea = make_id;
 //                                                    setmakeid.setText(idea);
-//                                                    Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //                                                }
 //                                            }
 //
@@ -793,7 +834,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                }, new Response.ErrorListener() {
 //                            @Override
 //                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                            }
 //                        })
 //                        {
@@ -809,7 +850,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                            }
 //                        };
 //
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //                        requestQueue.add(request);
                         // Dismiss dialog
                         dialog.dismiss();
@@ -884,13 +925,13 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 String stock_type_name = object.getString("stock_type_name");
 
                                 stockTypeSpinners.add(new StockTypeSpinner(stock_type_id,stock_type_name));
-                                StockTypeSpinnerAdpter = new ArrayAdapter<StockTypeSpinner>(Add_Stock_List_Activity.this,
+                                StockTypeSpinnerAdpter = new ArrayAdapter<StockTypeSpinner>(Update_StockList_Activity.this,
                                         android.R.layout.simple_list_item_1,stockTypeSpinners );
                                 StockTypeSpinnerAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
 //                                typeList.add(stock_type_name);
-//                                typeAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                typeAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,typeList);
 //                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
@@ -903,7 +944,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -932,7 +973,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
         requestQueue.add(request);
 
 
@@ -940,7 +981,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog = new Dialog(Add_Stock_List_Activity.this);
+                dialog = new Dialog(Update_StockList_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
@@ -1020,7 +1061,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                                    setypeid.setText(idea);
 //                                                    TypeIdPass(idea);
 //
-//                                                    Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //
 //                                                }
 //                                            }
@@ -1032,7 +1073,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                }, new Response.ErrorListener() {
 //                            @Override
 //                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                            }
 //                        })
 //                        {
@@ -1061,7 +1102,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                            }
 //                        };
 //
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //                        requestQueue.add(request);
 
                         // Dismiss dialog
@@ -1106,12 +1147,12 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 String stock_size_name = object.getString("stock_size_name");
 
                                 stockSizeSpinners.add(new StockSizeSpinner(stock_size_id,stock_size_name));
-                                sizeSpinnerArrayAdapter = new ArrayAdapter<StockSizeSpinner>(Add_Stock_List_Activity.this,
+                                sizeSpinnerArrayAdapter = new ArrayAdapter<StockSizeSpinner>(Update_StockList_Activity.this,
                                         android.R.layout.simple_list_item_1,stockSizeSpinners);
                                 sizeSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 //                                sizeList.add(stock_size_name);
-//                                sizeAdapter = new ArrayAdapter<>(Add_Stock_List_Activity.this,
+//                                sizeAdapter = new ArrayAdapter<>(Update_StockList_Activity.this,
 //                                        android.R.layout.simple_list_item_1,sizeList);
 //                                sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -1124,7 +1165,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -1148,14 +1189,14 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
         requestQueue.add(request);
 
         select_size.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog = new Dialog(Add_Stock_List_Activity.this);
+                dialog = new Dialog(Update_StockList_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
@@ -1232,7 +1273,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                                if(ss.equals(stock_size_name)){
 //                                                    String idea = stock_size_id;
 //                                                    setsizeid.setText(idea);
-//                                                    Toast.makeText(Add_Stock_List_Activity.this, idea, Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Update_StockList_Activity.this, idea, Toast.LENGTH_SHORT).show();
 //
 //                                                }
 //                                            }
@@ -1244,7 +1285,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                                }, new Response.ErrorListener() {
 //                            @Override
 //                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                            }
 //                        })
 //                        {
@@ -1273,7 +1314,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 //                            }
 //                        };
 //
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //                        requestQueue.add(request);
                         // Dismiss dialog
                         dialog.dismiss();
@@ -1307,37 +1348,37 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(category))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Select Category ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Select Category ", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(type))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Select type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Select type", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(uom))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Select Uom", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Select Uom", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(safetyinsert))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Enter safety stock", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Enter safety stock", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(quantityinsert))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Enter Quantity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Enter Quantity", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(max_all))
         {
-            Toast.makeText(Add_Stock_List_Activity.this, "Please Maximum Size Allotted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_StockList_Activity.this, "Please Maximum Size Allotted", Toast.LENGTH_SHORT).show();
             return;
         }
 
         else {
-            progressDialog = new ProgressDialog(Add_Stock_List_Activity.this);
+            progressDialog = new ProgressDialog(Update_StockList_Activity.this);
             progressDialog.setTitle("Stock Category");
             progressDialog.setMessage("Loading... Please Wait!");
             progressDialog.show();
@@ -1345,9 +1386,10 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
+            String id = getIntent().getStringExtra("id");
 
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/add_stock",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -1356,7 +1398,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                                 jsonObject = new JSONObject(response);
                                 String message = jsonObject.getString("message");
 
-                                Toast.makeText(Add_Stock_List_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Update_StockList_Activity.this, message, Toast.LENGTH_SHORT).show();
 
                                 startActivity(new Intent(getApplicationContext(),StockListActivity.class));
                                 progressDialog.dismiss();
@@ -1369,7 +1411,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
             })
@@ -1400,24 +1442,26 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
                     params.put("stock_price", priceinsert);
                     params.put("stock_invoice_number", invoiceinsert);
                     params.put("stock_distributor_name", distributorinsert);
+                    params.put("stock_id",id);
+
                     return params;
                 }
 
 
             };
-            RequestQueue  requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+            RequestQueue  requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
             requestQueue.add(request);
 
 //            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_category_list.php",
 //                    new Response.Listener<String>() {
 //                        @Override
 //                        public void onResponse(String response) {
-//                            Toast.makeText(Add_Stock_List_Activity.this, response, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Update_StockList_Activity.this, response, Toast.LENGTH_SHORT).show();
 //                        }
 //                    }, new Response.ErrorListener() {
 //                @Override
 //                public void onErrorResponse(VolleyError error) {
-//                    Toast.makeText(Add_Stock_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Update_StockList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //
 //                }
 //            }) {
@@ -1444,7 +1488,7 @@ public class Add_Stock_List_Activity extends AppCompatActivity {
 ////                +"/"+distributorinsert+"/"+makeinsert+"/"+uom+"/"+safetyinsert+"/"+quantityinsert
 ////                +"/"+max_all+"/"+priceinsert, Toast.LENGTH_SHORT).show();
 //
-//            RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_List_Activity.this);
+//            RequestQueue requestQueue = Volley.newRequestQueue(Update_StockList_Activity.this);
 //            requestQueue.add(request);
         }
 

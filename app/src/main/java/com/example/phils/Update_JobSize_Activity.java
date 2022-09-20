@@ -1,4 +1,4 @@
-package com.example.phils.Admin;
+package com.example.phils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.R;
+import com.example.phils.Update_JobSize_Activity;
+import com.example.phils.Admin.Job_Size_Activity;
 import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONException;
@@ -37,7 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Add_Job_Category_Activity extends AppCompatActivity {
+public class Update_JobSize_Activity extends AppCompatActivity {
+
     TextView check_status;
     ArrayList<String> arrayList1;
     Dialog dialog;
@@ -45,19 +47,20 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
     EditText category_name;
     TextView location_save;
     AppConfig appConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_job_category);
-
-        appConfig = new AppConfig(this);
-        location_save = findViewById(R.id.location_save);
-        String location_save1 = appConfig.getLocation();
-        location_save.setText(location_save1);
+        setContentView(R.layout.activity_update_job_size);
 
         check_status = findViewById(R.id.status_check);
         button = findViewById(R.id.insert_job_cat);
         category_name = findViewById(R.id.category_insert);
+
+        String name = getIntent().getStringExtra("sizename");
+        String jobstatus = getIntent().getStringExtra("sizestatus");
+        category_name.setText(name);
+        check_status.setText(jobstatus);
 
         arrayList1=new ArrayList<>();
         arrayList1.add("Enable");
@@ -70,13 +73,11 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                 Insert();
             }
         });
-
-
         check_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Initialize dialog
-                dialog=new Dialog(Add_Job_Category_Activity.this);
+                dialog=new Dialog(Update_JobSize_Activity.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.dialog_searchable_spinner_status);
@@ -94,7 +95,7 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                 EditText editText1=dialog.findViewById(R.id.edit_text1);
                 ListView listViewstatus=dialog.findViewById(R.id.list_view_status);
 
-                ArrayAdapter<String> adapter=new ArrayAdapter<>(Add_Job_Category_Activity.this, android.R.layout.simple_list_item_1,arrayList1);
+                ArrayAdapter<String> adapter=new ArrayAdapter<>(Update_JobSize_Activity.this, android.R.layout.simple_list_item_1,arrayList1);
                 listViewstatus.setAdapter(adapter);
                 editText1.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -128,21 +129,20 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
 
     }
 
-
     private void Insert() {
+
         String e2 = category_name.getText().toString().trim();
         String e3 = check_status.getText().toString().trim();
-
-         if(TextUtils.isEmpty(e2))
+        if(TextUtils.isEmpty(e2))
         {
             category_name.setError("Please Enter your Category Name");
-            Toast.makeText(Add_Job_Category_Activity.this, "Please Enter your Category Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_JobSize_Activity.this, "Please Enter your Size Name", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(TextUtils.isEmpty(e3))
         {
             check_status.setError("Please Select your Status");
-            Toast.makeText(Add_Job_Category_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Update_JobSize_Activity.this, "Please Select your Status", Toast.LENGTH_SHORT).show();
             return;
         }
         else
@@ -161,12 +161,15 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
 
             String e5 = e2;
             String e6 = e3;
+//            Toast.makeText(this, e4+"  /  "+e5+"  /  "+e6, Toast.LENGTH_SHORT).show();
+
 
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
+            String id = getIntent().getStringExtra("id");
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/add_job_category",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/update_job_size",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -175,9 +178,9 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                                 jsonObject = new JSONObject(response);
                                 String message = jsonObject.getString("message");
 
-                                Toast.makeText(Add_Job_Category_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Update_JobSize_Activity.this, message, Toast.LENGTH_SHORT).show();
 
-                                startActivity(new Intent(getApplicationContext(),Job_Category_Activity.class));
+                                startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
 
 
                             } catch (JSONException e) {
@@ -188,7 +191,7 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(Add_Job_Category_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Update_JobSize_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
             })
@@ -207,14 +210,16 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<String,String>();
-                    params.put("job_category_name",e5);
-                    params.put("job_category_status",e6);
+                    params.put("job_size_name",e5);
+                    params.put("job_size_status",e6);
+                    params.put("job_size_id",id);
+
                     return  params;
                 }
 
 
             };
-            RequestQueue  requestQueue = Volley.newRequestQueue(Add_Job_Category_Activity.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(Update_JobSize_Activity.this);
             requestQueue.add(request);
 
         }

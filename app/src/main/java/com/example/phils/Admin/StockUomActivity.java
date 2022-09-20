@@ -8,12 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockUOMAdapterClass;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockMake;
 import com.example.phils.ResponseModels.ResponseModelStockUOM;
@@ -48,6 +54,7 @@ public class StockUomActivity extends AppCompatActivity {
 
     RecyclerView recview;
     SearchView searchView;
+    ImageView img,profile;
 
     Button uom;
     StockUOMAdapterClass stockUOMAdapterClass;
@@ -145,10 +152,77 @@ public class StockUomActivity extends AppCompatActivity {
                     case R.id.list_stock:
                         startActivity(new Intent(getApplicationContext(),StockListActivity.class));
                         break;
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
                     default:
                         return true;
                 }
                 return true;
+            }
+        });
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(StockUomActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(StockUomActivity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
             }
         });
 
@@ -212,15 +286,22 @@ public class StockUomActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
-                            int j=0;
+                            int j = 0;
                             String uom_status;
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
-                            // Toast.makeText(StockMakeActivity.this, message, Toast.LENGTH_SHORT).show();
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
+
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(StockUomActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(StockUomActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 j++;
                                 JSONObject object = jsonArray.getJSONObject(i);
@@ -230,12 +311,9 @@ public class StockUomActivity extends AppCompatActivity {
                                 String uom_name = object.getString("uom_name");
 
                                 uom_status = object.getString("uom_status");
-                                if(uom_status.equals(String.valueOf(0)))
-                                {
+                                if (uom_status.equals(String.valueOf(0))) {
                                     uom_status = "Disable";
-                                }
-                                else
-                                {
+                                } else {
                                     uom_status = "Enable";
                                 }
 
@@ -244,13 +322,14 @@ public class StockUomActivity extends AppCompatActivity {
                                 String uom_created_on = object.getString("uom_created_on");
 
 
-                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status,uom_updated_on,uom_created_on);
-                                    data.add(responseModelStockUOM);
-                                    stockUOMAdapterClass.notifyDataSetChanged();
-                                    progressDialog.dismiss();
+                                responseModelStockUOM = new ResponseModelStockUOM(sn, uom_id, uom_name, uom_status, uom_updated_on, uom_created_on);
+                                data.add(responseModelStockUOM);
+                                stockUOMAdapterClass.notifyDataSetChanged();
+                                progressDialog.dismiss();
 
                             }
 
+                        }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -282,65 +361,6 @@ public class StockUomActivity extends AppCompatActivity {
 
     }
 
-//    private void fatchdata() {
-//        progressDialog = new ProgressDialog(StockUomActivity.this);
-//        progressDialog.setTitle("Stock UOM");
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-//        progressDialog.show();
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_uom.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String uom_status;
-//                            int stat = 0;
-//                            int j=0;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String uom_id = object.getString("uom_id");
-//                                    String  sn = String.valueOf(j);
-//                                    String uom_name = object.getString("uom_name");
-//
-//                                    uom_status = object.getString("uom_status");
-//                                    if(uom_status.equals(String.valueOf(0)))
-//                                    {
-//                                        uom_status = "Disable";
-//                                    }
-//                                    else
-//                                    {
-//                                        uom_status = "Enable";
-//                                    }
-//
-//                                    responseModelStockUOM = new ResponseModelStockUOM(sn,uom_id,uom_name,uom_status);
-//                                    data.add(responseModelStockUOM);
-//                                    stockUOMAdapterClass.notifyDataSetChanged();
-//                                    progressDialog.dismiss();
-//
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(StockUomActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
-//    }
     private void recycleClickLister() {
         listener = new StockUOMAdapterClass.RecycleViewClickListener(){
             @Override

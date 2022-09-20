@@ -8,12 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +30,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockListAdapterClass;
 import com.example.phils.Demo;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.ResponseModels.ResponseModelStockList;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.Update_StockList_Activity;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -49,6 +56,7 @@ public class StockListActivity extends AppCompatActivity {
 
     RecyclerView recview;
     SearchView searchView;
+    ImageView img,profile;
 
     StockListAdapterClass stockListAdapterClass;
     List<ResponseModelStockList> data;
@@ -148,10 +156,77 @@ public class StockListActivity extends AppCompatActivity {
                     case R.id.list_stock:
                         startActivity(new Intent(getApplicationContext(),StockListActivity.class));
                         break;
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
                     default:
                         return true;
                 }
                 return true;
+            }
+        });
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(StockListActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(StockListActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
             }
         });
 
@@ -405,14 +480,64 @@ public class StockListActivity extends AppCompatActivity {
             public void onClick(View v, int position) {
                 String kk = data.get(position).getStock_id();
 
+                String stock_category_id = data.get(position).getStock_category_id();
+                String stock_type_id = data.get(position).getStock_type_id();
+                String stock_size_id = data.get(position).getStock_size_id();
+
+                String Stock_category_name = data.get(position).getStock_category_name();
+                String Stock_type_name = data.get(position).getStock_type_name();
+                String Stock_size_name = data.get(position).getStock_size_name();
+
+                String stock_batch_number = data.get(position).getStock_batch_number();
+
+                String stock_make_id = data.get(position).getStock_make_id();
+                String stock_uom_id = data.get(position).getStock_uom_id();
+
+                String Make_name = data.get(position).getMake_name();
+                String Uom_name = data.get(position).getUom_name();
+
+                String safety_stock = data.get(position).getSafety_stock();
+                String stock_quantity = data.get(position).getStock_quantity();
+                String stock_lot = data.get(position).getStock_lot();
+                String stock_price = data.get(position).getStock_price();
+                String stock_invoice_number = data.get(position).getStock_invoice_number();
+                String stock_distributor_name = data.get(position).getStock_distributor_name();
+
+
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocation();
 
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username", kk);
+                Intent intent = new Intent(getApplicationContext(), Update_StockList_Activity.class);
+                intent.putExtra("id", kk);
+                intent.putExtra("stock_category_id", stock_category_id);
+                intent.putExtra("stock_type_id", stock_type_id);
+                intent.putExtra("stock_size_id", stock_size_id);
+
+                intent.putExtra("Stock_category_name", Stock_category_name);
+                intent.putExtra("Stock_type_name",Stock_type_name );
+                intent.putExtra("Stock_size_name", Stock_size_name);
+
+                intent.putExtra("stock_batch_number", stock_batch_number);
+
+                intent.putExtra("stock_make_id", stock_make_id);
+                intent.putExtra("stock_uom_id", stock_uom_id);
+
+                intent.putExtra("Make_name", Make_name);
+                intent.putExtra("Uom_name", Uom_name);
+
+                intent.putExtra("safety_stock", safety_stock);
+                intent.putExtra("stock_quantity", stock_quantity);
+                intent.putExtra("stock_lot", stock_lot);
+                intent.putExtra("stock_price", stock_price);
+                intent.putExtra("stock_invoice_number", stock_invoice_number);
+                intent.putExtra("stock_distributor_name", stock_distributor_name);
+
+                intent.putExtra("token",token);
                 intent.putExtra("userId",userId);
                 intent.putExtra("location",location);
+
+
 
                 startActivity(intent);
             }

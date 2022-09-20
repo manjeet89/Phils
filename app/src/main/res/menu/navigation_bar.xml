@@ -45,33 +45,33 @@
 
           <item
               android:id="@+id/list_stock"
-              android:title="List"
+              android:title="Stock List"
               android:icon="@drawable/ic_baseline_featured_play_list_24"/>
 
       </menu>
   </item>
 
-<!--    <item-->
-<!--        android:title="Job">-->
-<!--        <menu>-->
+    <item
+        android:title="Job">
+        <menu>
 
-<!--            <item-->
-<!--                android:id="@+id/category_job"-->
-<!--                android:title="Category"-->
-<!--                android:icon="@drawable/ic_baseline_category_24"/>-->
+            <item
+                android:id="@+id/category_job"
+                android:title="Category"
+                android:icon="@drawable/ic_baseline_category_24"/>
 
-<!--            <item-->
-<!--                android:id="@+id/Size_job"-->
-<!--                android:title="Size"-->
-<!--                android:icon="@drawable/ic_baseline_wysiwyg_24"/>-->
+            <item
+                android:id="@+id/Size_job"
+                android:title="Size"
+                android:icon="@drawable/ic_baseline_wysiwyg_24"/>
 
 <!--            <item-->
 <!--                android:id="@+id/List_job"-->
 <!--                android:title="List"-->
 <!--                android:icon="@drawable/ic_baseline_featured_play_list_24"/>-->
 
-<!--        </menu>-->
-<!--    </item>-->
+        </menu>
+    </item>
 
 <!--    <item-->
 <!--        android:title="Requisition">-->
