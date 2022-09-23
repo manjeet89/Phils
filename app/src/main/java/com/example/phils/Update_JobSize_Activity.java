@@ -1,7 +1,10 @@
 package com.example.phils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,11 +14,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +32,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Admin.ChangePasswordActivity;
+import com.example.phils.Admin.Job_Category_Activity;
+import com.example.phils.Admin.MainActivity;
+import com.example.phils.Admin.StockCategoryActivity;
+import com.example.phils.Admin.StockListActivity;
+import com.example.phils.Admin.StockMakeActivity;
+import com.example.phils.Admin.StockSizeActivity;
+import com.example.phils.Admin.StockTypeActivity;
+import com.example.phils.Admin.StockUomActivity;
 import com.example.phils.Update_JobSize_Activity;
 import com.example.phils.Admin.Job_Size_Activity;
 import com.example.phils.Shareprefered.AppConfig;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,11 +63,17 @@ public class Update_JobSize_Activity extends AppCompatActivity {
     EditText category_name;
     TextView location_save;
     AppConfig appConfig;
+    ImageView img,profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_job_size);
+        appConfig = new AppConfig(this);
+
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
 
         check_status = findViewById(R.id.status_check);
         button = findViewById(R.id.insert_job_cat);
@@ -65,6 +87,128 @@ public class Update_JobSize_Activity extends AppCompatActivity {
         arrayList1=new ArrayList<>();
         arrayList1.add("Enable");
         arrayList1.add("Disable");
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+                    case R.id.ghar:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        break;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                        break;
+
+                    case R.id.category_stock:
+                        startActivity(new Intent(getApplicationContext(), StockCategoryActivity.class));
+                        break;
+
+                    case R.id.type_stock:
+                        startActivity(new Intent(getApplicationContext(), StockTypeActivity.class));
+                        break;
+
+                    case R.id.size_stock:
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
+                        break;
+
+                    case R.id.make_stock:
+                        startActivity(new Intent(getApplicationContext(), StockMakeActivity.class));
+                        break;
+
+                    case R.id.umo_stock:
+                        startActivity(new Intent(getApplicationContext(), StockUomActivity.class));
+                        break;
+
+                    case R.id.list_stock:
+                        startActivity(new Intent(getApplicationContext(), StockListActivity.class));
+                        break;
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog  dialog=new Dialog(Update_JobSize_Activity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Update_JobSize_Activity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

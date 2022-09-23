@@ -95,7 +95,7 @@ public class StockListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Add_Stock_List_Activity.class);
                 intent.putExtra("token",token);
@@ -287,7 +287,7 @@ public class StockListActivity extends AppCompatActivity {
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_list",
                 new com.android.volley.Response.Listener<String>() {
@@ -296,9 +296,6 @@ public class StockListActivity extends AppCompatActivity {
 
                         try {
                             int j=0;
-//                            String stock_category_status;
-//                            String emp_type_name;
-
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 //                            Toast.makeText(StockListActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -342,38 +339,6 @@ public class StockListActivity extends AppCompatActivity {
                                 stockListAdapterClass.notifyDataSetChanged();
                                 progressDialog.dismiss();
 
-//                                String stock_category_id = object.getString("stock_category_id");
-//                                String stock_category_name = object.getString("stock_category_name");
-//                                String stock_emp_category = object.getString("stock_emp_category");
-//
-//                                stock_category_status = object.getString("stock_category_status");
-//                                if(stock_category_status.equals(String.valueOf(0)))
-//                                {
-//                                    stock_category_status = "Disable";
-//                                }
-//                                else
-//                                {
-//                                    stock_category_status = "Enable";
-//                                }
-//
-//
-//                                String stock_category_updated_on = object.getString("stock_category_updated_on");
-//                                String stock_category_created_on = object.getString("stock_category_created_on");
-//                                emp_type_name = object.getString("emp_type_name");
-//                                if(emp_type_name.equals("null"))
-//                                {
-//                                    emp_type_name = "Others";
-//                                }
-//                                else
-//                                {
-//                                    emp_type_name = object.getString("emp_type_name");
-//                                }
-//
-//                                responseModelStockCategory = new ResponseModelStockCategory(sn,stock_category_id,stock_category_name,stock_emp_category,stock_category_status,stock_category_updated_on,stock_category_created_on,emp_type_name);
-//                                data.add(responseModelStockCategory);
-//                                stockCategoryAdapterClass.notifyDataSetChanged();
-//                                progressDialog.dismiss();
-
                             }
 
                         }
@@ -408,72 +373,6 @@ public class StockListActivity extends AppCompatActivity {
     }
 
 
-    //    private void fatchdata() {
-//        progressDialog = new ProgressDialog(StockListActivity.this);
-//        progressDialog.setTitle("Stock List");
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-//        progressDialog.show();
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_list.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String stock_status;
-//                            int stat = 0;
-//                            int j=0;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String stock_id = object.getString("stock_id");
-//                                    String sn = String.valueOf(j);
-//                                    String stock_category_name = object.getString("stock_category_name");
-//                                    String stock_type_name = object.getString("stock_type_name");
-//                                    String stock_size_name = object.getString("stock_size_name");
-//                                    String stock_batch_number = object.getString("stock_batch_number");
-//                                    String make_name = object.getString("make_name");
-//                                    String uom_name = object.getString("uom_name");
-//                                    String safety_stock = object.getString("safety_stock");
-//                                    String stock_quantity = object.getString("stock_quantity");
-//                                    String stock_price = object.getString("stock_price");
-//                                    stock_status = object.getString("stock_status");
-//                                    if(stock_status.equals(String.valueOf(0)))
-//                                    {
-//                                        stock_status = "Disable";
-//                                    }
-//                                    else
-//                                    {
-//                                        stock_status = "Enable";
-//                                    }
-//
-//                                   responseModelStockList = new ResponseModelStockList(sn,stock_id,stock_category_name,stock_type_name,stock_size_name,stock_batch_number,make_name,uom_name,safety_stock,stock_quantity,stock_price,stock_status);
-//                                    data.add(responseModelStockList);
-//                                    stockListAdapterClass.notifyDataSetChanged();
-//                                    progressDialog.dismiss();
-//
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(StockListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
-//    }
     private void recycleClickLister() {
         listener = new StockListAdapterClass.RecycleViewClickListener() {
             @Override
@@ -506,7 +405,7 @@ public class StockListActivity extends AppCompatActivity {
 
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockList_Activity.class);
                 intent.putExtra("id", kk);

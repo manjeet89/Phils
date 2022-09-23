@@ -2,12 +2,14 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.CategorySpinner;
 import com.example.phils.EmpSpinner;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
@@ -46,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -60,9 +66,22 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
     AppConfig appConfig;
     ProgressDialog progressDialog;
     ArrayAdapter<String> EmpCategory;
+    ImageView img,profile;
 
     ArrayList<EmpSpinner> empSpinners = new ArrayList<EmpSpinner>();
     ArrayAdapter<EmpSpinner> spinnerArrayAdapter;
+
+
+
+//    boolean[] selectedLanguage;
+//    ArrayList<String> langList = new ArrayList<>();
+//    String[] str;
+
+
+
+
+
+
 
 
     @Override
@@ -75,10 +94,169 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_stock_category);
 
+
+
+//        String token = getIntent().getStringExtra("token");
+//        String userId = getIntent().getStringExtra("userId");
+//        String location = getIntent().getStringExtra("location");
+//
+//        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_employee_category",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            for(int i=0;i<jsonArray.length();i++) {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String emp_type_id = object.getString("emp_type_id");
+//                                String emp_type_name = object.getString("emp_type_name");
+//
+//                                empSpinners.add(new EmpSpinner(emp_type_id, emp_type_name));
+//
+//                                String[] str = new String[empSpinners.size()];
+//                                for (int j = 0; j < empSpinners.size(); j++) {
+//                                    str[j] = String.valueOf(empSpinners.get(j));
+//                                }
+//                                selectedLanguage = new boolean[str.length];
+//
+//
+//                                textview.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View view) {
+//
+//                                        // Initialize alert dialog
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(Add_Stock_Category_Activity.this);
+//
+//                                        // set title
+//                                        builder.setTitle("Select Language");
+//
+//                                        // set dialog non cancelable
+//                                        builder.setCancelable(false);
+//
+//                                        builder.setMultiChoiceItems(str, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+//                                                // check condition
+//                                                if (b) {
+//                                                    // when checkbox selected
+//                                                    // Add position  in lang list
+//                                                    langList.add(String.valueOf(i));
+//                                                    // Sort array list
+//                                                    Collections.sort(langList);
+//                                                } else {
+//                                                    // when checkbox unselected
+//                                                    // Remove position from langList
+//                                                    langList.remove(Integer.valueOf(i));
+//                                                }
+//                                            }
+//                                        });
+//
+//                                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                                // Initialize string builder
+//                                                StringBuilder stringBuilder = new StringBuilder();
+//                                                // use for loop
+//                                                for (int j = 0; j < langList.size(); j++) {
+//                                                    // concat array value
+//                                                    stringBuilder.append(str[Integer.parseInt(langList.get(j))]);
+//                                                    // check condition
+//                                                    if (j != langList.size() - 1) {
+//                                                        // When j value  not equal
+//                                                        // to lang list size - 1
+//                                                        // add comma
+//                                                        stringBuilder.append(", ");
+//                                                    }
+//                                                }
+//                                                // set text on textView
+//                                                textview.setText(stringBuilder.toString());
+//
+//                                                String s = textview.getText().toString();
+//                                                Toast.makeText(Add_Stock_Category_Activity.this, s, Toast.LENGTH_SHORT).show();
+//                                                //Toast.makeText(Assign_user_Job_Activity.this, s, Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//
+//                                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                                // dismiss dialog
+//                                                dialogInterface.dismiss();
+//                                            }
+//                                        });
+//                                        builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                                // use for loop
+//                                                for (int j = 0; j < selectedLanguage.length; j++) {
+//                                                    // remove all selection
+//                                                    selectedLanguage[j] = false;
+//                                                    // clear language list
+//                                                    langList.clear();
+//                                                    // clear text view value
+//                                                    textview.setText("");
+//                                                }
+//                                            }
+//                                        });
+//                                        // show dialog
+//                                        builder.show();
+//                                    }
+//                                });
+//
+//
+////                                spinnerArrayAdapter = new ArrayAdapter<EmpSpinner>(Add_Stock_Category_Activity.this,
+////                                        android.R.layout.simple_spinner_dropdown_item,empSpinners);
+////                                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////                                arrayList.add(emp_type_name);
+////                                EmpCategory = new ArrayAdapter<>(Add_Stock_Category_Activity.this,
+////                                        android.R.layout.simple_list_item_1, arrayList);
+////                                EmpCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//
+//                            }
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(Add_Stock_Category_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("user_token",token);
+//                headers.put("user_id", userId);
+//                headers.put("project_location_id", location);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Category_Activity.this);
+//        requestQueue.add(request);
+//
+
+
+
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
+
+
+
 
 
             textview=findViewById(R.id.testView);
@@ -143,7 +321,63 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         });
 
 
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog  dialog=new Dialog(Add_Stock_Category_Activity.this);
 
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Add_Stock_Category_Activity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
 
 
 
@@ -187,15 +421,14 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                                 String emp_type_name = object.getString("emp_type_name");
 
                                 empSpinners.add(new EmpSpinner(emp_type_id,emp_type_name));
+
+
                                 spinnerArrayAdapter = new ArrayAdapter<EmpSpinner>(Add_Stock_Category_Activity.this,
                                         android.R.layout.simple_spinner_dropdown_item,empSpinners);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                                arrayList.add(emp_type_name);
-//                                EmpCategory = new ArrayAdapter<>(Add_Stock_Category_Activity.this,
-//                                        android.R.layout.simple_list_item_1, arrayList);
-//                                EmpCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+//                                simple_spinner_dropdown_item
                             }
+
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -222,7 +455,6 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Category_Activity.this);
         requestQueue.add(request);
-
 
 
             textview.setOnClickListener(new View.OnClickListener() {
@@ -252,6 +484,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                     //ArrayAdapter<String> adapter=new ArrayAdapter<>(Add_Stock_Category_Activity.this, android.R.layout.simple_list_item_1,arrayList);
 
                     // set adapter
+                    //listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
                     listView.setAdapter(spinnerArrayAdapter);
                     editText.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -277,6 +510,8 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                             // set selected item on textView
                             //textview.setText(EmpCategory.getItem(position));
                             // Dismiss dialog
+//                            EmpSpinner item = (EmpSpinner) parent.getItemAtPosition(position);
+//                            Toast.makeText(Add_Stock_Category_Activity.this, item.emp_type_name, Toast.LENGTH_SHORT).show();
 
                             EmpSpinner empSpinner= (EmpSpinner) parent.getItemAtPosition(position);
                             textview.setText(empSpinner.emp_type_name);
@@ -344,10 +579,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         }
 
     private void Insert() {
-        progressDialog = new ProgressDialog(Add_Stock_Category_Activity.this);
-        progressDialog.setTitle("Stock Category");
-        progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.show();
+
 
         String e1 =  setcategoryid.getText().toString().trim();
         String e2 = category_name.getText().toString().toUpperCase(Locale.ROOT).trim();
@@ -372,6 +604,11 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         }
         else
         {
+
+            progressDialog = new ProgressDialog(Add_Stock_Category_Activity.this);
+            progressDialog.setTitle("Stock Category");
+            progressDialog.setMessage("Loading... Please Wait!");
+            progressDialog.show();
 
 
             if(e3.equals("Enable"))

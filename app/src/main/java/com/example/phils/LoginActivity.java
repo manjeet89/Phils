@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String emp_type_name = jsonObject1.getString("emp_type_name");
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
                                     String project_location_id = jsonObject1.getString("project_location_id");
+                                    String location_name = jsonObject1.getString("location_name");
 
 
                                     Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
@@ -140,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("emp_type_name",emp_type_name);
                                     intent.putExtra("emp_type_id",emp_type_id);
                                     intent.putExtra("project_location_id",project_location_id);
+                                    intent.putExtra("location_name",location_name);
 
 
                                     startActivity(intent);
@@ -160,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String emp_type_name = jsonObject1.getString("emp_type_name");
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
                                     String project_location_id = jsonObject1.getString("project_location_id");
+                                    String location_name = jsonObject1.getString("location_name");
 
                                     if (isRememberUserLogin) {
                                         appConfig.updateUserLoginStatus(true);
@@ -171,7 +174,8 @@ public class LoginActivity extends AppCompatActivity {
                                         appConfig.Saveemp_type_name(emp_type_name);
                                         appConfig.Saveemp_type_id(emp_type_id);
                                         appConfig.Saveuser_token(user_token);
-                                        appConfig.SaveLocation(project_location_id);
+                                        appConfig.SaveLocation(location_name);
+                                        appConfig.SaveLocationId(project_location_id);
 
 
                                     }

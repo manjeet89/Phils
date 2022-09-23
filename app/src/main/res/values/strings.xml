@@ -6,6 +6,9 @@
 
     <string name="pref_id_of_user">idofuser</string>
     <string name="save_location">locationProject</string>
+
+    <string name="save_locationid">locationidProject</string>
+
     <string name="save_userName">userName</string>
 
     <string name="user_id">user_id</string>
@@ -19,5 +22,9 @@
     <string name="user_name">user_name</string>
 
     <string name="user_token">user_token</string>
+
+
+    <string name="done" > done </string>
+
 
 </resources>

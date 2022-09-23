@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.CategorySpinner;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.StockTypeSpinner;
@@ -59,11 +62,9 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
     String categoryurl = "https://mployis.com/staging/api/stock/stock_category";
     String categoryIdurl="https://mployis.com/staging/api/stock/get_stock_type_from_category_id";
     String sizeurl = "https://mployis.com/staging/api/stock/add_stock_size";
-    ArrayList<String> category = new ArrayList<>();
-    ArrayList<String> type = new ArrayList<>();
 
-    ArrayAdapter<String> categoryAdapter;
-    ArrayAdapter<String> typeAdapter;
+    ImageView img,profile;
+
 
     ArrayList<StockTypeSpinner> stockTypeSpinners = new ArrayList<StockTypeSpinner>();
     ArrayAdapter<StockTypeSpinner> StockTypeSpinnerAdpter;
@@ -76,6 +77,11 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
 
     TextView location_save;
     AppConfig appConfig;
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +171,64 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
             }
         });
 
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(Add_Stock_Size_Activity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Add_Stock_Size_Activity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
+
         select_category = findViewById(R.id.select_category);
         select_type = findViewById(R.id.select_type);
         stock_size_name = findViewById(R.id.stock_size_name);
@@ -209,13 +273,7 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
                                         android.R.layout.simple_spinner_dropdown_item,categorySpinners);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
-//                                category.add(stock_category_name);
-//
-//                                categoryAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-//                                        android.R.layout.simple_list_item_1, category);
-//                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            }
+   }
 
                         }
                         catch (JSONException e) {
@@ -243,38 +301,6 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
 
         RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Size_Activity.this);
         requestQueue.add(request);
-
-
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String category_id= jsonObject.optString("stock_category_id");
-//                                String category_name= jsonObject.optString("stock_category_name");
-//                                category.add(category_name);
-//                                categoryAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-//                                        android.R.layout.simple_list_item_1,category);
-//                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest);
 
 
         select_category.setOnClickListener(new View.OnClickListener() {
@@ -334,119 +360,15 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
                         CategoryIdPass(spn.stock_category_id);
                         //Toast.makeText(Add_Stock_Size_Activity.this, spn.stock_category_id, Toast.LENGTH_SHORT).show();
 
-//                        String token = getIntent().getStringExtra("token");
-//                        String userId = getIntent().getStringExtra("userId");
-//                        String location = getIntent().getStringExtra("location");
-//
-//                        StringRequest request = new StringRequest(Request.Method.POST, categoryurl,
-//                                new com.android.volley.Response.Listener<String>() {
-//                                    @Override
-//                                    public void onResponse(String response) {
-//
-//                                        try {
-//                                            int j=0;
-//
-//                                            JSONObject jsonObject = new JSONObject(response);
-//                                            String message = jsonObject.getString("message");
-//
-//                                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                                            for(int i=0;i<jsonArray.length();i++)
-//                                            {
-//                                                j++;
-//                                                String ss = select_category.getText().toString();
-//
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//                                                String stock_category_id = object.getString("stock_category_id");
-//                                                String stock_category_name = object.getString("stock_category_name");
-//                                                if(ss.equals(stock_category_name)){
-//                                                    String idea = stock_category_id;
-//                                                    setcategoryid.setText(idea);
-//                                                    CategoryIdPass(idea);
-//                                                    Toast.makeText(Add_Stock_Size_Activity.this, idea, Toast.LENGTH_SHORT).show();
-//
-//                                                }
-//                                            }
-//                                        }
-//                                        catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_Size_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        {
-//                            @Override
-//                            public Map<String, String> getHeaders() throws AuthFailureError {
-//                                HashMap headers = new HashMap();
-//                                headers.put("user_token",token);
-//                                headers.put("user_id", userId);
-//                                headers.put("project_location_id", location);
-//
-//                                return headers;
-//                                //return super.getHeaders();
-//                            }
-//                        };
-//
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Size_Activity.this);
-//                        requestQueue.add(request);
-
 
                         // Dismiss dialog
                         dialog.dismiss();
 
 
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-
-//                        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, url
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = select_category.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String category_name = jsonObject.optString("stock_category_name");
-//                                        String category_id = jsonObject.optString("stock_category_id");
-//                                        if(ss.equals(category_name)){
-//                                            String idea = category_id;
-//                                            setcategoryid.setText(idea);
-//                                            CategoryIdPass(idea);
-//
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest1);
                     }
                 });
             }
         });
-
-
-
-
-
-
 
 
 
@@ -605,47 +527,6 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
             requestQueue.add(request);
 
 
-//            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_category_size.php",
-//                    new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            Toast.makeText(Add_Stock_Size_Activity.this, response, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    Toast.makeText(Add_Stock_Size_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }) {
-//
-//                @Override
-//                public Map<String, String> getHeaders() throws AuthFailureError {
-//                    HashMap headers = new HashMap();
-//                    headers.put("user_token",token);
-//                    headers.put("user_id", userId);
-//                    return headers;
-//
-//
-//
-//                    @Nullable
-//                @Override
-//                protected Map<String, String> getParams() throws AuthFailureError {
-//                    Map<String, String> params = new HashMap<String, String>();
-//                    params.put("stock_category_id", categoryadd);
-//                    params.put("stock_type_id",typeadd);
-//                    params.put("stock_size_name", sizenameadd);
-//                    params.put("stock_size_status", status);
-//                    return params;
-//                }
-//            };
-//            RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Size_Activity.this);
-//            requestQueue.add(request);
-//            progressDialog.dismiss();
-
-
-            //Toast.makeText(this, category + "/" + typeadd + "/" + sizename + "/" + status, Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -683,10 +564,6 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
                                 StockTypeSpinnerAdpter = new ArrayAdapter<StockTypeSpinner>(Add_Stock_Size_Activity.this,
                                         android.R.layout.simple_list_item_1,stockTypeSpinners );
                                 StockTypeSpinnerAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                                type.add(stock_type_name);
-//                                typeAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-//                                        android.R.layout.simple_list_item_1,type);
-//                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
                             }
                         }
@@ -728,39 +605,6 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
 
         RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Size_Activity.this);
         requestQueue.add(request);
-
-
-
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url1+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String stock_type_id= jsonObject.optString("stock_type_id");
-//                                String stock_type_name= jsonObject.optString("stock_type_name");
-//                                type.add(stock_type_name);
-//                                typeAdapter = new ArrayAdapter<>(Add_Stock_Size_Activity.this,
-//                                        android.R.layout.simple_list_item_1,type);
-//                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest);
 
 
         select_type.setOnClickListener(new View.OnClickListener() {
@@ -815,119 +659,9 @@ public class Add_Stock_Size_Activity extends AppCompatActivity  {
                         StockTypeSpinner stockTypeSpinner = (StockTypeSpinner) parent.getItemAtPosition(position);
                         select_type.setText(stockTypeSpinner.stock_type_name);
                         setypeid.setText(stockTypeSpinner.stock_type_id);
-//                        select_type.setText(typeAdapter.getItem(position));
-//
-//                        String token = getIntent().getStringExtra("token");
-//                        String userId = getIntent().getStringExtra("userId");
-//                        String location = getIntent().getStringExtra("location");
-//
-//                        StringRequest request = new StringRequest(Request.Method.POST, categoryIdurl,
-//                                new com.android.volley.Response.Listener<String>() {
-//                                    @Override
-//                                    public void onResponse(String response) {
-//
-//                                        try {
-//                                            int j=0;
-//                                            String ss = select_type.getText().toString();
-//                                            JSONObject jsonObject = new JSONObject(response);
-//                                            String message = jsonObject.getString("message");
-//
-//                                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                                            for(int i=0;i<jsonArray.length();i++)
-//                                            {
-//                                                j++;
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//                                                String stock_type_id = object.getString("stock_type_id");
-//                                                String stock_type_name = object.getString("stock_type_name");
-//                                                if(ss.equals(stock_type_name)){
-//                                                String idea = stock_type_id;
-//                                                setypeid.setText(idea);
-//                                                Toast.makeText(Add_Stock_Size_Activity.this, idea, Toast.LENGTH_SHORT).show();
-//
-//                                        }
-//                                            }
-//                                        }
-//                                        catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Add_Stock_Size_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        {
-//
-//                            @Nullable
-//                            @Override
-//                            protected Map<String, String> getParams() throws AuthFailureError {
-//                                Map<String,String> params = new HashMap<String,String>();
-//                                params.put("stock_category_id",idea);
-//                                return params;
-//                            }
-//
-//                            @Override
-//                            public Map<String, String> getHeaders() throws AuthFailureError {
-//                                HashMap headers = new HashMap();
-//                                headers.put("user_token",token);
-//                                headers.put("user_id", userId);
-//                                headers.put("project_location_id", location);
-//
-//                                return headers;
-//
-//
-//
-//
-//                                //return super.getHeaders();
-//                            }
-//                        };
-//
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Add_Stock_Size_Activity.this);
-//                        requestQueue.add(request);
-
-                        // Dismiss dialog
                         dialog.dismiss();
 
 
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, url1+idea
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = select_type.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String stock_type_id= jsonObject.optString("stock_type_id");
-//                                        String stock_type_name= jsonObject.optString("stock_type_name");
-//                                        if(ss.equals(stock_type_name)){
-//                                            String idea = stock_type_id;
-//                                            setypeid.setText(idea);
-////                                            Toast.makeText(Add_Stock_Size_Activity.this, idea, Toast.LENGTH_SHORT).show();
-//
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest1);
                     }
                 });
             }

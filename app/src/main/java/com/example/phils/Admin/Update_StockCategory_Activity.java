@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.EmpSpinner;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
@@ -58,6 +61,7 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
     AppConfig appConfig;
     ProgressDialog progressDialog;
     ArrayAdapter<String> EmpCategory;
+    ImageView img,profile;
 
     ArrayList<EmpSpinner> empSpinners = new ArrayList<EmpSpinner>();
     ArrayAdapter<EmpSpinner> spinnerArrayAdapter;
@@ -146,7 +150,63 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
         });
 
 
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog  dialog=new Dialog(Update_StockCategory_Activity.this);
 
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Update_StockCategory_Activity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
 
         // initialize array list
         arrayList=new ArrayList<>();

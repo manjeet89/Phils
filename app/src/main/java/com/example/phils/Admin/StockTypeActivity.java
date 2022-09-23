@@ -94,7 +94,7 @@ public class StockTypeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Add_Stock_Type_Activity.class);
                 intent.putExtra("token",token);
@@ -263,7 +263,7 @@ public class StockTypeActivity extends AppCompatActivity {
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_type",
                 new com.android.volley.Response.Listener<String>() {
@@ -382,7 +382,7 @@ public class StockTypeActivity extends AppCompatActivity {
 
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockType_Activity.class);
                 intent.putExtra("id",id);

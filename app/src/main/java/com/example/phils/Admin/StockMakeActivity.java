@@ -182,7 +182,6 @@ public class StockMakeActivity extends AppCompatActivity {
 
 
 
-
                 Button logout = dialog.findViewById(R.id.logout);
                 logout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -215,7 +214,7 @@ public class StockMakeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Add_Stock_Make_Activity.class);
                 intent.putExtra("token",token);
@@ -223,7 +222,8 @@ public class StockMakeActivity extends AppCompatActivity {
                 intent.putExtra("location",location);
 
                 startActivity(intent);
-                finish();               }
+                finish();
+            }
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -281,7 +281,7 @@ public class StockMakeActivity extends AppCompatActivity {
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_make",
                 new com.android.volley.Response.Listener<String>() {
@@ -373,7 +373,7 @@ public class StockMakeActivity extends AppCompatActivity {
 
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockMake_Activity.class);
                 intent.putExtra("id", kk);

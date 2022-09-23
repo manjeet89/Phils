@@ -20,6 +20,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
     TextView textView;
     boolean[] selectedLanguage;
     ArrayList<String> langList = new ArrayList<>();
+
     String[] langArray = {"Java", "C++", "Kotlin", "C", "Python", "Javascript", "C++", "Kotlin", "C", "Python", "Javascript", "C++", "Kotlin", "C", "Python", "Javascript"};
     TextView location_save;
     AppConfig appConfig;
@@ -61,6 +62,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                             // when checkbox selected
                             // Add position  in lang list
                             langList.add(String.valueOf(i));
+
                             // Sort array list
                             Collections.sort(langList);
                         } else {

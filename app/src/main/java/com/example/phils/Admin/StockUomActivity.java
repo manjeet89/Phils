@@ -278,7 +278,7 @@ public class StockUomActivity extends AppCompatActivity {
         progressDialog.show();
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_uom",
                 new com.android.volley.Response.Listener<String>() {

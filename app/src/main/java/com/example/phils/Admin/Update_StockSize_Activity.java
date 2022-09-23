@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.CategorySpinner;
+import com.example.phils.LoginActivity;
+import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.StockTypeSpinner;
@@ -55,19 +58,12 @@ public class Update_StockSize_Activity extends AppCompatActivity {
     Button insert_size;
     ArrayList<String> arrayList1;
     Dialog dialog;
+    ImageView img,profile;
 
     String categoryurl = "https://mployis.com/staging/api/stock/stock_category";
     String categoryIdurl="https://mployis.com/staging/api/stock/get_stock_type_from_category_id";
     String sizeurl = "https://mployis.com/staging/api/stock/update_stock_size";
 
-//    String url = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_data_in_tbl_type.php";
-//    String url1 = "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/fatch_spinner_stock/fatch_spinner_category_and_type_data_in_tbl_size.php?stock_category_id=";
-
-    ArrayList<String> category = new ArrayList<>();
-    ArrayList<String> type = new ArrayList<>();
-
-    ArrayAdapter<String> categoryAdapter;
-    ArrayAdapter<String> typeAdapter;
 
     ArrayList<StockTypeSpinner> stockTypeSpinners = new ArrayList<StockTypeSpinner>();
     ArrayAdapter<StockTypeSpinner> StockTypeSpinnerAdpter;
@@ -169,6 +165,64 @@ public class Update_StockSize_Activity extends AppCompatActivity {
             }
         });
 
+        profile = findViewById(R.id.profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                Dialog dialog=new Dialog(Update_StockSize_Activity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(Update_StockSize_Activity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
+
         select_category = findViewById(R.id.select_category);
         select_type = findViewById(R.id.select_type);
         stock_size_name = findViewById(R.id.stock_size_name);
@@ -228,13 +282,7 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                                 spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Update_StockSize_Activity.this,
                                         android.R.layout.simple_spinner_dropdown_item,categorySpinners);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//                                category.add(stock_category_name);
-//
-//                                categoryAdapter = new ArrayAdapter<>(Update_StockSize_Activity.this,
-//                                        android.R.layout.simple_list_item_1, category);
-//                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            }
+ }
 
                         }
                         catch (JSONException e) {
@@ -523,11 +571,6 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                                         android.R.layout.simple_list_item_1,stockTypeSpinners );
                                 StockTypeSpinnerAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-//                                type.add(stock_type_name);
-//                                typeAdapter = new ArrayAdapter<>(Update_StockSize_Activity.this,
-//                                        android.R.layout.simple_list_item_1,type);
-//                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////
                             }
                         }
                         catch (JSONException e) {
@@ -627,7 +670,6 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                 });
             }
         });
-
 
 
     }

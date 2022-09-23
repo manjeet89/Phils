@@ -158,6 +158,12 @@
                 android:orientation="vertical"
                 android:layout_margin="15sp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="0dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,11 +172,21 @@
                     android:textStyle="bold"
                     android:textColor="#3e403f"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"/>
 
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" *"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#db0711"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        />
+                </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -191,6 +207,12 @@
                 android:orientation="vertical"
                 android:layout_margin="15sp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="0dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -199,10 +221,20 @@
                     android:textStyle="bold"
                     android:textColor="#3e403f"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"/>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" *"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#db0711"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -224,6 +256,12 @@
                 android:orientation="vertical"
                 android:layout_margin="15sp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="0dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -232,10 +270,19 @@
                     android:textStyle="bold"
                     android:textColor="#3e403f"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="0dp"/>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" *"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#db0711"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        />
+                </LinearLayout>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -257,6 +304,12 @@
                 android:orientation="vertical"
                 android:layout_margin="15sp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="0dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -265,10 +318,19 @@
                     android:textStyle="bold"
                     android:textColor="#3e403f"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="0dp"/>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" *"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#db0711"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        />
+                </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

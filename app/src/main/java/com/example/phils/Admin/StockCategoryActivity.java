@@ -77,8 +77,8 @@ public class StockCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_category);
-
         appConfig = new AppConfig(this);
+
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
@@ -255,7 +255,7 @@ public class StockCategoryActivity extends AppCompatActivity {
     private void Add_category() {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         Intent intent = new Intent(getApplicationContext(), Add_Stock_Category_Activity.class);
         intent.putExtra("token",token);
@@ -294,7 +294,7 @@ public class StockCategoryActivity extends AppCompatActivity {
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
@@ -384,76 +384,6 @@ public class StockCategoryActivity extends AppCompatActivity {
 
     }
 
-//    private void fatchdata() {
-//
-//        progressDialog = new ProgressDialog(StockCategoryActivity.this);
-//        progressDialog.setTitle("Stock Category");
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.show();
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_category.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String status;
-//                            int stat = 0;
-//                            int j=0;
-//                            String cat_group;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String stock_category_id = object.getString("stock_category_id");
-//                                    String sn = String.valueOf(j);
-//                                    String category = object.getString("stock_category_name");
-//
-//                                     cat_group = object.getString("emp_type_name");
-//                                    if(cat_group.equals("null"))
-//                                    {
-//                                        cat_group = "Other";
-//                                    }
-//                                    else
-//                                    {
-//                                        cat_group = object.getString("emp_type_name");
-//                                    }
-//                                     status = object.getString("stock_category_status");
-//                                    if(status.equals(String.valueOf(0)))
-//                                    {
-//                                        status = "Disable";
-//                                    }
-//                                    else
-//                                    {
-//                                        status = "Enable";
-//                                    }
-//
-//                                    responseModelStockCategory = new ResponseModelStockCategory(sn,category,cat_group,status,stock_category_id);
-//                                    data.add(responseModelStockCategory);
-//                                    stockCategoryAdapterClass.notifyDataSetChanged();
-//                                progressDialog.dismiss();
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(StockCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(getApplicationContext(), Demo.class));
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
-//    }
-
     private void recycleClickLister() {
         listener = new StockCategoryAdapterClass.RecycleViewClickListener() {
 
@@ -466,7 +396,7 @@ public class StockCategoryActivity extends AppCompatActivity {
 
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
                 intent.putExtra("id",id);

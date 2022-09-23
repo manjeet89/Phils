@@ -92,7 +92,7 @@ public class StockSizeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Add_Stock_Size_Activity.class);
                 intent.putExtra("token",token);
@@ -282,7 +282,7 @@ public class StockSizeActivity extends AppCompatActivity {
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
-        String location = appConfig.getLocation();
+        String location = appConfig.getLocationId();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_size",
                 new com.android.volley.Response.Listener<String>() {
@@ -370,68 +370,6 @@ public class StockSizeActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-//    private void fatchdata() {
-//        progressDialog = new ProgressDialog(StockSizeActivity.this);
-//        progressDialog.setTitle("Stock Size");
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-//        progressDialog.show();
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_stock_size.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String stock_size_status;
-//                            int stat = 0;
-//                            int j=0;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = String.valueOf(j);
-//                                    String stock_size_id = object.getString("stock_size_id");
-//                                    String stock_category_name = object.getString("stock_category_name");
-//                                    String stock_type_name = object.getString("stock_type_name");
-//                                    String stock_size_name = object.getString("stock_size_name");
-//                                    stock_size_status = object.getString("stock_size_status");
-//
-//                                    if(stock_size_status.equals(String.valueOf(0)))
-//                                    {
-//                                        stock_size_status = "Disable";
-//                                    }
-//                                    else
-//                                    {
-//                                        stock_size_status = "Enable";
-//                                    }
-//
-//                                    responseModelStockSize = new ResponseModelStockSize(sn,stock_category_name,stock_type_name,stock_size_name,stock_size_status,stock_size_id);
-//                                    data.add(responseModelStockSize);
-//                                    stockSizeAdapterClass.notifyDataSetChanged();
-//                                    progressDialog.dismiss();
-//
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(StockSizeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
-//    }
-
     private void recycleClickLister() {
         listener = new StockSizeAdapterClass.RecycleViewClickListener() {
             @Override
@@ -448,7 +386,7 @@ public class StockSizeActivity extends AppCompatActivity {
 
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
-                String location = appConfig.getLocation();
+                String location = appConfig.getLocationId();
 
                 Intent intent = new Intent(getApplicationContext(), Update_StockSize_Activity.class);
                 intent.putExtra("id",id);

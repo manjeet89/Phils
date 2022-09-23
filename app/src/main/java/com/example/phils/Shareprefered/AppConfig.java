@@ -70,6 +70,17 @@ public class AppConfig {
         return sharedPreferences.getString(context.getString(R.string.save_location),"padgha");
     }
 
+    public void SaveLocationId(String locationId)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.save_locationid),locationId);
+        editor.apply();
+    }
+    public String getLocationId()
+    {
+        return sharedPreferences.getString(context.getString(R.string.save_locationid),"1");
+    }
+
 
 
 

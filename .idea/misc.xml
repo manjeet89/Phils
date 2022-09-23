@@ -44,10 +44,10 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_type.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_stock_uom.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_two_step_verification.xml" value="0.153125" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_job_category.xml" value="0.153125" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_job_category.xml" value="0.18" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_job_size.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_category.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_list.xml" value="0.153125" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_list.xml" value="0.21" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_make.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_size.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_type.xml" value="0.20416666666666666" />
@@ -69,11 +69,13 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_status.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/dialog_searchable_spinner_stock_type.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/multiple_item_spinner.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/navigation_header.xml" value="0.25" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/spinner_item_position.xml" value="0.23722627737226276" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/status_select.xml" value="0.15534420289855072" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/update_stock_category.xml" value="0.203125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/update_stock_type.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/main_menu.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/navigation_bar.xml" value="0.25" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/menu/navigation_bar_manager.xml" value="0.203125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1965" />
