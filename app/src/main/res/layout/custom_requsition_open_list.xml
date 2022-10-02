@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            android:id="@+id/table_layout">
+            <TableRow>
+                <TextView
+                    android:id="@+id/req_sn"
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="Sr.No."
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_id"
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="ID."
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/req_requisition_from"
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="REQUISITION FROM"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="0dp"
+                    android:layout_margin="7sp"
+
+                    >
+                <TextView
+                    android:id="@+id/req_requisition_for"
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:text="REQUISITION FOR"
+                    android:layout_margin="7sp"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                </ScrollView>
+
+                <TextView
+                    android:id="@+id/req_job_number"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="JOB NUMBER"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_seam_number"
+                    android:layout_width="150sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="SEAM NUMBER "
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_category"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="CATEGORY"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_type"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="TYPE"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_size"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="SIZE"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/req_quantity_assign"
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="QUANTITY ASSIGN"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/req_quantity_required"
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="QUANTITY REQUIRE"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/req_approved_by"
+                                    android:layout_width="100sp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="7sp"
+                                    android:text="APPROVED BY"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp"
+                                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/manager_status"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="MANAGER STATUS"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/editid"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="EDIT"
+                    android:textSize="12dp"
+                    android:backgroundTint="#1ca6eb"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_margin="7sp"/>
+
+
+            </TableRow>
+        </TableLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/table_layout"
+            style="@style/underlines"
+            tools:ignore="MissingConstraints"
+            />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

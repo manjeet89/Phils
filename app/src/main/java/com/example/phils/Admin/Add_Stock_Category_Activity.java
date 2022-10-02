@@ -2,14 +2,12 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -35,12 +33,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.CategorySpinner;
-import com.example.phils.EmpSpinner;
-import com.example.phils.LoginActivity;
+import com.example.phils.Spinner.EmpSpinner;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -51,7 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -70,7 +64,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
 
     ArrayList<EmpSpinner> empSpinners = new ArrayList<EmpSpinner>();
     ArrayAdapter<EmpSpinner> spinnerArrayAdapter;
-
+    static String arr[]=new String[10] ;
 
 
 //    boolean[] selectedLanguage;
@@ -419,6 +413,8 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String emp_type_id = object.getString("emp_type_id");
                                 String emp_type_name = object.getString("emp_type_name");
+                                arr[Integer.parseInt(emp_type_id)]=emp_type_name;
+
 
                                 empSpinners.add(new EmpSpinner(emp_type_id,emp_type_name));
 
@@ -428,6 +424,8 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                                simple_spinner_dropdown_item
                             }
+
+                          //  Log.d("Nilesh",arr[0]+arr[1]+arr[2]+arr[3]+arr[4]+arr[5]);
 
                         }
                         catch (JSONException e) {
@@ -502,6 +500,8 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
 
                         }
                     });
+
+
 
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

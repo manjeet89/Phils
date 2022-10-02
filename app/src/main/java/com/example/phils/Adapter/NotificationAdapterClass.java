@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,13 +18,20 @@ import java.util.List;
 
 public class NotificationAdapterClass extends RecyclerView.Adapter<NotificationAdapterClass.MyViewHolder> {
 
-    private Context context;
+    private NotificationAdapterClass.RecycleViewClickListener listener;
     private List<ResponseModelNotification> data;
 
-    public NotificationAdapterClass(Context context, List<ResponseModelNotification> data) {
-        this.context = context;
+    public NotificationAdapterClass(RecycleViewClickListener listener, List<ResponseModelNotification> data) {
+        this.listener = listener;
         this.data = data;
     }
+    //    private Context context;
+//    private List<ResponseModelNotification> data;
+//
+//    public NotificationAdapterClass(Context context, List<ResponseModelNotification> data) {
+//        this.context = context;
+//        this.data = data;
+//    }
 
 
     public void setFilteredList(List<ResponseModelNotification> filteredList)
@@ -50,13 +58,24 @@ public class NotificationAdapterClass extends RecyclerView.Adapter<NotificationA
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView sn_job,noti_message,noti_status;
+        Button id;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             sn_job = itemView.findViewById(R.id.sn_job);
             noti_message = itemView.findViewById(R.id.noti_message);
             noti_status = itemView.findViewById(R.id.noti_status);
+            id = itemView.findViewById(R.id.id);
+            id.setOnClickListener(this);
         }
+
+        public void onClick(View view) {
+            listener.onClick(view,getAdapterPosition());
+
+        }
+    }
+    public interface RecycleViewClickListener{
+        void onClick(View v,int position);
     }
 }

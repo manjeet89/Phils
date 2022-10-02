@@ -1,6 +1,5 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -8,7 +7,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,26 +19,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Add_Job_Category_Activity;
-import com.example.phils.Admin.MainActivity;
-import com.example.phils.ResponseModels.ResponseModelLogin;
+import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -217,155 +204,6 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-//    private void userLogin() {
-//        progressDialog = new ProgressDialog(LoginActivity.this);
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-//        progressDialog.show();
-//
-//        String username1 = username.getText().toString().trim();
-//        String password1 = password.getText().toString().trim();
-//        Call<ResponseModelLogin> call = ApiController.getInstance().getapi().userLogin(username1,password1);
-//        call.enqueue(new Callback<ResponseModelLogin>() {
-//            @Override
-//            public void onResponse(Call<ResponseModelLogin> call, Response<ResponseModelLogin> response) {
-//                if(response.code()==200)
-//                {
-//                    if(response.body().getStatus().equals("ok"))
-//                    {
-//                       if(response.body().getResultCode()==1)
-//                       {
-//                           String id = response.body().getUser_id();
-//                           String name = response.body().getName();
-//                           String user = response.body().getUsername();
-
-
-//                           if(user.equals("admin")) {
-//
-//
-//                               if(isRememberUserLogin)
-//                               {
-//                                   appConfig.updateUserLoginStatus(true);
-//                                   appConfig.saveNameOfUser(name);
-//                                   appConfig.saveUserName(user);
-//                                   appConfig.saveIdOfUser(id);
-//                               }
-//
-//                               Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                               intent.putExtra("name", name);
-//                               intent.putExtra("id", id);
-//                               startActivity(intent);
-//                               finish();
-//                           }
-//                           else {
-
-
-//                               FirebaseMessaging.getInstance().getToken()
-//                                       .addOnCompleteListener(new OnCompleteListener<String>() {
-//                                           @Override
-//                                           public void onComplete(@NonNull Task<String> task) {
-//                                               if (task.isSuccessful()) {
-//                                                   String usertoken = Objects.requireNonNull(task.getResult());
-//                                                   Log.d("tooo", "token: " + usertoken);
-//
-//
-//                                                   StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_token.php",
-//                                                           new com.android.volley.Response.Listener<String>() {
-//                                                               @Override
-//                                                               public void onResponse(String response) {
-//                                                                //   Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-//                                                               }
-//                                                           }, new com.android.volley.Response.ErrorListener() {
-//                                                       @Override
-//                                                       public void onErrorResponse(VolleyError error) {
-//                                                           Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                                                       }
-//                                                   }) {
-//                                                       @Nullable
-//                                                       @Override
-//                                                       protected Map<String, String> getParams() throws AuthFailureError {
-//                                                           Map<String, String> params = new HashMap<String, String>();
-//                                                           params.put("user_id", id);
-//                                                           params.put("user_token", usertoken);
-//                                                           return params;
-//                                                       }
-//                                                   };
-//                                                   RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-//                                                   requestQueue.add(request);
-//
-//                                                   Random random = new Random();
-//                                                   String id1 = String.format("%04d", random.nextInt(10000));
-//
-//
-//                                                   StringRequest request1 = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/update_otp.php",
-//                                                           new com.android.volley.Response.Listener<String>() {
-//                                                               @Override
-//                                                               public void onResponse(String response) {
-//                                                                //   Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-//                                                               }
-//                                                           }, new com.android.volley.Response.ErrorListener() {
-//                                                       @Override
-//                                                       public void onErrorResponse(VolleyError error) {
-//                                                           Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                                                       }
-//                                                   }) {
-//                                                       @Nullable
-//                                                       @Override
-//                                                       protected Map<String, String> getParams() throws AuthFailureError {
-//                                                           Map<String, String> params = new HashMap<String, String>();
-//                                                           params.put("user_id", id);
-//                                                           params.put("user_otp", id1);
-//                                                           return params;
-//                                                       }
-//                                                   };
-//                                                   RequestQueue requestQueue1 = Volley.newRequestQueue(LoginActivity.this);
-//                                                   requestQueue1.add(request1);
-//
-//
-//                                                   Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
-//                                                   // intent.putExtra("name",name);
-//                                                   intent.putExtra("id", id);
-//                                                   startActivity(intent);
-//
-//                                               }
-//                                           }
-//                                       });
-//                               finish();
-                         //  }
-//                           progressDialog.dismiss();
-//                       }
-//                       else
-//                       {
-//                            displayUserInformation("Something Went wrong");
-//                       }
-//                    }
-//                    else
-//                    {
-//                        displayUserInformation("Invalid Username or password");
-//
-//                       // Toast.makeText(LoginActivity.this, "Something Wrong...", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                }
-//                else
-//                {
-//                    displayUserInformation("Something  wrong");
-//
-//                    // Toast.makeText(LoginActivity.this, "Something Wrong...", Toast.LENGTH_SHORT).show();
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseModelLogin> call, Throwable t) {
-//
-//            }
-//        });
-
-    //}
     private void displayUserInformation(String message)
     {
        // Snackbar.make(layout, message,Snackbar.LENGTH_SHORT).show();

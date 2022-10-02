@@ -7,12 +7,13 @@
     android:id="@+id/ghar"
     android:title="Dashboards"
     android:icon="@drawable/ic_baseline_home_24"
+    
     />
-<!--    <item-->
-<!--        android:id="@+id/user"-->
-<!--        android:title="User"-->
-<!--        android:icon="@drawable/ic_baseline_person_24"-->
-<!--        />-->
+    <item
+        android:id="@+id/user"
+        android:title="User"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
 
   <item
       android:title="Stock">
@@ -73,14 +74,14 @@
         </menu>
     </item>
 
-<!--    <item-->
-<!--        android:title="Requisition">-->
-<!--        <menu>-->
+    <item
+        android:title="Requisition">
+        <menu>
 
-<!--            <item-->
-<!--                android:id="@+id/resqu_list"-->
-<!--                android:title="Requisition List"-->
-<!--                android:icon="@drawable/ic_baseline_category_24"/>-->
+            <item
+                android:id="@+id/resqu_list"
+                android:title="Requisition List"
+                android:icon="@drawable/ic_baseline_category_24"/>
 
 <!--            <item-->
 <!--                android:id="@+id/resqu_reviever"-->
@@ -88,8 +89,8 @@
 <!--                android:icon="@drawable/ic_baseline_wysiwyg_24"/>-->
 
 
-<!--        </menu>-->
-<!--    </item>-->
+        </menu>
+    </item>
 
 <!--    <item-->
 <!--        android:title="Report">-->

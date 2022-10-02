@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Spinner;
 
 public class CategorySpinner {
     public String stock_category_id;

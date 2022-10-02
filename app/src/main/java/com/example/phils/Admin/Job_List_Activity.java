@@ -29,14 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobListAdapterClass;
-import com.example.phils.Adapter.StockMakeAdapterClass;
 import com.example.phils.Add_Job_List_Activity;
-import com.example.phils.Demo;
-import com.example.phils.LoginActivity;
+import com.example.phils.JobList_Update;
+import com.example.phils.JobReplaceUseerActivity;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobList;
-import com.example.phils.ResponseModels.ResponseModelStockList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -65,7 +63,7 @@ public class Job_List_Activity extends AppCompatActivity {
     Button button,add_job;
     ImageView img,profile;
 
-    TextView location_save;
+    TextView location_save,replace_user;
     AppConfig appConfig;
 
     private JobListAdapterClass.RecycleViewClickListener listener;
@@ -91,7 +89,18 @@ public class Job_List_Activity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Assign_user_Job_Activity.class));
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocationId();
+
+                Intent intent = new Intent(getApplicationContext(), Assign_user_Job_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();
+               // startActivity(new Intent(getApplicationContext(), Assign_user_Job_Activity.class));
             }
         });
 
@@ -99,7 +108,34 @@ public class Job_List_Activity extends AppCompatActivity {
         add_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Add_Job_List_Activity.class));
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocationId();
+
+                Intent intent = new Intent(getApplicationContext(), Add_Job_List_Activity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();            }
+        });
+
+        replace_user = findViewById(R.id.replace_user);
+        replace_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocationId();
+
+                Intent intent = new Intent(getApplicationContext(), JobReplaceUseerActivity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -303,19 +339,34 @@ public class Job_List_Activity extends AppCompatActivity {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String sn = String.valueOf(j);
+
                                     String job_id = object.getString("job_id");
                                     String job_name = object.getString("job_name");
+                                    String job_category_id = object.getString("job_category_id");
                                     String job_number = object.getString("job_number");
-                                    String job_manager_id = object.getString("user_full_name");
-                                    job_status = object.getString("job_status");
+                                    String job_size_id = object.getString("job_size_id");
+                                    String job_location_id = object.getString("job_location_id");
 
+                                    String consumables_items = object.getString("consumables_items");
+                                    String seam_number = object.getString("seam_number");
+                                    String job_manager_id = object.getString("job_manager_id");
+
+                                    String job_emp_user = object.getString("job_emp_user");
+                                     job_status = object.getString("job_status");
                                     if (job_status.equals(String.valueOf(2))) {
                                         job_status = "Completed";
                                     } else {
                                         job_status = "In Progress";
                                     }
+                                    String job_category_name = object.getString("job_category_name");
+                                    String job_size_name = object.getString("job_size_name");
+                                    String user_full_name = object.getString("user_full_name");
 
-                                    responseModelJobList = new ResponseModelJobList(sn, job_name, job_number, job_manager_id, job_status, job_id);
+
+
+                                    responseModelJobList = new ResponseModelJobList(sn, job_id, job_name, job_category_id, job_number, job_size_id,
+                                            job_location_id,consumables_items,seam_number,job_manager_id,job_emp_user,job_status,job_category_name,
+                                            job_size_name,user_full_name);
                                     data.add(responseModelJobList);
                                     jobListAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -354,71 +405,52 @@ public class Job_List_Activity extends AppCompatActivity {
         requestQueue.add(request);
 
 
-
-
-
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_job_list.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String job_status;
-//                            int stat = 0;
-//                            int j=0;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    String job_id = object.getString("job_id");
-//                                    String sn = String.valueOf(j);
-//                                    String job_name = object.getString("job_name");
-//                                    String job_number = object.getString("job_number");
-//                                    String job_manager_id = object.getString("user_full_name");
-//                                    job_status = object.getString("job_status");
-//
-//                                    if(job_status.equals(String.valueOf(2)))
-//                                    {
-//                                        job_status = "Completed";
-//                                    }
-//                                    else
-//                                    {
-//                                        job_status = "In Progress";
-//                                    }
-//
-//                                    responseModelJobList = new ResponseModelJobList(sn,job_name,job_number,job_manager_id,job_status,job_id);
-//                                    data.add(responseModelJobList);
-//                                    jobListAdapterClass.notifyDataSetChanged();
-//                                    progressDialog.dismiss();
-//
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(Job_List_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
     }
     private void recycleClickLister() {
         listener = new JobListAdapterClass.RecycleViewClickListener() {
             @Override
             public void onClick(View v, int position) {
                 String kk = data.get(position).getJob_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-                intent.putExtra("username", kk);
+
+                String job_name = data.get(position).getJob_name();
+                String job_category_id = data.get(position).getJob_category_id();
+                String job_category_name = data.get(position).getJob_category_name();
+                String job_size_id = data.get(position).getJob_size_id();
+                String job_size_name = data.get(position).getJob_size_name();
+                String job_manager_id = data.get(position).getJob_manager_id();
+                String user_full_name = data.get(position).getUser_full_name();
+                String job_number = data.get(position).getJob_number();
+                String consumables_items = data.get(position).getConsumables_items();
+                String seam_number = data.get(position).getSeam_number();
+                String job_emp_user = data.get(position).getJob_emp_user();
+                String job_status = data.get(position).getJob_status();
+
+
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocationId();
+
+                Intent intent = new Intent(getApplicationContext(), Update_JobList_Activity.class);
+                intent.putExtra("id", kk);
+
+                intent.putExtra("token", token);
+                intent.putExtra("userId", userId);
+                intent.putExtra("location", location);
+
+
+                intent.putExtra("job_name", job_name);
+                intent.putExtra("job_category_id", job_category_id);
+                intent.putExtra("job_category_name", job_category_name);
+                intent.putExtra("job_size_id", job_size_id);
+                intent.putExtra("job_size_name", job_size_name);
+                intent.putExtra("job_manager_id", job_manager_id);
+                intent.putExtra("user_full_name", user_full_name);
+                intent.putExtra("job_number", job_number);
+                intent.putExtra("consumables_items", consumables_items);
+                intent.putExtra("seam_number", seam_number);
+                intent.putExtra("job_emp_user", job_emp_user);
+                intent.putExtra("job_status", job_status);
+
                 startActivity(intent);
             }
         };

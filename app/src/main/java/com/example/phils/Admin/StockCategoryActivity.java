@@ -1,7 +1,6 @@
 package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -31,13 +30,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockCategoryAdapterClass;
-import com.example.phils.Demo;
-import com.example.phils.LoginActivity;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.TwoStepVerification;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -62,6 +58,7 @@ public class StockCategoryActivity extends AppCompatActivity {
     StockCategoryAdapterClass stockCategoryAdapterClass;
     List<ResponseModelStockCategory> data;
     ResponseModelStockCategory responseModelStockCategory;
+
     LinearLayoutManager linearLayoutManager;
     SwipeRefreshLayout swipe;
     TextView location_save;

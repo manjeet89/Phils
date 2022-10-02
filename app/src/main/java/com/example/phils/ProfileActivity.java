@@ -4,16 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.phils.Admin.LoginActivity;
+import com.example.phils.ProfileActivity;
+import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.ResponseModels.ResponseModelUserProfile;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -46,6 +64,80 @@ public class ProfileActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(ProfileActivity.this);
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocationId();
+
+        //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/profile",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            int j=0;
+
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+
+                            Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                    String data = jsonObject.getString("data");
+                                    JSONObject jsonObject1 = new JSONObject(data);
+                                    String Name = jsonObject1.getString("user_full_name");
+                                    String Post = jsonObject1.getString("emp_type_name");
+                                    String phone = jsonObject1.getString("user_phone_number");
+                                    String email = jsonObject1.getString("user_email_id");
+                                    String Emp = jsonObject1.getString("user_employee_id");
+
+                                    adminName.setText(Name);
+                                    adminPost.setText(Post);
+                                    adminMobile.setText(phone);
+                                    adminEmail.setText(email);
+                                    adminEmp.setText(Emp);
+
+                                    progressDialog.dismiss();
+
+
+                            }
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ProfileActivity.this);
+        requestQueue.add(request);
 
 //        //Call<ResponseModelUserProfile> call = ApiController.getInstance().getapi().AdminProfile(ID);
 //        call.enqueue(new Callback<ResponseModelUserProfile>() {

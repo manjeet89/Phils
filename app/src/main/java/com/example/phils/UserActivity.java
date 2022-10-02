@@ -1,6 +1,7 @@
 package com.example.phils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.UserAdapterClass;
+import com.example.phils.Admin.Job_List_Activity;
+import com.example.phils.Admin.LoginActivity;
 import com.example.phils.Admin.MainActivity;
 import com.example.phils.Admin.StockCategoryActivity;
 import com.example.phils.Admin.StockListActivity;
@@ -30,6 +34,7 @@ import com.example.phils.Admin.StockMakeActivity;
 import com.example.phils.Admin.StockSizeActivity;
 import com.example.phils.Admin.StockTypeActivity;
 import com.example.phils.Admin.StockUomActivity;
+import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.ResponseModels.ResponseModelUser;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -40,8 +45,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -49,7 +56,7 @@ public class UserActivity extends AppCompatActivity {
     SearchView searchView;
 
 //    UserAdapterClass userAdapterClass;
-UserAdapterClass adapter;
+    UserAdapterClass adapter;
     List<ResponseModelUser> data;
     ResponseModelUser responseModelUser;
     LinearLayoutManager linearLayoutManager;
@@ -194,33 +201,40 @@ UserAdapterClass adapter;
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
-        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_user.php",
-                new com.android.volley.Response.Listener<String>() {
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocationId();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/user_list",
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            String user_status;
-                            String employee_type;
-                            int stat = 0;
                             int j=0;
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            if(success.equals("1"))
-                            {
-                                for(int i=0;i<jsonArray.length();i++)
-                                {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+
+                            //Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(UserActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
-//                                    String sn = object.getString("stock_category_id");
-                                    String user_id = String.valueOf(j);
-                                    String user_full_name = object.getString("user_full_name");
-                                    String emp_type_name = object.getString("emp_type_name");
+                                    String sn = String.valueOf(j);
+                                    String user_id = object.getString("user_id");
                                     String user_name = object.getString("user_name");
-                                    String user_phone_number = object.getString("user_phone_number");
-                                    String user_otp = object.getString("user_otp");
-                                     employee_type = object.getString("employee_type");
+                                    String user_employee_id = object.getString("user_employee_id");
+                                    String user_employee_type = object.getString("user_employee_type");
+                                    String employee_type = object.getString("employee_type");
                                     if(employee_type.equals(String.valueOf(0)))
                                     {
                                         employee_type = "Temporary";
@@ -229,8 +243,22 @@ UserAdapterClass adapter;
                                     {
                                         employee_type = "Permanent";
                                     }
-                                    user_status = object.getString("user_status");
+                                    String user_full_name = object.getString("user_full_name");
+                                    String gender = object.getString("gender");
+                                    String user_email_id = object.getString("user_email_id");
+                                    String user_phone_number = object.getString("user_phone_number");
+                                    String user_password = object.getString("user_password");
+                                    String project_location_id = object.getString("project_location_id");
+                                    String reporting_manager = object.getString("reporting_manager");
+                                    String user_otp = object.getString("user_otp");
+                                    if(user_otp.equals("null"))
+                                    {
+                                        user_otp = " ";
+                                    }
+                                    String user_otp_tried = object.getString("user_otp_tried");
+                                    String user_token = object.getString("user_token");
 
+                                    String user_status = object.getString("user_status");
                                     if(user_status.equals(String.valueOf(0)))
                                     {
                                         user_status = "Disable";
@@ -239,8 +267,14 @@ UserAdapterClass adapter;
                                     {
                                         user_status = "Enable";
                                     }
+                                    String user_updated_on = object.getString("user_updated_on");
+                                    String user_created_on = object.getString("user_created_on");
+                                    String emp_type_name = object.getString("emp_type_name");
 
-                                    responseModelUser = new ResponseModelUser(user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status);
+
+                                    responseModelUser = new ResponseModelUser(sn,user_id,user_name,user_employee_id,user_employee_type,
+                                            employee_type,user_full_name,gender,user_email_id,user_phone_number,user_password,project_location_id,
+                                            reporting_manager,user_otp,user_otp_tried,user_token,user_status,user_updated_on,user_created_on,emp_type_name);
                                     data.add(responseModelUser);
                                     adapter.notifyDataSetChanged();
                                     progressDialog.dismiss();
@@ -248,18 +282,109 @@ UserAdapterClass adapter;
                                 }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(UserActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token", token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+            }
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("project_location_id", location);
+                params.put("user_id", userId);
+
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(UserActivity.this);
         requestQueue.add(request);
+
+//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_user.php",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            String user_status;
+//                            String employee_type;
+//                            int stat = 0;
+//                            int j=0;
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            if(success.equals("1"))
+//                            {
+//                                for(int i=0;i<jsonArray.length();i++)
+//                                {
+//                                    j++;
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+////                                    String sn = object.getString("stock_category_id");
+//                                    String user_id = String.valueOf(j);
+//                                    String user_full_name = object.getString("user_full_name");
+//                                    String emp_type_name = object.getString("emp_type_name");
+//                                    String user_name = object.getString("user_name");
+//                                    String user_phone_number = object.getString("user_phone_number");
+//                                    String user_otp = object.getString("user_otp");
+//                                     employee_type = object.getString("employee_type");
+//                                    if(employee_type.equals(String.valueOf(0)))
+//                                    {
+//                                        employee_type = "Temporary";
+//                                    }
+//                                    else
+//                                    {
+//                                        employee_type = "Permanent";
+//                                    }
+//                                    user_status = object.getString("user_status");
+//
+//                                    if(user_status.equals(String.valueOf(0)))
+//                                    {
+//                                        user_status = "Disable";
+//                                    }
+//                                    else
+//                                    {
+//                                        user_status = "Enable";
+//                                    }
+//
+//                                    responseModelUser = new ResponseModelUser(user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status);
+//                                    data.add(responseModelUser);
+//                                    adapter.notifyDataSetChanged();
+//                                    progressDialog.dismiss();
+//
+//                                }
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(UserActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
     }
 
     private void recycleClickLister() {

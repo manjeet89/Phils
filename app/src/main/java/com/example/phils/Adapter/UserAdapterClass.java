@@ -40,7 +40,7 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.user_id.setText(data.get(position).getUser_id());
+        holder.user_id.setText(data.get(position).getSn());
         holder.user_full_name.setText(data.get(position).getUser_full_name());
         holder.emp_type_name.setText(data.get(position).getEmp_type_name());
         holder.user_name.setText(data.get(position).getUser_name());

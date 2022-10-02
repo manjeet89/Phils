@@ -31,14 +31,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.CategorySpinner;
-import com.example.phils.LoginActivity;
+import com.example.phils.Spinner.CategorySpinner;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -270,11 +267,6 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                                  spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Add_Stock_Type_Activity.this,
                                         android.R.layout.simple_spinner_dropdown_item,categorySpinners);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//                                category.add(stock_category_name);
-//                                categoryAdapter = new ArrayAdapter<>(Add_Stock_Type_Activity.this,
-//                                        android.R.layout.simple_list_item_1, category);
-//                                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
                             }

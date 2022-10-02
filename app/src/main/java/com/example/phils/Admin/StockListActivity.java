@@ -1,6 +1,7 @@
 package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -29,14 +30,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.StockListAdapterClass;
-import com.example.phils.Demo;
-import com.example.phils.LoginActivity;
 import com.example.phils.ProfileActivity;
 import com.example.phils.R;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
+import com.example.phils.RequisitionListActivity;
 import com.example.phils.ResponseModels.ResponseModelStockList;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.Update_StockList_Activity;
+import com.example.phils.TransfarStockListActivity;
 import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -326,7 +325,15 @@ public class StockListActivity extends AppCompatActivity {
                                 String stock_status = object.getString("stock_status");
                                 String stock_type_name = object.getString("stock_type_name");
                                 String stock_size_name = object.getString("stock_size_name");
+                                if(stock_size_name.equals("null"))
+                                {
+                                    stock_size_name = " ";
+                                }
                                 String make_name = object.getString("make_name");
+                                if(make_name.equals("null"))
+                                {
+                                    make_name = " ";
+                                }
                                 String uom_name = object.getString("uom_name");
                                 String stock_category_name = object.getString("stock_category_name");
                                 String assign_quantity = object.getString("assign_quantity");
@@ -377,6 +384,7 @@ public class StockListActivity extends AppCompatActivity {
         listener = new StockListAdapterClass.RecycleViewClickListener() {
             @Override
             public void onClick(View v, int position) {
+
                 String kk = data.get(position).getStock_id();
 
                 String stock_category_id = data.get(position).getStock_category_id();
@@ -407,38 +415,132 @@ public class StockListActivity extends AppCompatActivity {
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
 
-                Intent intent = new Intent(getApplicationContext(), Update_StockList_Activity.class);
-                intent.putExtra("id", kk);
-                intent.putExtra("stock_category_id", stock_category_id);
-                intent.putExtra("stock_type_id", stock_type_id);
-                intent.putExtra("stock_size_id", stock_size_id);
+                Dialog  dialog=new Dialog(StockListActivity.this);
 
-                intent.putExtra("Stock_category_name", Stock_category_name);
-                intent.putExtra("Stock_type_name",Stock_type_name );
-                intent.putExtra("Stock_size_name", Stock_size_name);
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_stock_list_button);
 
-                intent.putExtra("stock_batch_number", stock_batch_number);
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
 
-                intent.putExtra("stock_make_id", stock_make_id);
-                intent.putExtra("stock_uom_id", stock_uom_id);
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                intent.putExtra("Make_name", Make_name);
-                intent.putExtra("Uom_name", Uom_name);
+                // show dialog
+                dialog.show();
+                // Toast.makeText(Notification_Activity.this, "dfn", Toast.LENGTH_SHORT).show();
 
-                intent.putExtra("safety_stock", safety_stock);
-                intent.putExtra("stock_quantity", stock_quantity);
-                intent.putExtra("stock_lot", stock_lot);
-                intent.putExtra("stock_price", stock_price);
-                intent.putExtra("stock_invoice_number", stock_invoice_number);
-                intent.putExtra("stock_distributor_name", stock_distributor_name);
-
-                intent.putExtra("token",token);
-                intent.putExtra("userId",userId);
-                intent.putExtra("location",location);
+                Button edit = dialog.findViewById(R.id.stocklistedit);
+                Button transfer = dialog.findViewById(R.id.stockTransfer);
+                Button delete = dialog.findViewById(R.id.Stockdelete);
 
 
 
-                startActivity(intent);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_delete",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = new JSONObject(response);
+                                            String message = jsonObject.getString("message");
+
+                                            Toast.makeText(StockListActivity.this, message, Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(StockListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        {
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                HashMap headers = new HashMap();
+                                headers.put("user_token",token);
+                                headers.put("user_id", userId);
+                                headers.put("project_location_id", location);
+
+                                return headers;
+                            }
+
+                            @Nullable
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String,String> params = new HashMap<String,String>();
+                                params.put("stock_id",kk);
+                                return  params;
+                            }
+
+
+                        };
+                        RequestQueue  requestQueue = Volley.newRequestQueue(StockListActivity.this);
+                        requestQueue.add(request);
+                    }
+                });
+                transfer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), TransfarStockListActivity.class);
+                        intent.putExtra("id", kk);
+                        intent.putExtra("Stock_category_name", Stock_category_name);
+                        intent.putExtra("Stock_type_name",Stock_type_name );
+                        intent.putExtra("Stock_size_name", Stock_size_name);
+                        intent.putExtra("stock_batch_number", stock_batch_number);
+                        intent.putExtra("Make_name", Make_name);
+                        intent.putExtra("Uom_name", Uom_name);
+
+                        intent.putExtra("token",token);
+                        intent.putExtra("userId",userId);
+                        intent.putExtra("location",location);
+
+                        startActivity(intent);
+                    }
+                });
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Update_StockList_Activity.class);
+                        intent.putExtra("id", kk);
+                        intent.putExtra("stock_category_id", stock_category_id);
+                        intent.putExtra("stock_type_id", stock_type_id);
+                        intent.putExtra("stock_size_id", stock_size_id);
+                        intent.putExtra("Stock_category_name", Stock_category_name);
+                        intent.putExtra("Stock_type_name",Stock_type_name );
+                        intent.putExtra("Stock_size_name", Stock_size_name);
+                        intent.putExtra("stock_batch_number", stock_batch_number);
+                        intent.putExtra("stock_make_id", stock_make_id);
+                        intent.putExtra("stock_uom_id", stock_uom_id);
+                        intent.putExtra("Make_name", Make_name);
+                        intent.putExtra("Uom_name", Uom_name);
+                        intent.putExtra("safety_stock", safety_stock);
+                        intent.putExtra("stock_quantity", stock_quantity);
+                        intent.putExtra("stock_lot", stock_lot);
+                        intent.putExtra("stock_price", stock_price);
+                        intent.putExtra("stock_invoice_number", stock_invoice_number);
+                        intent.putExtra("stock_distributor_name", stock_distributor_name);
+                        intent.putExtra("token",token);
+                        intent.putExtra("userId",userId);
+                        intent.putExtra("location",location);
+                        startActivity(intent);
+                    }
+                });
+
+
+
+
+
             }
         };
     }

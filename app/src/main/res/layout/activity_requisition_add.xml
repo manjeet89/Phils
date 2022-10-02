@@ -48,8 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/header"
             android:background="@color/white"
+            android:id="@+id/header"
             >
 
             <com.google.android.material.appbar.AppBarLayout
@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="5sp"
+                android:background="@color/white"
                 >
                 <ImageView
                     android:layout_width="120sp"
@@ -84,6 +85,7 @@
                 android:orientation="horizontal"
                 android:layout_margin="5sp"
                 android:gravity="right"
+                android:background="@drawable/curve_shap"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,17 +111,17 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="25sp"
-                    android:layout_height="35sp"
-                    android:layout_margin="5sp"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_margin="7sp"
+                    android:src="@drawable/admin"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -173,7 +175,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="15sp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -182,11 +188,20 @@
                         android:textStyle="bold"
                         android:textColor="#3e403f"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"/>
+                        />
 
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -202,46 +217,20 @@
                 </LinearLayout>
 
 
+
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="15sp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Seam Number"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="0dp"/>
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/seamnumber"
-                        android:hint="select seam number"
-                        android:padding="10dp"
-                        android:background="#f2ebeb"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="1dp"
-                        android:gravity="center_vertical"
-                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        />
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="15sp">
-
+                        android:orientation="horizontal"
+                        >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -250,10 +239,20 @@
                         android:textStyle="bold"
                         android:textColor="#3e403f"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"/>
+                       />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -274,7 +273,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="15sp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -283,11 +286,20 @@
                         android:textStyle="bold"
                         android:textColor="#3e403f"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"/>
+                        />
 
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -309,6 +321,11 @@
                     android:orientation="vertical"
                     android:layout_margin="15sp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -317,10 +334,19 @@
                         android:textStyle="bold"
                         android:textColor="#3e403f"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"/>
-
+                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -369,26 +395,85 @@
                         />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="15sp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Seam Number"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="0dp"/>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/seamnumber"
+                        android:hint="select seam number"
+                        android:padding="10dp"
+                        android:background="#f2ebeb"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="1dp"
+                        android:gravity="center_vertical"
+                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="15sp">
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Quantity "
+                        android:text="Quantity"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="#3e403f"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="0dp"/>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#db0711"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            />
+                    </LinearLayout>
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

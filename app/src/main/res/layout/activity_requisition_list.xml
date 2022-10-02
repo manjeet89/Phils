@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".RequisitionListActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checklist"
+        android:visibility="invisible"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -147,8 +153,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/other_reqlist"
@@ -174,44 +179,46 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Requisition List"
                 android:layout_margin="10dp"
-                android:textColor="@color/black"
                 android:fontFamily="serif"
-                android:textStyle="bold"
-                />
+                android:text="Requisition List"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <Button
                     android:layout_width="80dp"
                     android:layout_height="41dp"
-                    android:text="Open"
-                    android:textColor="#41b6e0"
+                    android:layout_marginStart="15dp"
                     android:backgroundTint="@color/white"
-                    android:layout_marginStart="15dp"/>
+                    android:text="Open"
+                    android:textColor="#41b6e0" />
+
                 <Button
                     android:layout_width="110dp"
                     android:layout_height="41dp"
-                    android:text="On Going"
-                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
                     android:backgroundTint="@color/white"
-                    android:layout_marginStart="5dp"/>
+                    android:text="On Going"
+                    android:textColor="@color/black" />
+
                 <Button
                     android:layout_width="125dp"
                     android:layout_height="41dp"
-                    android:text="Completed"
-                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
                     android:backgroundTint="@color/white"
-                    android:layout_marginStart="5dp"/>
+                    android:text="Completed"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
-
 
 
             <HorizontalScrollView
@@ -248,43 +255,51 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/list_category_name"
-                                android:layout_width="100sp"
+                                android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="CATEGORY"
+                                android:text="ID."
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/list_category_name"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="REQUISITION FROM"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
 
-
                             <TextView
                                 android:id="@+id/list_type_name"
-                                android:layout_width="100sp"
+                                android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="TYPE"
+                                android:text="REQUISITION FOR"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/list_size_name"
-                                android:layout_width="80sp"
+                                android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="SIZE"
+                                android:text="JOB NUMBER"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/list_batch_number"
-                                android:layout_width="100sp"
+                                android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="BATCH NUMBER "
+                                android:text="SEAM NUMBER "
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -294,7 +309,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="MAKE"
+                                android:text="CATEGORY"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -304,7 +319,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="UOM"
+                                android:text="TYPE"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -314,7 +329,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="SAFETY"
+                                android:text="SIZE"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -324,16 +339,17 @@
                                 android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="QUANTITY"
+                                android:text="QUANTITY ASSIGN"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
+
                             <TextView
                                 android:id="@+id/list_price"
                                 android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="PRICE"
+                                android:text="QUANTITY REQUIRE"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -343,17 +359,35 @@
                                 android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="STATUS"
+                                android:text="APPROVED BY"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <!--                            <TextView-->
+                            <!--                                android:id="@+id/id"-->
+                            <!--                                android:layout_width="100sp"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:layout_margin="7sp"-->
+                            <!--                                android:text="MANAGER STATUS"-->
+                            <!--                                android:textColor="@color/lightgray"-->
+                            <!--                                android:textSize="12dp"-->
+                            <!--                                android:textStyle="bold" />-->
+
+                            <TextView
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="MANAGER STATUS"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/id"
                                 android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Action"
+                                android:text="ACTION"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

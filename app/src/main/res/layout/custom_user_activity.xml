@@ -105,6 +105,8 @@
                     android:text="Action"
                     android:textColor="@color/lightgray"
                     android:textSize="12dp"
+                    android:backgroundTint="#1ca6eb"
+                    android:background="#1ca6eb"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
