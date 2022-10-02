@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Job_List_Activity;
+import com.example.phils.R;
+import com.example.phils.RequisitionListActivity;
 import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONException;
@@ -50,7 +51,7 @@ public class RequisitionChangeStatusActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(),RequisitionListActivity.class));
+        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
     }
 
     @Override

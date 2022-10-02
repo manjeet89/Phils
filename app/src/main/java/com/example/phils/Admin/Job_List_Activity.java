@@ -30,13 +30,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.JobListAdapterClass;
 import com.example.phils.Add_Job_List_Activity;
-import com.example.phils.JobList_Update;
-import com.example.phils.JobReplaceUseerActivity;
-import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelJobList;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 

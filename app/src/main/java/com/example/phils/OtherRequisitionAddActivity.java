@@ -33,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.Spinner.CategorySpinner;
+import com.example.phils.Spinner.RequisitionJobNumberSpinner;
 import com.example.phils.Spinner.StockSizeSpinner;
 import com.example.phils.Spinner.StockTypeSpinner;
 

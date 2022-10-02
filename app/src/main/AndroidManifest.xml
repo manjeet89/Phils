@@ -21,13 +21,13 @@
             android:name=".TransfarStockListActivity"
             android:exported="false" />
         <activity
-            android:name=".RequisitionChangeStatusActivity"
+            android:name=".Admin.RequisitionChangeStatusActivity"
             android:exported="false" />
         <activity
             android:name=".OtherRequisitionAddActivity"
             android:exported="false" />
         <activity
-            android:name=".JobReplaceUseerActivity"
+            android:name=".Admin.JobReplaceUseerActivity"
             android:exported="false" />
         <activity
             android:name=".JobList_Update"
@@ -60,7 +60,7 @@
             android:name=".RequisitionAddActivity"
             android:exported="false" />
         <activity
-            android:name=".RequisitionReceiverActivity"
+            android:name=".Admin.RequisitionReceiverActivity"
             android:exported="false" />
         <activity
             android:name=".RequisitionListActivity"
@@ -81,7 +81,7 @@
             android:name=".Admin.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Admin.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.ProjectLocationActivity"
@@ -168,7 +168,7 @@
             android:name=".Admin.StockCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".UserActivity"
+            android:name=".Admin.UserActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.MainActivity"

@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,14 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockCategoryAdapterClass;
-import com.example.phils.Admin.Assign_user_Job_Activity;
 import com.example.phils.Admin.LoginActivity;
 import com.example.phils.Admin.MainActivity;
-import com.example.phils.Admin.Notification_Activity;
-import com.example.phils.Admin.StockCategoryActivity;
-import com.example.phils.Admin.Update_StockCategory_Activity;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
+import com.example.phils.Admin.RequisitionChangeStatusActivity;
+import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 import com.example.phils.Shareprefered.AppConfig;
 
 import org.json.JSONArray;
@@ -40,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -214,7 +207,7 @@ public class RequisitionListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent = new Intent(getApplicationContext(),RequisitionChangeStatusActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), RequisitionChangeStatusActivity.class);
 
                         intent.putExtra("stockcategory",stockcategory);
                         intent.putExtra("stocktype",stocktype);

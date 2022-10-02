@@ -33,7 +33,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.Spinner.CategorySpinner;
 import com.example.phils.Shareprefered.AppConfig;
@@ -41,7 +40,6 @@ import com.example.phils.Spinner.StockMakeSpinner;
 import com.example.phils.Spinner.StockSizeSpinner;
 import com.example.phils.Spinner.StockTypeSpinner;
 import com.example.phils.Spinner.StockUOMSpinner;
-import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 

@@ -24,12 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Add_Stock_Type_Activity;
-import com.example.phils.Admin.Assign_user_Job_Activity;
 import com.example.phils.Admin.LoginActivity;
-import com.example.phils.Admin.Update_JobList_Activity;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.Spinner.CategorySpinner;
+import com.example.phils.Spinner.ProjectManagerSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -9,8 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.phils.Adapter.JobCategoryAdapterClass;
-import com.example.phils.ResponseModels.ResponseModelJobCategory;
+import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 
 import java.util.List;
 

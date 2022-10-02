@@ -28,14 +28,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Add_Stock_Type_Activity;
 import com.example.phils.Admin.LoginActivity;
-import com.example.phils.Admin.StockCategoryActivity;
 import com.example.phils.Admin.StockListActivity;
-import com.example.phils.Admin.StockTypeActivity;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.Spinner.CategorySpinner;
+import com.example.phils.Spinner.StockTransferlocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;

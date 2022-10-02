@@ -3,14 +3,10 @@ package com.example.phils;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,12 +31,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Admin.Add_Stock_List_Activity;
-import com.example.phils.Admin.Assign_user_Job_Activity;
-import com.example.phils.Admin.Job_List_Activity;
-import com.example.phils.Admin.Notification_Activity;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.Spinner.CategorySpinner;
+import com.example.phils.Spinner.RequisitionJobNumberSpinner;
 import com.example.phils.Spinner.StockSizeSpinner;
 import com.example.phils.Spinner.StockTypeSpinner;
 

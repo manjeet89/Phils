@@ -21,11 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.phils.ProfileActivity;
 import com.example.phils.R;
 import com.example.phils.RequisitionListActivity;
 import com.example.phils.Shareprefered.AppConfig;
-import com.example.phils.UserActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.onesignal.OneSignal;

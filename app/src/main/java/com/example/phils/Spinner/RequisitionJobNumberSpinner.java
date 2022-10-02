@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Spinner;
 
 public class RequisitionJobNumberSpinner {
     public String job_id;

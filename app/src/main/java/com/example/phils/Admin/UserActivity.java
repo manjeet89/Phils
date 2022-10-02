@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,16 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.UserAdapterClass;
-import com.example.phils.Admin.Job_List_Activity;
-import com.example.phils.Admin.LoginActivity;
-import com.example.phils.Admin.MainActivity;
-import com.example.phils.Admin.StockCategoryActivity;
-import com.example.phils.Admin.StockListActivity;
-import com.example.phils.Admin.StockMakeActivity;
-import com.example.phils.Admin.StockSizeActivity;
-import com.example.phils.Admin.StockTypeActivity;
-import com.example.phils.Admin.StockUomActivity;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
+import com.example.phils.Demo;
+import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelUser;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -392,7 +384,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 String kk = data.get(position).getUser_id();
-                Intent intent = new Intent(getApplicationContext(),Demo.class);
+                Intent intent = new Intent(getApplicationContext(), Demo.class);
                intent.putExtra("username",kk);
                 startActivity(intent);
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();

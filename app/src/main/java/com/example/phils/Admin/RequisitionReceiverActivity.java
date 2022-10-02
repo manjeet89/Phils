@@ -1,8 +1,10 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.phils.R;
 
 public class RequisitionReceiverActivity extends AppCompatActivity {
 
