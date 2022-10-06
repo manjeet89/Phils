@@ -1,9 +1,11 @@
-package com.example.phils;
+package com.example.phils.Rought;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.phils.R;
 
 public class Demo extends AppCompatActivity {
 

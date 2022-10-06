@@ -58,11 +58,7 @@ public class Notification_Activity extends AppCompatActivity {
 
     private NotificationAdapterClass.RecycleViewClickListener listener;
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

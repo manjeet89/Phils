@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,11 @@ public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClas
         holder.jobnumber.setText(data.get(position).getJob_number());
         holder.projectmanager.setText(data.get(position).getJob_manager_id());
         holder.statuslist.setText(data.get(position).getJob_status());
+        if(data.get(position).getJob_status().equals("In Progress"))
+            holder.statuslist.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.statuslist.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override

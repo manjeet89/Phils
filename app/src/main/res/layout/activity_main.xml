@@ -13,7 +13,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-        android:id="@+id/nav"
+        android:id="@+id/header"
+        android:background="@color/white"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -48,9 +49,9 @@
             android:orientation="horizontal"
             android:layout_margin="5sp"
             android:gravity="right"
-            android:background="@drawable/curve_shap"
             >
             <TextView
+                android:id="@+id/locationtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location :"
@@ -85,6 +86,7 @@
                 android:layout_height="30sp"
                 android:layout_margin="7sp"
                 android:src="@drawable/admin"
+                android:background="@drawable/shap_curve"
                 />
         </LinearLayout>
 </LinearLayout>
@@ -118,15 +120,15 @@
 <!--            android:gravity="center"-->
 <!--            android:layout_below="@id/test"-->
 <!--            android:layout_marginTop="200sp"/>-->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_notification"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:text="Notification"
-            android:layout_marginTop="270sp"
-            android:layout_marginStart="130sp"/>
+<!--        <Button-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/btn_notification"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:text="Notification"-->
+<!--            android:layout_marginTop="270sp"-->
+<!--            android:layout_marginStart="130sp"/>-->
       </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

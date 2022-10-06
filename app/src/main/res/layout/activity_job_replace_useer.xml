@@ -26,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/white"
             android:id="@+id/header"
+            android:background="@color/white"
             >
 
             <com.google.android.material.appbar.AppBarLayout
@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="5sp"
-                android:background="@color/white"
                 >
                 <ImageView
                     android:layout_width="120sp"
@@ -63,9 +62,9 @@
                 android:orientation="horizontal"
                 android:layout_margin="5sp"
                 android:gravity="right"
-                android:background="@drawable/curve_shap"
                 >
                 <TextView
+                    android:id="@+id/locationtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location :"
@@ -100,6 +99,7 @@
                     android:layout_height="30sp"
                     android:layout_margin="7sp"
                     android:src="@drawable/admin"
+                    android:background="@drawable/shap_curve"
                     />
             </LinearLayout>
         </LinearLayout>

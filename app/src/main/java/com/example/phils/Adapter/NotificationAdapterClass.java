@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,11 @@ public class NotificationAdapterClass extends RecyclerView.Adapter<NotificationA
         holder.sn_job.setText(data.get(position).getNoti_id());
         holder.noti_message.setText(data.get(position).getNoti_message());
         holder.noti_status.setText(data.get(position).getNoti_status());
+        if(data.get(position).getNoti_status().equals("Disable"))
+            holder.noti_status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.noti_status.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override

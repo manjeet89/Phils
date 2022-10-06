@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints"
+            android:id="@+id/table_layout">
+            <TableRow >
+
+
+                    <RadioButton
+                        android:id="@+id/stockId"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:layout_margin="7sp"
+
+                        />
+
+<!--                <TextView-->
+<!--                    android:layout_width="100sp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="7sp"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="#1b1c1b"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textStyle="bold" />-->
+
+                <TextView
+                    android:id="@+id/assignbatch"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="BATCH"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assigncategory"
+                    android:layout_width="120sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="CATEGORY"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/assigntype"
+                    android:layout_width="120sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="TYPE"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/assignsize"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="SIZE"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assignmaxalot"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="MAX ALOT"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assignavailable"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="AVAILABLE"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assignstock"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="STOCK"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assignmake"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="MAKE"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/assignuom"
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7sp"
+                    android:text="UOM"
+                    android:textColor="#1b1c1b"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+
+
+            </TableRow>
+        </TableLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/table_layout"
+            style="@style/underlines"
+            tools:ignore="MissingConstraints"
+            />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

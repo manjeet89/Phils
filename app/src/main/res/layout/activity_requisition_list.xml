@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".RequisitionListActivity">
+    tools:context=".Admin.RequisitionListActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
                 android:gravity="right"
                 >
                 <TextView
+                    android:id="@+id/locationtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location :"
@@ -84,20 +85,22 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="25sp"
-                    android:layout_height="35sp"
-                    android:layout_margin="5sp"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_margin="7sp"
+                    android:src="@drawable/admin"
+                    android:background="@drawable/shap_curve"
                     />
             </LinearLayout>
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
@@ -163,7 +166,7 @@
                     android:backgroundTint="#1ca6eb"
                     android:drawableLeft="@drawable/ic_baseline_add_24"
                     android:padding="10dp"
-                    android:text="Other Requisition"
+                    android:text="Store Requisition"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
@@ -175,9 +178,9 @@
                     android:backgroundTint="#1ca6eb"
                     android:drawableLeft="@drawable/ic_baseline_add_24"
                     android:padding="10dp"
-                    android:text="Add Requisition"
+                    android:text="Consumable Requisition"
                     android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:textSize="7sp" />
             </LinearLayout>
 
             <TextView
@@ -195,6 +198,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/open"
                     android:layout_width="80dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="15dp"
@@ -203,6 +207,7 @@
                     android:textColor="#41b6e0" />
 
                 <Button
+                    android:id="@+id/ongoing"
                     android:layout_width="110dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="5dp"

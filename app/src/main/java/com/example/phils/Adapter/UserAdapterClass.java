@@ -1,9 +1,11 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,11 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
         holder.user_otp.setText(data.get(position).getUser_otp());
         holder.employee_type.setText(data.get(position).getEmployee_type());
         holder.user_status.setText(data.get(position).getUser_status());
+        if(data.get(position).getUser_status().equals("Disable"))
+        holder.user_status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+        holder.user_status.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override
@@ -58,6 +65,7 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status;
 
+        Button button;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             user_id = itemView.findViewById(R.id.user_id);
@@ -68,7 +76,8 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
             user_otp = itemView.findViewById(R.id.user_otp);
             employee_type = itemView.findViewById(R.id.employee_type);
             user_status = itemView.findViewById(R.id.user_status);
-            itemView.setOnClickListener(this);
+            button = itemView.findViewById(R.id.id);
+            button.setOnClickListener(this);
         }
 
         @Override

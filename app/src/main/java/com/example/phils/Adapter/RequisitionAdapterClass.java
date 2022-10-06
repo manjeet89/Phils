@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 
 import java.util.List;

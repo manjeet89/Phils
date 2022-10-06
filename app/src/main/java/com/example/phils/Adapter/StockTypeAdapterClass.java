@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,11 @@ public class StockTypeAdapterClass extends RecyclerView.Adapter<StockTypeAdapter
         holder.type.setText(data.get(position).getStock_type_name());
         holder.status.setText(data.get(position).getStock_type_status());
         holder.refrance.setText(data.get(position).getStock_type_id());
+        if(data.get(position).getStock_type_status().equals("Disable"))
+            holder.status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.status.setTextColor(Color.parseColor("#0eed3e"));
+
 //        holder.btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

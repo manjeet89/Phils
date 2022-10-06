@@ -1,8 +1,10 @@
 package com.example.phils.Admin;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,30 +19,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.example.phils.Spinner.UserLocationSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProjectLocationActivity extends AppCompatActivity {
 
-    TextView select_location;
+    TextView select_location,setlocation;
     Dialog dialog;
     Button insert_location;
-    ArrayList<String> location = new ArrayList<>();
-    ArrayAdapter<String> locationAdapter;
+    ArrayList<UserLocationSpinner> locationList = new ArrayList<>();
+    ArrayAdapter<UserLocationSpinner> locationAdapter;
     RequestQueue requestQueue;
-    String url = "https://investment-wizards.com/manjeet/Phils_Stock/projectLocation.php";
+    String url = "https://mployis.com/staging/api/job/location_list";
     AppConfig appConfig;
     TextView location_save;
 
@@ -56,6 +62,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
+        setlocation = findViewById(R.id.setlocation);
 
         insert_location = findViewById(R.id.insert_location);
         insert_location.setOnClickListener(new View.OnClickListener() {
@@ -67,44 +74,71 @@ public class ProjectLocationActivity extends AppCompatActivity {
 
 
         select_location=findViewById(R.id.select_location);
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url
-                , null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        try {
+                            int j=0;
+                            String stock_category_status;
+                            String emp_type_name;
 
-                        String location_id = jsonObject.optString("location_id");
-                        String location_name = jsonObject.optString("location_name");
-                        String location_status = jsonObject.optString("location_status");
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
 
-                        location.add(location_name);
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(ProjectLocationActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(ProjectLocationActivity.this,MainActivity.class));
+                                finish();
+                            }
+                            else {
 
-                        locationAdapter = new ArrayAdapter<>(ProjectLocationActivity.this,
-                                android.R.layout.simple_list_item_1, location);
-                        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    j++;
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String location_id = object.getString("location_id");
+                                    String location_name = object.getString("location_name");
 
+                                    locationList.add(new UserLocationSpinner(location_id,location_name));
+                                    locationAdapter = new ArrayAdapter<UserLocationSpinner>(ProjectLocationActivity.this,
+                                            android.R.layout.simple_spinner_dropdown_item,locationList);
+                                    locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                }
+                            }
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(ProjectLocationActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
 
-        requestQueue.add(jsonObjectRequest);
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ProjectLocationActivity.this);
+        requestQueue.add(request);
 
 
         select_location.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +151,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650,800);
+                dialog.getWindow().setLayout(750,1000);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -129,11 +163,9 @@ public class ProjectLocationActivity extends AppCompatActivity {
                 EditText editText=dialog.findViewById(R.id.edit_text);
                 ListView listView=dialog.findViewById(R.id.list_view);
 
-                // Initialize array adapter
-                ArrayAdapter<String> adapter=new ArrayAdapter<>(ProjectLocationActivity.this, android.R.layout.simple_list_item_1,location);
 
                 // set adapter
-                listView.setAdapter(adapter);
+                listView.setAdapter(locationAdapter);
                 editText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -142,7 +174,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        adapter.getFilter().filter(s);
+                        locationAdapter.getFilter().filter(s);
                     }
 
                     @Override
@@ -156,8 +188,10 @@ public class ProjectLocationActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         // when item selected from list
                         // set selected item on textView
-                        select_location.setText(adapter.getItem(position));
 
+                        UserLocationSpinner sp = (UserLocationSpinner)parent.getItemAtPosition(position);
+                        select_location.setText(sp.location_name);
+                        setlocation.setText(sp.location_id);
                         // Dismiss dialog
                         dialog.dismiss();
                     }
@@ -168,8 +202,73 @@ public class ProjectLocationActivity extends AppCompatActivity {
     }
     private void SaveLocation()
     {
-        String location = select_location.getText().toString();
-        appConfig.SaveLocation(location);
-        Toast.makeText(this, "Successful Update", Toast.LENGTH_SHORT).show();
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocation();
+        String locationName = setlocation.getText().toString();
+
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/set_location",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(ProjectLocationActivity.this, message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Location updated successfully"))
+                            {
+                                String data = jsonObject.getString("data");
+                                JSONObject jsonObject1 = new JSONObject(data);
+                                String location_name = jsonObject1.getString("location_name");
+                                 appConfig.SaveLocation(location_name);
+                                startActivity(new Intent(ProjectLocationActivity.this, MainActivity.class));
+
+                                //String setlocation = appConfig.getLocation();
+                                //location_save.setText(setlocation);
+
+
+                            }else {
+                                Toast.makeText(ProjectLocationActivity.this, message, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProjectLocationActivity.this, MainActivity.class));
+                                finish();
+                            }
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProjectLocationActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+
+                return headers;
+            }
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("project_location_id", locationName);
+                params.put("user_id", userId);
+                return  params;
+            }
+
+        };
+        RequestQueue  requestQueue1 = Volley.newRequestQueue(ProjectLocationActivity.this);
+        requestQueue1.add(request1);
     }
 }

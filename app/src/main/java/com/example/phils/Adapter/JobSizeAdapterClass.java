@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,11 @@ public class JobSizeAdapterClass extends RecyclerView.Adapter<JobSizeAdapterClas
         holder.sn.setText(data.get(position).getSn());
         holder.category.setText(data.get(position).getJob_size_name());
         holder.status.setText(data.get(position).getJob_size_status());
+        if(data.get(position).getJob_size_status().equals("Disable"))
+            holder.status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.status.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override

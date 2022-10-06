@@ -55,6 +55,7 @@
                 android:gravity="right"
                 >
                 <TextView
+                    android:id="@+id/locationtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location :"
@@ -78,17 +79,18 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="25sp"
-                    android:layout_height="35sp"
-                    android:layout_margin="5sp"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_margin="7sp"
+                    android:src="@drawable/admin"
+                    android:background="@drawable/shap_curve"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -146,6 +148,7 @@
                 app:queryHint="Search Type..." />
 
             <Button
+                android:id="@+id/adduser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10sp"
@@ -186,7 +189,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="Sr.No."
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -196,7 +199,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="EMPLOYEE NAME"
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -206,7 +209,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="POST "
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -216,7 +219,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="USER NAME "
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -225,7 +228,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="PHONE NUMBER "
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -234,7 +237,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="OTP"
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -243,7 +246,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="WORKER"
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -253,7 +256,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="STATUS"
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
@@ -263,7 +266,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="Action"
-                                android:textColor="@color/lightgray"
+                                android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
                         </TableRow>

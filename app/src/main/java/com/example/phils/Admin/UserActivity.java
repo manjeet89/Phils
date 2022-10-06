@@ -9,11 +9,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +38,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.UserAdapterClass;
-import com.example.phils.Demo;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelUser;
 import com.example.phils.Shareprefered.AppConfig;
@@ -54,6 +66,7 @@ public class UserActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     TextView location_save;
     AppConfig appConfig;
+    Button button;
 
      private UserAdapterClass.RecycleViewClickListener listener;
 
@@ -62,6 +75,12 @@ public class UserActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
+
+    Button logout,location;
+    Button btnnotification;
+    ImageView img,profile;
+    TextView locationtext;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +92,139 @@ public class UserActivity extends AppCompatActivity {
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
 
-        recview = findViewById(R.id.recview);
-        searchView = findViewById(R.id.search);
-        searchView.clearFocus();
+        locationtext = findViewById(R.id.locationtext);
+        locationtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+            }
+        });
+        location_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+
+            }
+        });
+
+        img = findViewById(R.id.img);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Notification_Activity.class));
+            }
+        });
+
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                appConfig.updateUserLoginStatus(false);
+//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                finish();
+//            }
+//        });
+
+        profile = findViewById(R.id.profile);
+
+        //ImageView profile=(ImageView) findViewById(R.id.profile);
+        Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+        Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+        Canvas canvas=new Canvas(imageRounded);
+        Paint mpaint=new Paint();
+        mpaint.setAntiAlias(true);
+        mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+        profile.setImageBitmap(imageRounded);
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                dialog=new Dialog(UserActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+                ImageView profile  = dialog.findViewById(R.id.profile);
+                Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+                Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+                Canvas canvas=new Canvas(imageRounded);
+                Paint mpaint=new Paint();
+                mpaint.setAntiAlias(true);
+                mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+                canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+                profile.setImageBitmap(imageRounded);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(UserActivity.this,LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+//                if(1==1)
+//                {
+//                    textView.setVisibility(View.GONE);
+//                }
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
 
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
+
+
+
+
+        if(1==2) {
+            Menu menu = navigationView.getMenu();
+            MenuItem menuItem = menu.findItem(R.id.ghar);
+            menuItem.setVisible(false);
+        }
+
+
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +245,7 @@ public class UserActivity extends AppCompatActivity {
 
                     case R.id.user:
                         startActivity(new Intent(getApplicationContext(),UserActivity.class));
+
                         break;
 
                     case R.id.category_stock:
@@ -126,12 +271,67 @@ public class UserActivity extends AppCompatActivity {
                     case R.id.list_stock:
                         startActivity(new Intent(getApplicationContext(), StockListActivity.class));
                         break;
+
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
+                    case R.id.List_job:
+                        startActivity(new Intent(getApplicationContext(), Job_List_Activity.class));
+                        break;
+
+                    case R.id.Report_reports:
+                        startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+                        break;
+
+                    case R.id.Report_consumption:
+                        startActivity(new Intent(getApplicationContext(), ConsumptionActivity.class));
+                        break;
+
+                    case R.id.Report_consumption_details:
+                        startActivity(new Intent(getApplicationContext(), ConsumptionDetailActivity.class));
+                        break;
+
+//                    case R.id.roles:
+//                        startActivity(new Intent(getApplicationContext(), RolesAndPrivilegesActivity.class));
+//                        break;
+//
+                    case R.id.resqu_list:
+                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+                        break;
+//
+                    case R.id.resqu_reviever:
+                        startActivity(new Intent(getApplicationContext(), RequisitionReciverList.class));
+                        break;
+
+
+
                     default:
                         return true;
                 }
                 return true;
             }
         });
+
+
+        recview = findViewById(R.id.recview);
+        searchView = findViewById(R.id.search);
+        searchView.clearFocus();
+        button = findViewById(R.id.adduser);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AddUserActivity.class));
+            }
+        });
+
+
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -189,7 +389,6 @@ public class UserActivity extends AppCompatActivity {
 
     private void fatchdata() {
         progressDialog = new ProgressDialog(UserActivity.this);
-        progressDialog.setTitle("Stock User");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
@@ -311,81 +510,39 @@ public class UserActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivity.this);
         requestQueue.add(request);
 
-//        StringRequest request = new StringRequest(Request.Method.GET, "https://investment-wizards.com/manjeet/Phils_Stock/tbl_user.php",
-//                new com.android.volley.Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            String user_status;
-//                            String employee_type;
-//                            int stat = 0;
-//                            int j=0;
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                            if(success.equals("1"))
-//                            {
-//                                for(int i=0;i<jsonArray.length();i++)
-//                                {
-//                                    j++;
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-////                                    String sn = object.getString("stock_category_id");
-//                                    String user_id = String.valueOf(j);
-//                                    String user_full_name = object.getString("user_full_name");
-//                                    String emp_type_name = object.getString("emp_type_name");
-//                                    String user_name = object.getString("user_name");
-//                                    String user_phone_number = object.getString("user_phone_number");
-//                                    String user_otp = object.getString("user_otp");
-//                                     employee_type = object.getString("employee_type");
-//                                    if(employee_type.equals(String.valueOf(0)))
-//                                    {
-//                                        employee_type = "Temporary";
-//                                    }
-//                                    else
-//                                    {
-//                                        employee_type = "Permanent";
-//                                    }
-//                                    user_status = object.getString("user_status");
-//
-//                                    if(user_status.equals(String.valueOf(0)))
-//                                    {
-//                                        user_status = "Disable";
-//                                    }
-//                                    else
-//                                    {
-//                                        user_status = "Enable";
-//                                    }
-//
-//                                    responseModelUser = new ResponseModelUser(user_id,user_full_name,emp_type_name,user_name,user_phone_number,user_otp,employee_type,user_status);
-//                                    data.add(responseModelUser);
-//                                    adapter.notifyDataSetChanged();
-//                                    progressDialog.dismiss();
-//
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(UserActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(request);
     }
 
     private void recycleClickLister() {
         listener = new UserAdapterClass.RecycleViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                String kk = data.get(position).getUser_id();
-                Intent intent = new Intent(getApplicationContext(), Demo.class);
-               intent.putExtra("username",kk);
+                String id = data.get(position).getUser_id();
+                String employee_type = data.get(position).getEmployee_type();
+                String user_full_name = data.get(position).getUser_full_name();
+                String user_password = data.get(position).getUser_password();
+                String user_name = data.get(position).getUser_name();
+                String gender = data.get(position).getGender();
+                String user_employee_id = data.get(position).getUser_employee_id();
+                String user_mobile_number = data.get(position).getUser_phone_number();
+                String user_email_id = data.get(position).getUser_email_id();
+                String user_employee_type = data.get(position).getUser_employee_type();
+                String reporting_manager = data.get(position).getReporting_manager();
+                String user_status = data.get(position).getUser_status();
+
+                Intent intent = new Intent(getApplicationContext(), UpdateUserActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("employee_type",employee_type);
+                intent.putExtra("user_full_name",user_full_name);
+                intent.putExtra("user_password",user_password);
+                intent.putExtra("user_name",user_name);
+                intent.putExtra("gender",gender);
+                intent.putExtra("user_employee_id",user_employee_id);
+                intent.putExtra("user_mobile_number",user_mobile_number);
+                intent.putExtra("user_email_id",user_email_id);
+                intent.putExtra("user_employee_type",user_employee_type);
+                intent.putExtra("reporting_manager",reporting_manager);
+                intent.putExtra("user_status",user_status);
+
                 startActivity(intent);
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }

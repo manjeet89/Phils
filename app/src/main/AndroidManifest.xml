@@ -18,13 +18,37 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
-            android:name=".TransfarStockListActivity"
+            android:name=".Admin.RequisitionReciverComplete"
+            android:exported="false" />
+        <activity
+            android:name=".Rought.ResponseModelReciverComplete"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.ReturnStock"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.RequisitionReciverList"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AssignStockRequisition"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.UpdateUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.RequisitionOnGoingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AddUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.TransfarStockListActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.RequisitionChangeStatusActivity"
             android:exported="false" />
         <activity
-            android:name=".OtherRequisitionAddActivity"
+            android:name=".Admin.OtherRequisitionAddActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.JobReplaceUseerActivity"
@@ -48,7 +72,7 @@
             android:name=".Admin.TwoStepVerification"
             android:exported="false" />
         <activity
-            android:name=".Add_Job_List_Activity"
+            android:name=".Admin.Add_Job_List_Activity"
             android:exported="false" />
         <activity
             android:name=".Admin.Update_StockUom_Activity"
@@ -57,13 +81,13 @@
             android:name=".Admin.Update_StockMake_Activity"
             android:exported="false" />
         <activity
-            android:name=".RequisitionAddActivity"
+            android:name=".Admin.RequisitionAddActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.RequisitionReceiverActivity"
             android:exported="false" />
         <activity
-            android:name=".RequisitionListActivity"
+            android:name=".Admin.RequisitionListActivity"
             android:exported="false" />
         <activity
             android:name=".Admin.Update_StockSize_Activity"
@@ -105,7 +129,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Demo"
+            android:name=".Rought.Demo"
             android:exported="false" />
         <activity
             android:name=".Admin.Add_Stock_List_Activity"

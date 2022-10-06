@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="Sr.No."
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="CATEGORY NAME"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="TYPE"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="SIZE"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="BATCH NUMBER "
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="MAKE"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="UOM"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="SAFETY"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="QUANTITY"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
                 <TextView
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="7sp"
                     android:text="PRICE"
-                    android:textColor="@color/lightgray"
+                    android:textColor="#1b1c1b"
                     android:textSize="12dp"
                     android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_margin="7sp"-->
 <!--                    android:text="STATUS"-->
-<!--                    android:textColor="@color/lightgray"-->
+<!--                    android:textColor="#1b1c1b"-->
 <!--                    android:textSize="12dp"-->
 <!--                    android:textStyle="bold" />-->
 

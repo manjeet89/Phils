@@ -29,7 +29,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="#1ca6eb"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
     <Button
         android:id="@+id/stockTransfer"
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="#1ca6eb"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
     <Button
         android:id="@+id/Stockdelete"
         android:layout_width="wrap_content"
@@ -47,6 +47,6 @@
         android:layout_margin="10dp"
         android:backgroundTint="#1ca6eb"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/white"/>
 
 </LinearLayout>

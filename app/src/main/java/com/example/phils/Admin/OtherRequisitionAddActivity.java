@@ -1,24 +1,38 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,11 +45,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.Spinner.CategorySpinner;
 import com.example.phils.Spinner.RequisitionJobNumberSpinner;
 import com.example.phils.Spinner.StockSizeSpinner;
 import com.example.phils.Spinner.StockTypeSpinner;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +87,10 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
     static String wokerId[];
 
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+    }
 
     TextView setjobnumberid,setReqUserid,setcategoryid,setypeid,setsizeid;
     TextView job_nuber,seamnumber,req_user,categoryreq,typereq,sizereq;
@@ -100,6 +121,13 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
     TextView location_save;
     AppConfig appConfig;
 
+    Button logout,location;
+    Button btnnotification;
+    ImageView img,profile;
+    TextView locationtext;
+
+
+
     private static final String CHANNEL_ID = "My Channel";
     private static final int NOTIFICATION_ID = 100;
 
@@ -109,7 +137,238 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_requisition_add);
         requestQueue = Volley.newRequestQueue(this);
+
+
         appConfig = new AppConfig(this);
+        location_save = findViewById(R.id.location_save);
+        String location_save1 = appConfig.getLocation();
+        location_save.setText(location_save1);
+
+        locationtext = findViewById(R.id.locationtext);
+        locationtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+            }
+        });
+        location_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+
+            }
+        });
+
+        img = findViewById(R.id.img);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Notification_Activity.class));
+            }
+        });
+
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                appConfig.updateUserLoginStatus(false);
+//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                finish();
+//            }
+//        });
+
+        profile = findViewById(R.id.profile);
+
+        //ImageView profile=(ImageView) findViewById(R.id.profile);
+        Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+        Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+        Canvas canvas=new Canvas(imageRounded);
+        Paint mpaint=new Paint();
+        mpaint.setAntiAlias(true);
+        mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+        profile.setImageBitmap(imageRounded);
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
+                dialog=new Dialog(OtherRequisitionAddActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_profile_dialog);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(750,1050);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                String emp_name = appConfig.getemp_type_name();
+                String fullName = appConfig.getuser_full_name();
+
+                TextView nameAdmin = dialog.findViewById(R.id.nameAdmin);
+                TextView post = dialog.findViewById(R.id.postAdmin);
+                nameAdmin.setText(fullName);
+                post.setText(emp_name);
+
+                ImageView profile  = dialog.findViewById(R.id.profile);
+                Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+                Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+                Canvas canvas=new Canvas(imageRounded);
+                Paint mpaint=new Paint();
+                mpaint.setAntiAlias(true);
+                mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+                canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+                profile.setImageBitmap(imageRounded);
+
+
+
+
+                Button logout = dialog.findViewById(R.id.logout);
+                logout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        appConfig.updateUserLoginStatus(false);
+                        startActivity(new Intent(OtherRequisitionAddActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                });
+                TextView textView = dialog.findViewById(R.id.my_profile);
+//                if(1==1)
+//                {
+//                    textView.setVisibility(View.GONE);
+//                }
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                    }
+                });
+                TextView ChangePassword = dialog.findViewById(R.id.change_pas);
+                ChangePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+                    }
+                });
+
+            }
+        });
+
+
+        MaterialToolbar toolbar = findViewById(R.id.topAppbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+
+
+
+        if(1==2) {
+            Menu menu = navigationView.getMenu();
+            MenuItem menuItem = menu.findItem(R.id.ghar);
+            menuItem.setVisible(false);
+        }
+
+
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (id)
+                {
+                    case R.id.ghar:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        break;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(),UserActivity.class));
+
+                        break;
+
+                    case R.id.category_stock:
+                        startActivity(new Intent(getApplicationContext(), StockCategoryActivity.class));
+                        break;
+
+                    case R.id.type_stock:
+                        startActivity(new Intent(getApplicationContext(), StockTypeActivity.class));
+                        break;
+
+                    case R.id.size_stock:
+                        startActivity(new Intent(getApplicationContext(), StockSizeActivity.class));
+                        break;
+
+                    case R.id.make_stock:
+                        startActivity(new Intent(getApplicationContext(), StockMakeActivity.class));
+                        break;
+
+                    case R.id.umo_stock:
+                        startActivity(new Intent(getApplicationContext(), StockUomActivity.class));
+                        break;
+
+                    case R.id.list_stock:
+                        startActivity(new Intent(getApplicationContext(), StockListActivity.class));
+                        break;
+
+
+                    case R.id.category_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Category_Activity.class));
+                        break;
+
+                    case R.id.Size_job:
+                        startActivity(new Intent(getApplicationContext(), Job_Size_Activity.class));
+                        break;
+
+                    case R.id.List_job:
+                        startActivity(new Intent(getApplicationContext(), Job_List_Activity.class));
+                        break;
+
+                    case R.id.Report_reports:
+                        startActivity(new Intent(getApplicationContext(), ReportsActivity.class));
+                        break;
+
+                    case R.id.Report_consumption:
+                        startActivity(new Intent(getApplicationContext(), ConsumptionActivity.class));
+                        break;
+
+                    case R.id.Report_consumption_details:
+                        startActivity(new Intent(getApplicationContext(), ConsumptionDetailActivity.class));
+                        break;
+
+//                    case R.id.roles:
+//                        startActivity(new Intent(getApplicationContext(), RolesAndPrivilegesActivity.class));
+//                        break;
+//
+                    case R.id.resqu_list:
+                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+                        break;
+//
+                    case R.id.resqu_reviever:
+                        startActivity(new Intent(getApplicationContext(), RequisitionReciverList.class));
+                        break;
+
+
+
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
 
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
@@ -225,7 +484,7 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
 //                                else
 //                                {
                                 Toast.makeText(OtherRequisitionAddActivity.this, message, Toast.LENGTH_SHORT).show();
-
+                                startActivity(new Intent(getApplicationContext(),RequisitionListActivity.class));
                                 // }
 
                             } catch (JSONException e) {
@@ -270,44 +529,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
             };
             RequestQueue requestQueue = Volley.newRequestQueue(OtherRequisitionAddActivity.this);
             requestQueue.add(request);
-//            StringRequest request = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/insert_category/add_requisition_list.php",
-//                    new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                          // Notification();
-////                            Toast.makeText(OtherRequisitionAddActivity.this, response, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    Toast.makeText(OtherRequisitionAddActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }) {
-//                @Nullable
-//                @Override
-//                protected Map<String, String> getParams() throws AuthFailureError {
-//                    Map<String, String> params = new HashMap<String, String>();
-//                    params.put("req_user_id", userreq);
-//                   // params.put("req_by_user_id", req_by_user_id);
-//                    params.put("req_job_id", jobnumber);
-//                    params.put("seam_number", seamList);
-//                    params.put("req_category_id", category);
-//                    params.put("req_type_id", type);
-//                    params.put("req_size_id", size);
-//                    params.put("req_quantity", quantity);
-//                    params.put("req_remark", remarks);
-//                   // params.put("req_location_id", location_save1);
-//
-//                    return params;
-//                }
-//            };
-//            //        Toast.makeText(this, category+"/"+type+"/"+size+"/"+batchno+"/"+invoiceinsert
-////                +"/"+distributorinsert+"/"+makeinsert+"/"+uom+"/"+safetyinsert+"/"+quantityinsert
-////                +"/"+max_all+"/"+priceinsert, Toast.LENGTH_SHORT).show();
-//
-//            RequestQueue requestQueue = Volley.newRequestQueue(OtherRequisitionAddActivity.this);
-//            requestQueue.add(request);
 
         }
     }
@@ -549,43 +770,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
                         // Dismiss dialog
                         dialog.dismiss();
 
-
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, categoryurl
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = categoryreq.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String category_name = jsonObject.optString("stock_category_name");
-//                                        String category_id = jsonObject.optString("stock_category_id");
-//                                        if(ss.equals(category_name)){
-//                                            String idea = category_id;
-//                                            setcategoryid.setText(idea);
-//                                            CategoryIdPass(idea);
-//                                            Toast.makeText(OtherRequisitionAddActivity.this, setcategoryid.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest1);
                     }
                 });
             }
@@ -668,37 +852,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
         RequestQueue requestQueue1 = Volley.newRequestQueue(OtherRequisitionAddActivity.this);
         requestQueue1.add(request1);
 
-//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, typeurl+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String stock_type_id= jsonObject.optString("stock_type_id");
-//                                String stock_type_name1= jsonObject.optString("stock_type_name");
-//                                typeList.add(stock_type_name1);
-//                                typeAdapter = new ArrayAdapter<>(OtherRequisitionAddActivity.this,
-//                                        android.R.layout.simple_list_item_1,typeList);
-//                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest1);
-
 
         typereq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -758,45 +911,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
                         // Dismiss dialog
                         dialog.dismiss();
 
-
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.POST, typeurl+idea
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = typereq.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String stock_type_id= jsonObject.optString("stock_type_id");
-//                                        String stock_type_name= jsonObject.optString("stock_type_name");
-//                                        if(ss.equals(stock_type_name)){
-//                                            String idea = stock_type_id;
-//                                            setypeid.setText(idea);
-//                                            Toast.makeText(OtherRequisitionAddActivity.this, setypeid.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                            TypeIdPass(idea);
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest2);
                     }
                 });
             }
@@ -876,36 +990,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(OtherRequisitionAddActivity.this);
         requestQueue1.add(request1);
-
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, sizeurl+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String stock_size_id= jsonObject.optString("stock_size_id");
-//                                String stock_size_name= jsonObject.optString("stock_size_name");
-//                                sizeList.add(stock_size_name);
-//                                sizeAdapter = new ArrayAdapter<>(OtherRequisitionAddActivity.this,
-//                                        android.R.layout.simple_list_item_1,sizeList);
-//                                sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest);
 
 
         sizereq.setOnClickListener(new View.OnClickListener() {
@@ -1155,146 +1239,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
             }
         });
 
-//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.GET, req_userurl, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//
-//                                String user_id= jsonObject.optString("user_id");
-//                                String user_full_name= jsonObject.optString("user_full_name");
-//                                String user_employee_id= jsonObject.optString("user_employee_id");
-//
-//                                if(user_full_name.equals("Phils ERP"))
-//                                {
-//
-//                                }
-//                                else {
-//
-//                                    reqUserList.add(user_full_name+" - "+user_employee_id);
-//                                    reqUserAdapter = new ArrayAdapter<>(OtherRequisitionAddActivity.this,
-//                                            android.R.layout.simple_list_item_1, reqUserList);
-//                                    reqUserAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest1);
-//
-//        req_user.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // Initialize dialog
-//                dialog = new Dialog(OtherRequisitionAddActivity.this);
-//
-//                // set custom dialog
-//                dialog.setContentView(R.layout.dialog_searchable_spinner);
-//
-//                // set custom height and width
-//                dialog.getWindow().setLayout(950, 1200);
-//
-//                // set transparent background
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//                // show dialog
-//                dialog.show();
-//
-//                // Initialize and assign variable
-//                EditText editText = dialog.findViewById(R.id.edit_text);
-//                ListView listView = dialog.findViewById(R.id.list_view);
-//
-//
-//
-//                listView.setAdapter(reqUserAdapter);
-//                editText.addTextChangedListener(new TextWatcher() {
-//                                                    @Override
-//                                                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                                                        reqUserAdapter.getFilter().filter(charSequence);
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void afterTextChanged(Editable editable) {
-//
-//                                                    }
-//
-//                                                }
-//
-//                );
-//                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        // when item selected from list
-//                        // set selected item on textView
-//                        req_user.setText(reqUserAdapter.getItem(position));
-//                        // Dismiss dialog
-//                        dialog.dismiss();
-//
-//                        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET,req_userurl
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = req_user.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//
-//                                        String user_id= jsonObject.optString("user_id");
-//                                        String user_full_name= jsonObject.optString("user_full_name");
-//                                        String user_employee_id= jsonObject.optString("user_employee_id");
-//
-//                                        if(ss.equals(user_full_name+" - "+user_employee_id)){
-//                                            String idea = user_id;
-//                                            setReqUserid.setText(idea);
-//                                             Toast.makeText(OtherRequisitionAddActivity.this, setReqUserid.getText().toString(), Toast.LENGTH_SHORT).show();
-//
-//                                            //PassJobNumber(idea);
-//                                            //TypeIdPass(idea);
-//                                        }
-//
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest2);
-//
-//                    }
-//                });
-//            }
-//        });
-
     }
 
 
@@ -1501,43 +1445,6 @@ public class OtherRequisitionAddActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(OtherRequisitionAddActivity.this);
         requestQueue.add(request1);
-
-//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, seamurlurl+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//
-//                                String job_id= jsonObject.optString("job_id");
-//                                String seam_number= jsonObject.optString("seam_number");
-//
-//                                String[] strSplit = seam_number.split(",");
-//                                ArrayList<String> strList = new ArrayList<String>(
-//                                        Arrays.asList(strSplit));
-//
-//                                for (String s : strList) {
-//                                    seamList.add(s);
-//                                    seamAdapter = new ArrayAdapter<>(RequisitionAddActivity.this,
-//                                            android.R.layout.simple_list_item_1, seamList);
-//                                    seamAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                                }
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest1);
 
         seamnumber.setOnClickListener(new View.OnClickListener() {
             @Override

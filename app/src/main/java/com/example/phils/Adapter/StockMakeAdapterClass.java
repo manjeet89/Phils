@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,11 @@ public class StockMakeAdapterClass extends RecyclerView.Adapter<StockMakeAdapter
         holder.make_id.setText(data.get(position).getSn());
         holder.make_name.setText(data.get(position).getMake_name());
         holder.make_status.setText(data.get(position).getMake_status());
+        if(data.get(position).getMake_status().equals("Disable"))
+            holder.make_status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.make_status.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override

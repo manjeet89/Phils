@@ -2,15 +2,19 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phils.R;
-import com.example.phils.RequisitionListActivity;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -35,15 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static long back_pressed;
     TextView test;
+
+    TextView location_save;
     Button logout,location;
     Button btnnotification;
+    ImageView img,profile;
+    TextView locationtext;
+    AppConfig appConfig;
+    Dialog dialog;
 
     private static final String CHANNEL_ID = "My Channel";
     private static final int NOTIFICATION_ID = 100;
-    ImageView img,profile;
-    TextView location_save;
-    AppConfig appConfig;
-    Dialog dialog;
+
 
     @Override
     public void onBackPressed(){
@@ -121,9 +127,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
@@ -132,24 +135,20 @@ public class MainActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
 
 
-        //test = findViewById(R.id.test);
-//        String name = getIntent().getStringExtra("id");
-//        String s = appConfig.getUserName();
-//        String p = appConfig.getIdOfUser();
-//        String fullName = appConfig.getNameOfUser();
+        locationtext = findViewById(R.id.locationtext);
+        locationtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+            }
+        });
+        location_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
 
-       // test.setText(s+p+fullName);
-
-
-
-
-//        location = findViewById(R.id.location);
-//        location.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
-//            }
-//        });
+            }
+        });
 
         img = findViewById(R.id.img);
         img.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         profile = findViewById(R.id.profile);
+
+        //ImageView profile=(ImageView) findViewById(R.id.profile);
+        Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+        Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+        Canvas canvas=new Canvas(imageRounded);
+        Paint mpaint=new Paint();
+        mpaint.setAntiAlias(true);
+        mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+        profile.setImageBitmap(imageRounded);
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,6 +205,16 @@ public class MainActivity extends AppCompatActivity {
                 TextView post = dialog.findViewById(R.id.postAdmin);
                 nameAdmin.setText(fullName);
                 post.setText(emp_name);
+
+                ImageView profile  = dialog.findViewById(R.id.profile);
+                Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
+                Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
+                Canvas canvas=new Canvas(imageRounded);
+                Paint mpaint=new Paint();
+                mpaint.setAntiAlias(true);
+                mpaint.setShader(new BitmapShader(mbitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+                canvas.drawRoundRect((new RectF(0, 0, mbitmap.getWidth(), mbitmap.getHeight())), 100, 100, mpaint); // Round Image Corner 100 100 100 100
+                profile.setImageBitmap(imageRounded);
 
 
 
@@ -230,37 +250,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnnotification = findViewById(R.id.btn_notification);
-        btnnotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = "This is Example notification";
-                Intent intent = new Intent(getApplicationContext(),Notification_Activity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("Message",message);
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
-                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
-                builder.setContentTitle("Phils ERP");
-                builder.setContentText(message);
-                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                builder.setContentIntent(pendingIntent);
-                builder.setAutoCancel(true);
-
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
-
-
-            }
-        });
+//        btnnotification = findViewById(R.id.btn_notification);
+//        btnnotification.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String message = "This is Example notification";
+//                Intent intent = new Intent(getApplicationContext(),Notification_Activity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.putExtra("Message",message);
+//                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(),CHANNEL_ID);
+//                builder.setSmallIcon(R.drawable.ic_baseline_message_24);
+//                builder.setContentTitle("Phils ERP");
+//                builder.setContentText(message);
+//                builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//                builder.setContentIntent(pendingIntent);
+//                builder.setAutoCancel(true);
+//
+//                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+//                notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+//
+//
+//            }
+//        });
 
         MaterialToolbar toolbar = findViewById(R.id.topAppbar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
 
-        
+
 
         if(1==2) {
             Menu menu = navigationView.getMenu();
@@ -351,9 +371,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
                         break;
 //
-//                    case R.id.resqu_reviever:
-//                        startActivity(new Intent(getApplicationContext(), RequisitionReceiverActivity.class));
-//                        break;
+                    case R.id.resqu_reviever:
+                        startActivity(new Intent(getApplicationContext(), RequisitionReciverList.class));
+                        break;
 
 
 

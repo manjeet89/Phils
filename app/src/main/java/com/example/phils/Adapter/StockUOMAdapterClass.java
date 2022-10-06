@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,11 @@ public class StockUOMAdapterClass extends RecyclerView.Adapter<StockUOMAdapterCl
         holder.uom_id.setText(data.get(position).getSn());
         holder.uom_name.setText(data.get(position).getUom_name());
         holder.uom_status.setText(data.get(position).getUom_status());
+        if(data.get(position).getUom_status().equals("Disable"))
+            holder.uom_status.setTextColor(Color.parseColor("#ed0e1d"));
+        else
+            holder.uom_status.setTextColor(Color.parseColor("#0eed3e"));
+
     }
 
     @Override

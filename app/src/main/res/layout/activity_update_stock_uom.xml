@@ -65,6 +65,7 @@
                 android:gravity="right"
                 >
                 <TextView
+                    android:id="@+id/locationtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location :"
@@ -95,11 +96,11 @@
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
                     android:layout_margin="7sp"
                     android:src="@drawable/admin"
-                    android:background="@drawable/button_shap"
+                    android:background="@drawable/shap_curve"
                     />
             </LinearLayout>
         </LinearLayout>
