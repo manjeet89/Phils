@@ -1,6 +1,7 @@
 package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -38,6 +39,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.RequisitionAdapterClass;
 import com.example.phils.R;
+import com.example.phils.RequsitionComplete;
 import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -334,6 +336,14 @@ public class RequisitionListActivity extends AppCompatActivity {
             }
         });
 
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
+            }
+        });
+
         add_reqlist = findViewById(R.id.add_reqlist);
         add_reqlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -458,6 +468,7 @@ public class RequisitionListActivity extends AppCompatActivity {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
+                String user_employee_type = appConfig.getuser_employee_type();
 //
                 // Toast.makeText(RequisitionListActivity.this, changestatu, Toast.LENGTH_SHORT).show();
                 if(changestatu.equals("Declined"))
@@ -514,6 +525,65 @@ public class RequisitionListActivity extends AppCompatActivity {
                         intent.putExtra("userId",userId);
                         intent.putExtra("location",location);
                         startActivity(intent);
+
+                    }
+                });
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        progressDialog.setMessage("Please Wait");
+                        progressDialog.show();
+                        //Toast.makeText(RequisitionListActivity.this, id, Toast.LENGTH_SHORT).show();
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/delete_requisition",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = new JSONObject(response);
+                                            String message = jsonObject.getString("message");
+
+                                            Toast.makeText(RequisitionListActivity.this, message, Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(),RequisitionListActivity.class));
+                                            progressDialog.dismiss();
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(RequisitionListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        {
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                HashMap headers = new HashMap();
+                                headers.put("user_token",token);
+                                headers.put("user_id", userId);
+                                headers.put("project_location_id", location);
+                                headers.put("user_employee_type", user_employee_type);
+
+                                return headers;
+                            }
+
+                            @Nullable
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String,String> params = new HashMap<String,String>();
+                                params.put("req_id",id);
+                                return  params;
+                            }
+
+
+                        };
+                        RequestQueue  requestQueue = Volley.newRequestQueue(RequisitionListActivity.this);
+                        requestQueue.add(request);
 
                     }
                 });

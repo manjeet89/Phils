@@ -563,6 +563,7 @@
                     android:background="#f2ebeb"
                     android:gravity="center_vertical"
                     android:padding="10dp"
+                    android:hint="Transfer Stock Quantity"
                     android:textColor="@color/black" />
 
 

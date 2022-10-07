@@ -388,7 +388,6 @@ public class StockUomActivity extends AppCompatActivity {
     private void fatchdata() {
 
         progressDialog = new ProgressDialog(StockUomActivity.this);
-        progressDialog.setTitle("Stock UOM");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
         String token = appConfig.getuser_token();

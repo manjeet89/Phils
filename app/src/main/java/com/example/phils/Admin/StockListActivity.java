@@ -22,6 +22,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -393,7 +394,6 @@ public class StockListActivity extends AppCompatActivity {
     private void fatchdata() {
 
         progressDialog = new ProgressDialog(StockListActivity.this);
-        progressDialog.setTitle("Stock List");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 
@@ -408,6 +408,8 @@ public class StockListActivity extends AppCompatActivity {
 
                         try {
                             int j=0;
+                            String stock_quantity;
+                            String assign_quantity;
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 //                            Toast.makeText(StockListActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -431,7 +433,9 @@ public class StockListActivity extends AppCompatActivity {
                                 String stock_make_id = object.getString("stock_make_id");
                                 String stock_uom_id = object.getString("stock_uom_id");
                                 String safety_stock = object.getString("safety_stock");
-                                String stock_quantity = object.getString("stock_quantity");
+                                       stock_quantity = object.getString("stock_quantity");
+                               // Log.d("nobita",stock_quantity);
+
                                 String stock_lot = object.getString("stock_lot");
                                 String stock_price = object.getString("stock_price");
                                 String is_stock_transfer = object.getString("is_stock_transfer");
@@ -449,12 +453,17 @@ public class StockListActivity extends AppCompatActivity {
                                 }
                                 String uom_name = object.getString("uom_name");
                                 String stock_category_name = object.getString("stock_category_name");
-                                String assign_quantity = object.getString("assign_quantity");
+                                 assign_quantity = object.getString("assign_quantity");
                                 if(assign_quantity.equals("null"))
                                 {
-                                    assign_quantity = " - ";
+                                    assign_quantity = "0";
                                 }
+//                                int p = Integer.parseInt(stock_quantity);
+//                                int q = Integer.parseInt(assign_quantity);
 
+                               // Log.d("nobita",String.valueOf(p) +"/"+String.valueOf(q));
+//                                int k = p-q;
+//                                String quantity = String.valueOf(k);
                                 responseModelStockList = new ResponseModelStockList(sn,stock_id,stock_location_id,stock_category_id,stock_type_id,
                                         stock_size_id,stock_batch_number,stock_invoice_number,stock_distributor_name,stock_make_id,
                                         stock_uom_id,safety_stock,stock_quantity,stock_lot,stock_price,is_stock_transfer,stock_status,stock_type_name,
@@ -552,6 +561,19 @@ public class StockListActivity extends AppCompatActivity {
                 Button transfer = dialog.findViewById(R.id.stockTransfer);
                 Button delete = dialog.findViewById(R.id.Stockdelete);
 
+                //Toast.makeText(StockListActivity.this, stock_quantity, Toast.LENGTH_SHORT).show();
+
+                if(assign_quantity.equals("0")) {
+                    delete.setVisibility(View.VISIBLE);
+                }
+                else
+                    delete.setVisibility(View.GONE);
+                if(stock_quantity.equals("0"))
+                {
+                    delete.setVisibility(View.GONE);
+                    transfer.setVisibility(View.GONE);
+
+                }
 
 
                 delete.setOnClickListener(new View.OnClickListener() {

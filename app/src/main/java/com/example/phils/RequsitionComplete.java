@@ -1,6 +1,7 @@
-package com.example.phils.Admin;
+package com.example.phils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
@@ -36,9 +37,32 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.phils.Adapter.StockSizeAdapterClass;
-import com.example.phils.R;
-import com.example.phils.ResponseModels.ResponseModelStockSize;
+import com.example.phils.Admin.ChangePasswordActivity;
+import com.example.phils.Admin.ConsumptionActivity;
+import com.example.phils.Admin.ConsumptionDetailActivity;
+import com.example.phils.Admin.Job_Category_Activity;
+import com.example.phils.Admin.Job_List_Activity;
+import com.example.phils.Admin.Job_Size_Activity;
+import com.example.phils.Admin.LoginActivity;
+import com.example.phils.Admin.MainActivity;
+import com.example.phils.Admin.Notification_Activity;
+import com.example.phils.Admin.OtherRequisitionAddActivity;
+import com.example.phils.Admin.ProfileActivity;
+import com.example.phils.Admin.ProjectLocationActivity;
+import com.example.phils.Admin.ReportsActivity;
+import com.example.phils.Admin.RequisitionAddActivity;
+import com.example.phils.Admin.RequisitionListActivity;
+import com.example.phils.Admin.RequisitionOnGoingActivity;
+import com.example.phils.Admin.RequisitionReciverComplete;
+import com.example.phils.Admin.RequisitionReciverList;
+import com.example.phils.Admin.StockCategoryActivity;
+import com.example.phils.Admin.StockListActivity;
+import com.example.phils.Admin.StockMakeActivity;
+import com.example.phils.Admin.StockSizeActivity;
+import com.example.phils.Admin.StockTypeActivity;
+import com.example.phils.Admin.StockUomActivity;
+import com.example.phils.Admin.UserActivity;
+import com.example.phils.ResponseModels.ResponseModelReciverComplete;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -53,39 +77,41 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class StockSizeActivity extends AppCompatActivity {
-    ProgressDialog progressDialog;
+public class RequsitionComplete extends AppCompatActivity {
 
-    RecyclerView recview;
-    SearchView searchView;
-    ImageView img,profile;
+    ArrayList<String> wokerList = new ArrayList<>();
+    Button next,pre;
+    static  int store = 0;
+    static int sendvalue = 5;
+    static int nagetivevalue = -5;
 
-    StockSizeAdapterClass stockSizeAdapterClass;
-    List<ResponseModelStockSize> data;
-    ResponseModelStockSize responseModelStockSize;
-    LinearLayoutManager linearLayoutManager;
-    Button button;
-    TextView location_save,locationtext;
+    Button add_reqlist;
     AppConfig appConfig;
+    SearchView searchView;
+    ProgressDialog progressDialog;
+    TextView location_save,checklist;
+    LinearLayoutManager linearLayoutManager;
+    RecyclerView recview;
+    Button other_reqlist,ongoing,open;
+
 
     Button logout,location;
     Button btnnotification;
+    ImageView img,profile;
+    TextView locationtext;
     Dialog dialog;
 
-    private StockSizeAdapterClass.RecycleViewClickListener listener;
+    List<ResponseModelRequisitionComplete> data = new ArrayList<>();
+    RequisitionCompleteAdapterClass requisitionCompleteAdapterClass;
+    ResponseModelRequisitionComplete responseModelRequisitionComplete;
+    private RequisitionCompleteAdapterClass.RecycleViewClickListener listener;
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_size);
-
-
+        setContentView(R.layout.activity_requsition_complete);
 
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
@@ -141,7 +167,7 @@ public class StockSizeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
                 //Toast.makeText(MainActivity.this, "desh", Toast.LENGTH_SHORT).show();
-                dialog=new Dialog(StockSizeActivity.this);
+                dialog=new Dialog(RequsitionComplete.this);
 
                 // set custom dialog
                 dialog.setContentView(R.layout.custom_profile_dialog);
@@ -181,7 +207,7 @@ public class StockSizeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         appConfig.updateUserLoginStatus(false);
-                        startActivity(new Intent(StockSizeActivity.this,LoginActivity.class));
+                        startActivity(new Intent(RequsitionComplete.this, LoginActivity.class));
                         finish();
                     }
                 });
@@ -240,11 +266,11 @@ public class StockSizeActivity extends AppCompatActivity {
                 switch (id)
                 {
                     case R.id.ghar:
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         break;
 
                     case R.id.user:
-                        startActivity(new Intent(getApplicationContext(),UserActivity.class));
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
 
                         break;
 
@@ -318,19 +344,22 @@ public class StockSizeActivity extends AppCompatActivity {
             }
         });
 
-
-        recview = findViewById(R.id.recview);
-        searchView = findViewById(R.id.search);
-        searchView.clearFocus();
-        button = findViewById(R.id.add_size);
-        button.setOnClickListener(new View.OnClickListener() {
+        ongoing = findViewById(R.id.ongoing);
+        ongoing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),RequisitionReciverList.class));
+            }
+        });
+        add_reqlist = findViewById(R.id.add_reqlist);
+        add_reqlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
 
-                Intent intent = new Intent(getApplicationContext(), Add_Stock_Size_Activity.class);
+                Intent intent = new Intent(getApplicationContext(), RequisitionAddActivity.class);
                 intent.putExtra("token",token);
                 intent.putExtra("userId",userId);
                 intent.putExtra("location",location);
@@ -340,7 +369,56 @@ public class StockSizeActivity extends AppCompatActivity {
             }
         });
 
+        other_reqlist = findViewById(R.id.other_reqlist);
+        other_reqlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = appConfig.getuser_token();
+                String userId = appConfig.getuser_id();
+                String location = appConfig.getLocationId();
 
+                Intent intent = new Intent(getApplicationContext(), OtherRequisitionAddActivity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("userId",userId);
+                intent.putExtra("location",location);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        next = findViewById(R.id.next);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fatchdata(sendvalue);
+            }
+        });
+        pre = findViewById(R.id.pre);
+        pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fatchdata(nagetivevalue);
+
+            }
+        });
+        ongoing = findViewById(R.id.ongoing);
+        ongoing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RequisitionOnGoingActivity.class));
+            }
+        });
+        open = findViewById(R.id.open);
+        open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),RequisitionListActivity.class));
+            }
+        });
+
+        searchView = findViewById(R.id.search);
+        searchView.clearFocus();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -355,116 +433,171 @@ public class StockSizeActivity extends AppCompatActivity {
             }
         });
 
-        fatchdata();
-        recycleClickLister();
+        fatchdata(0);
+       // recycleClickLister();
+
+        recview = findViewById(R.id.recview);
         linearLayoutManager = new LinearLayoutManager(this);
         recview.setLayoutManager(linearLayoutManager);
 
-        data = new ArrayList<>();
-        stockSizeAdapterClass = new StockSizeAdapterClass(listener,data);
-        recview.setAdapter(stockSizeAdapterClass);
-
-
+        requisitionCompleteAdapterClass = new RequisitionCompleteAdapterClass(listener,data);
+        recview.setAdapter(requisitionCompleteAdapterClass);
     }
-
-
 
     private void fileList(String newText) {
 
-        List<ResponseModelStockSize> modelStockCategories = new ArrayList<>();
-        for(ResponseModelStockSize responseModelStockSize : data)
+        List<ResponseModelRequisitionComplete> responseModelRequisitionLists = new ArrayList<>();
+        for(ResponseModelRequisitionComplete responseModelReciverComplete : data)
         {
-            if(responseModelStockSize.getStock_size_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
-                modelStockCategories.add(responseModelStockSize);
+            if(responseModelReciverComplete.getStock_category_name().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))){
+                responseModelRequisitionLists.add(responseModelReciverComplete);
             }
         }
 
-        if (modelStockCategories.isEmpty()){
+        if (responseModelRequisitionLists.isEmpty()){
             Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            stockSizeAdapterClass.setFilteredList(modelStockCategories);
+            requisitionCompleteAdapterClass.setFilteredList(responseModelRequisitionLists);
         }
     }
 
-
-    private void fatchdata() {
-        progressDialog = new ProgressDialog(StockSizeActivity.this);
+    private void fatchdata(int value) {
+        progressDialog = new ProgressDialog(RequsitionComplete.this);
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_size",
+//        Toast.makeText(this, token+"/"+userId+"/"+location+"/"+user_employee_type, Toast.LENGTH_SHORT).show();
+        store = store + value;
+        data.clear();
+        // String last_record_count =
+
+//        Toast.makeText(this, String.valueOf(store), Toast.LENGTH_SHORT).show();
+        //progressDialog.dismiss();
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requisition_completed",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
                             int j=0;
-                            String stock_size_status;
-                            String stock_type_name;
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
+                            Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+
                             if(message.equals("Invalid user request")){
-                                Toast.makeText(StockSizeActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
                                 appConfig.updateUserLoginStatus(false);
-                                startActivity(new Intent(StockSizeActivity.this, LoginActivity.class));
+                                startActivity(new Intent(RequsitionComplete.this, LoginActivity.class));
                                 finish();
                             }
                             else {
-
 
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String sn = String.valueOf(j);
-                                    String stock_size_id = object.getString("stock_size_id");
-                                    String stock_category_id = object.getString("stock_category_id");
-                                    String stock_type_id = object.getString("stock_type_id");
-                                    String stock_size_name = object.getString("stock_size_name");
 
-                                    stock_size_status = object.getString("stock_size_status");
-                                    if (stock_size_status.equals(String.valueOf(0))) {
-                                        stock_size_status = "Disable";
-                                    } else {
-                                        stock_size_status = "Enable";
+                                    String req_id = object.getString("req_id");
+                                    String req_user_id = object.getString("req_user_id");
+                                    String req_by_user_id = object.getString("req_by_user_id");
+
+                                    String req_job_id =object.getString("req_job_id");
+                                    String seam_number = object.getString("seam_number");
+                                    String req_category_id = object.getString("req_category_id");
+
+                                    String req_type_id = object.getString("req_type_id");
+                                    String req_size_id = object.getString("req_size_id");
+                                    String req_quantity = object.getString("req_quantity");
+                                    String req_remark = object.getString("req_remark");
+
+
+
+
+                                    String req_location_id = object.getString("req_location_id");
+                                    String req_manager_id = object.getString("req_manager_id");
+
+                                    if (req_manager_id.equals("null")) {
+                                        req_manager_id = "Default";
+                                    }
+                                    String req_manager_comment = object.getString("req_manager_comment");
+                                    if (req_manager_comment.equals("null")) {
+                                        req_manager_comment = "Default ";
                                     }
 
+                                    String req_manager_status = object.getString("req_manager_status");
+                                    if (req_manager_status.equals(String.valueOf(0))) {
+                                        req_manager_status = "Requested";
+                                    } else if (req_manager_status.equals(String.valueOf(1))) {
+                                        req_manager_status = "Accepted";
+                                    } else {
+                                        req_manager_status = "Declined";
+                                    }
+                                    String req_status = object.getString("req_status");
+                                    String req_updated_on = object.getString("req_updated_on");
+                                    String req_created_on = object.getString("req_created_on");
 
-                                    String stock_size_updated_on = object.getString("stock_size_updated_on");
-                                    String stock_size_created_on = object.getString("stock_size_created_on");
-                                    stock_type_name = object.getString("stock_type_name");
+                                    String stock_type_name = object.getString("stock_type_name");
+                                    String stock_size_name = object.getString("stock_size_name");
+                                    if(stock_size_name.equals("null"))
+                                        stock_size_name = " ";
                                     String stock_category_name = object.getString("stock_category_name");
+                                    String job_number = object.getString("job_number");
+
+                                    String user_full_name = object.getString("user_full_name");
+                                    String user_employee_id = object.getString("user_employee_id");
+                                    String assign_quantity = object.getString("assign_quantity");
+                                    String req_user_id_details = object.getString("req_user_id_details");
+
+                                    wokerList.clear();
+                                    String[] strSplit = req_user_id.split(",");
+                                    for (String name : strSplit) {
+                                        JSONObject jsonObject1 = new JSONObject(req_user_id_details);
+                                        String idnumber = jsonObject1.getString(name);
+                                        // Log.d("please",idnumber);
+                                        wokerList.add(idnumber);
+                                    }
+                                    String stringbuilder = String.join(",", wokerList);
 
 
-                                    responseModelStockSize = new ResponseModelStockSize(sn, stock_size_id, stock_category_id, stock_type_id,
-                                            stock_size_name, stock_size_status, stock_size_updated_on, stock_size_created_on, stock_type_name,
-                                            stock_category_name);
-                                    data.add(responseModelStockSize);
-                                    stockSizeAdapterClass.notifyDataSetChanged();
+                                   // Toast.makeText(RequsitionComplete.this, assign_quantity, Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(RequisitionReciverList.this, job_number, Toast.LENGTH_SHORT).show();
+                                    responseModelRequisitionComplete = new ResponseModelRequisitionComplete(sn,req_id,req_user_id,req_by_user_id,req_job_id,
+                                            seam_number,req_category_id,
+                                            req_type_id,req_size_id,req_quantity,req_remark,req_location_id,req_manager_id,
+                                            req_manager_comment,req_manager_status,req_status,req_updated_on,
+                                            req_created_on,stock_type_name,stock_size_name,stock_category_name,job_number,user_full_name,
+                                            user_employee_id,assign_quantity,stringbuilder);
+
+
+
+                                    data.add(responseModelRequisitionComplete);
+                                    requisitionCompleteAdapterClass.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
                                 }
                             }
-
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StockSizeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequsitionComplete.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         })
         {
@@ -474,50 +607,22 @@ public class StockSizeActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
             }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(StockSizeActivity.this);
-        requestQueue.add(request);
-    }
-
-    private void recycleClickLister() {
-        listener = new StockSizeAdapterClass.RecycleViewClickListener() {
+            @Nullable
             @Override
-            public void onClick(View v, int position) {
-                String id = data.get(position).getStock_size_id();
-                String category = data.get(position).getStock_category_name();
-                String categoryid = data.get(position).getStock_category_id();
-
-                String type = data.get(position).getStock_type_name();
-                String typeid = data.get(position).getStock_type_id();
-
-                String size = data.get(position).getStock_size_name();
-                String status = data.get(position).getStock_size_status();
-
-                String token = appConfig.getuser_token();
-                String userId = appConfig.getuser_id();
-                String location = appConfig.getLocationId();
-
-                Intent intent = new Intent(getApplicationContext(), Update_StockSize_Activity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("token",token);
-                intent.putExtra("userId",userId);
-                intent.putExtra("location",location);
-
-                intent.putExtra("categoryid",categoryid);
-                intent.putExtra("typeid",typeid);
-                intent.putExtra("category",category);
-                intent.putExtra("type",type);
-                intent.putExtra("size",size);
-                intent.putExtra("status",status);
-                startActivity(intent);
-                //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+                params.put("last_record_count", String.valueOf(store));
+                return  params;
             }
         };
-    }
 
+        RequestQueue requestQueue = Volley.newRequestQueue(RequsitionComplete.this);
+        requestQueue.add(request);
+
+    }
 }

@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Admin.Job_List_Activity">
+    tools:context=".Admin.RequisitionReciverComplete">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checklist"
+        android:visibility="invisible"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0f2f5"
-
+        android:background="#f5eeed"
         >
 
         <LinearLayout
@@ -105,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Job List"
+                android:text="Requisition List"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -115,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Job List"
+                android:text="  | Home - Requisition List"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -132,8 +137,8 @@
             android:layout_below="@+id/header"
             android:layout_marginStart="15dp"
             android:layout_marginTop="35dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="55dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="80dp"
             android:background="@drawable/curve_shap"
             android:orientation="vertical">
 
@@ -146,46 +151,79 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/curve_shap"
                 android:backgroundTint="#f5eeed"
-                app:queryHint="Search Type..." />
+                app:queryHint="Search List..." />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
-                    android:id="@+id/assing_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10sp"
-                    android:backgroundTint="#1ca6eb"
-                    android:padding="10dp"
-                    android:text=" Assign User"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
-                <Button
-                    android:id="@+id/replace_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10sp"
-                    android:backgroundTint="#1ca6eb"
-                    android:padding="10dp"
-                    android:text="Replace User"
-                    android:textColor="@color/white"
-                    android:textSize="10sp" />
-                <Button
-                    android:id="@+id/add_job"
+                    android:id="@+id/other_reqlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10sp"
                     android:backgroundTint="#1ca6eb"
                     android:drawableLeft="@drawable/ic_baseline_add_24"
-                    android:padding="6dp"
-                    android:text=" Add Job"
+                    android:padding="10dp"
+                    android:text="Store Requisition"
                     android:textColor="@color/white"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
+
+                <Button
+                    android:id="@+id/add_reqlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:backgroundTint="#1ca6eb"
+                    android:drawableLeft="@drawable/ic_baseline_add_24"
+                    android:padding="10dp"
+                    android:text="Consumable Requisition"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="serif"
+                android:text="Requisition List"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/open"
+                    android:layout_width="80dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="15dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Open"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/ongoing"
+                    android:layout_width="110dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="@color/white"
+                    android:text="On Going"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:layout_width="125dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Completed"
+                    android:textColor="#41b6e0" />
+
+            </LinearLayout>
 
 
             <HorizontalScrollView
@@ -212,7 +250,7 @@
                         <TableRow android:id="@+id/line1">
 
                             <TextView
-                                android:id="@+id/sn"
+                                android:id="@+id/list_id"
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
@@ -222,48 +260,133 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/category"
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="ID."
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/list_category_name"
                                 android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="JOB CLINT"
+                                android:text="REQUISITION FROM"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/type"
-                                android:layout_width="110sp"
+                                android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="JOB NUMBER "
+                                android:text="REQUISITION FOR"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
+
                             <TextView
-                                android:id="@+id/size"
-                                android:layout_width="135sp"
+                                android:id="@+id/list_type_name"
+                                android:layout_width="150sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="PROJECT MANAGER "
+                                android:text="JOB NUMBER"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/status"
+                                android:layout_width="150sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="SEAM NUMBER"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+
+                            <TextView
+                                android:id="@+id/list_make_name"
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="STATUS"
+                                android:text="CATEGORY"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/id"
+                                android:id="@+id/list_uom_name"
                                 android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="TYPE"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/list_safety"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="SIZE"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/list_quantity"
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="QUANTITY ASSIGN"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="QUANTITY REQUIRED"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="APPROVED BY"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="MANAGER STATUS"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="80sp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="7sp"
+                                android:text="MANAGER COMMENT"
+                                android:textColor="@color/lightgray"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+
+                            <TextView
+                                android:layout_width="80sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
                                 android:text="ACTION"
@@ -292,25 +415,54 @@
             </HorizontalScrollView>
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lay1"
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="-75sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="8sp">
+
+            <Button
+                android:id="@+id/pre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="Pre"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/white"
+                android:text="Next"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/button"
             android:background="@color/white"
             android:gravity="center"
-            android:layout_below="@id/lay1"
-            android:layout_marginTop="-30dp"
-            android:orientation="horizontal"
-            >
+            android:layout_marginTop="-10dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="2022©"/>
+                android:text="2022©" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="Sarvi Solution Pvt Ltd."/>
+                android:text="Sarvi Solution Pvt Ltd." />
         </LinearLayout>
 
     </RelativeLayout>
@@ -324,6 +476,5 @@
         app:menu="@menu/navigation_bar"
 
         />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

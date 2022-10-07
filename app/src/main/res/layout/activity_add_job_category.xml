@@ -114,7 +114,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - job category add"
+                android:text="  | Home - Job Category add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="*"
+                        android:text=" *"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="#db0711"
@@ -172,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/category_insert"
-                    android:hint="category name"
+                    android:hint="Category Name"
                     android:textSize="15sp"
                     android:padding="10dp"
                     android:background="#f2ebeb"
@@ -196,7 +196,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status"
+                    android:text="Status"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
@@ -206,7 +206,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="*"
+                        android:text=" *"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="#db0711"

@@ -76,6 +76,7 @@
                 android:gravity="right"
                 >
                 <TextView
+                    android:id="@+id/locationtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Location :"
@@ -99,20 +100,23 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="7sp"
                     android:src="@drawable/ic_baseline_message_24"
                     />
                 <ImageView
                     android:id="@+id/profile"
-                    android:layout_width="25sp"
-                    android:layout_height="35sp"
-                    android:layout_margin="5sp"
-                    android:src="@drawable/ic_baseline_more_vert_24"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:layout_margin="7sp"
+                    android:src="@drawable/admin"
+                    android:background="@drawable/shap_curve"
                     />
             </LinearLayout>
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
@@ -202,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10sp"
                             android:layout_marginBottom="10sp"
-                            android:hint="CUTTING WHEEL"
+                            android:hint=""
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -228,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10sp"
                             android:layout_marginBottom="10sp"
-                            android:hint="CUTTING WHEEL"
+                            android:hint=""
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -254,7 +258,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10sp"
                             android:layout_marginBottom="10sp"
-                            android:hint="CUTTING WHEEL"
+                            android:hint=""
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -280,7 +284,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10sp"
                             android:layout_marginBottom="10sp"
-                            android:hint="CUTTING WHEEL"
+                            android:hint=""
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -306,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10sp"
                             android:layout_marginBottom="10sp"
-                            android:hint="CUTTING WHEEL"
+                            android:hint=""
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -564,7 +568,7 @@
                     android:background="#f2ebeb"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:gravity="center_vertical"
-                    android:hint="Select Status"
+                    android:hint="Employee Received By"
                     android:padding="10dp"
                     android:textColor="@color/black" />
 

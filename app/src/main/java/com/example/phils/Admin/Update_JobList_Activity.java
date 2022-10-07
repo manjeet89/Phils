@@ -475,20 +475,42 @@ public class Update_JobList_Activity extends AppCompatActivity {
                                 String emp_type_id = object.getString("stock_type_id");
                                 String emp_type_name = object.getString("stock_type_name");
 
-                                String[] length = ln.split(",");
-                                for(String name : length){
-                                    if(emp_type_id.equals(name))
-                                    {
+                                String[] array = ln.split(",");
+//                                for(int s=0;s<length.length;s++)
+//                                {
+//                                    if(emp_type_id.equals(ln))
+//                                    langList.add(emp_type_id);
+//                                    langListvalue.add(emp_type_name);
+//                                    selectedLanguage[s] = true;
+//                                    Log.d("Nilesh", String.valueOf(langList));
+//                                    Log.d("Nilesh", String.valueOf(langListvalue));
+//
+//                                }
+                                for(int k=0;k<array.length;k++){
+                                    if(emp_type_id.equals(array[k])){
                                         langList.add(emp_type_id);
                                         langListvalue.add(emp_type_name);
-                                        //selectedLanguage = true;
+                                        selectedLanguage[k]=true;
                                         Log.d("Nilesh", String.valueOf(langList));
                                         Log.d("Nilesh", String.valueOf(langListvalue));
-
                                     }
-                                    //System.out.println(name);
-
+                                    else{
+                                        selectedLanguage[k]=false;
+                                    }
                                 }
+//                                for(String id : array){
+//                                    if(emp_type_id.equals(id))
+//                                    {
+//                                        langList.add(emp_type_id);
+//                                        langListvalue.add(emp_type_name);
+//                                        selectedLanguage[i]=true;
+//                                        Log.d("Nilesh", String.valueOf(langList));
+//                                        Log.d("Nilesh", String.valueOf(langListvalue));
+//
+//                                    }
+//                                    //System.out.println(name);
+//
+//                                }
                                 listValue[i]=emp_type_name;
                                 listId[i]=emp_type_id;
 
@@ -528,6 +550,95 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
         RequestQueue requestQueue11 = Volley.newRequestQueue(Update_JobList_Activity.this);
         requestQueue11.add(request11);
+
+
+
+
+        consumbles_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Initialize alert dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
+
+                // set title
+                builder.setTitle("Select Language");
+
+                // set dialog non cancelable
+                builder.setCancelable(false);
+
+
+                builder.setMultiChoiceItems(listValue, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        // check condition
+                        Log.d("just",listValue[i]);
+                        if (b) {
+                            // when checkbox selected
+                            // Add position  in lang list
+                            langList.add(listId[i]);
+                            langListvalue.add(listValue[i]);
+
+                            Log.d("Nilesh",listId[i]);
+
+
+                            // Sort array list
+                            Collections.sort(langList);
+
+                        } else {
+                            // when checkbox unselected
+                            // Remove position from langList
+                            langList.remove(listId[i]);
+                            langListvalue.remove(listValue[i]);
+
+                        }
+                        Log.d("Nil", String.valueOf(langList));
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Initialize string builder
+//                        StringBuilder stringBuilder = new StringBuilder();
+                        String stringBuilder= String.join(",", langListvalue);
+                        String stringbuilder = String.join(",",langList);
+                        Log.d("nil",stringBuilder);
+                        Log.d("nil",stringbuilder);
+
+                        consumbles_item.setText(stringBuilder);
+                        setconsum.setText(stringbuilder);
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // dismiss dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // use for loop
+                        for (int j = 0; j < selectedLanguage.length; j++) {
+                            // remove all selection
+                            selectedLanguage[j] = false;
+                            // clear language list
+                            langListvalue.clear();
+                            langList.clear();
+                            // clear text view value
+                            consumbles_item.setText("");
+                        }
+                    }
+                });
+                // show dialog
+                builder.show();
+
+            }
+        });
+
+
 
         String WelgerGrinder = job_emp_user;
 //        String[] WG = WelgerGrinder.split(",");
@@ -569,7 +680,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
                                     {
                                         wokerList.add(user_id);
                                         wokerListvalue.add(user_full_name+" - "+user_employee_id);
-
+                                        wokerlenght[i] = true;
                                         Log.d("okccc",user_full_name);
                                     }
                                     //System.out.println(name);
@@ -749,144 +860,62 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
 
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_type",
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            listValue = new String[jsonArray.length()];
-                            listId = new String[jsonArray.length()];
-                            selectedLanguage = new boolean[listValue.length];
-
-                            for(int i=0; i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String emp_type_id = object.getString("stock_type_id");
-                                String emp_type_name = object.getString("stock_type_name");
-
-                                listValue[i]=emp_type_name;
-                                listId[i]=emp_type_id;
-
-                            }
-
-                            Collections.reverse(Arrays.asList(listValue));
-                            Collections.reverse(Arrays.asList(listId));
-
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-
-                return headers;
-                //return super.getHeaders();
-            }
-        };
-
-        RequestQueue requestQueue1 = Volley.newRequestQueue(Update_JobList_Activity.this);
-        requestQueue1.add(request1);
-
-        consumbles_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
-
-                // set title
-                builder.setTitle("Select Language");
-
-                // set dialog non cancelable
-                builder.setCancelable(false);
-
-                builder.setMultiChoiceItems(listValue, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position  in lang list
-                            langList.add(listId[i]);
-                            langListvalue.add(listValue[i]);
-
-                            Log.d("Nilesh",listId[i]);
-
-
-                            // Sort array list
-                            Collections.sort(langList);
-
-                        } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            langList.remove(listId[i]);
-                            langListvalue.remove(listValue[i]);
-
-                        }
-                        Log.d("Nil", String.valueOf(langList));
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-//                        StringBuilder stringBuilder = new StringBuilder();
-                        String stringBuilder= String.join(",", langListvalue);
-                        String stringbuilder = String.join(",",langList);
-                        Log.d("nil",stringBuilder);
-                        Log.d("nil",stringbuilder);
-
-                        consumbles_item.setText(stringBuilder);
-                        setconsum.setText(stringbuilder);
-
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < selectedLanguage.length; j++) {
-                            // remove all selection
-                            selectedLanguage[j] = false;
-                            // clear language list
-                            langListvalue.clear();
-                            langList.clear();
-                            // clear text view value
-                            consumbles_item.setText("");
-                        }
-                    }
-                });
-                // show dialog
-                builder.show();
-
-            }
-        });
+//        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_type",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//
+//                            listValue = new String[jsonArray.length()];
+//                            listId = new String[jsonArray.length()];
+//                            selectedLanguage = new boolean[listValue.length];
+//
+//                            for(int i=0; i<jsonArray.length();i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String emp_type_id = object.getString("stock_type_id");
+//                                String emp_type_name = object.getString("stock_type_name");
+//
+//                                listValue[i]=emp_type_name;
+//                                listId[i]=emp_type_id;
+//
+//                            }
+//
+//                            Collections.reverse(Arrays.asList(listValue));
+//                            Collections.reverse(Arrays.asList(listId));
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("user_token",token);
+//                headers.put("user_id", userId);
+//                headers.put("project_location_id", location);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue1 = Volley.newRequestQueue(Update_JobList_Activity.this);
+//        requestQueue1.add(request1);
 
 
 
@@ -1163,62 +1192,62 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
 
 
-        StringRequest request4 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_welder_grinder_list",
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            wokerValue = new String[jsonArray.length()];
-                            wokerId = new String[jsonArray.length()];
-                            wokerlenght = new boolean[wokerValue.length];
-
-                            for(int i=0; i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String user_id = object.getString("user_id");
-                                String user_name = object.getString("user_full_name");
-
-                                wokerValue[i]=user_name;
-                                wokerId[i]=user_id;
-
-                            }
-
-//                            Collections.reverse(Arrays.asList(wokerValue));
-//                            Collections.reverse(Arrays.asList(wokerId));
-
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-
-                return headers;
-                //return super.getHeaders();
-            }
-        };
-
-        RequestQueue requestQueue4 = Volley.newRequestQueue(Update_JobList_Activity.this);
-        requestQueue4.add(request4);
+//        StringRequest request4 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_welder_grinder_list",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//
+//                            wokerValue = new String[jsonArray.length()];
+//                            wokerId = new String[jsonArray.length()];
+//                            wokerlenght = new boolean[wokerValue.length];
+//
+//                            for(int i=0; i<jsonArray.length();i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String user_id = object.getString("user_id");
+//                                String user_name = object.getString("user_full_name");
+//
+//                                wokerValue[i]=user_name;
+//                                wokerId[i]=user_id;
+//
+//                            }
+//
+////                            Collections.reverse(Arrays.asList(wokerValue));
+////                            Collections.reverse(Arrays.asList(wokerId));
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("user_token",token);
+//                headers.put("user_id", userId);
+//                headers.put("project_location_id", location);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue4 = Volley.newRequestQueue(Update_JobList_Activity.this);
+//        requestQueue4.add(request4);
 
         worker_w_r.setOnClickListener(new View.OnClickListener() {
             @Override

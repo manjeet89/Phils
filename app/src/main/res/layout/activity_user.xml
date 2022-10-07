@@ -188,7 +188,7 @@
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Sr.No."
+                                android:text="SR.NO."
                                 android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -265,7 +265,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Action"
+                                android:text="ACTION"
                                 android:textColor="#5d615e"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

@@ -6,21 +6,21 @@
     android:backgroundTint="@color/white"
     android:gravity="center"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#777a78"
-        android:text="OPERATION SELECT"
-        android:textSize="18sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:backgroundTint="@color/black"
-        android:background="@color/white"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="#777a78"-->
+<!--        android:text="OPERATION SELECT"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="10dp"/>-->
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:backgroundTint="@color/black"-->
+<!--        android:background="@color/white"/>-->
 
 
 

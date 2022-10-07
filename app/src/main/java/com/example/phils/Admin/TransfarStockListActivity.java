@@ -80,6 +80,11 @@ public class TransfarStockListActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),StockListActivity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfar_stock_list);
@@ -387,6 +392,11 @@ public class TransfarStockListActivity extends AppCompatActivity {
         makelist.setText(Make_name);
         uomlist.setText(Uom_name);
         assignquantitylist.setText(assign_quantity);
+
+        String locationId = appConfig.getLocationId();
+        setlocation.setText(locationId);
+        String locationName = appConfig.getLocation();
+        changestats.setText(locationName);
 
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");

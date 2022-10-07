@@ -222,7 +222,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/assign_welder"
-                    android:hint="select stock category"
+                    android:hint="Select Welder/Grinder"
                     android:padding="10dp"
                     android:background="#f2ebeb"
                     android:textColor="@color/black"

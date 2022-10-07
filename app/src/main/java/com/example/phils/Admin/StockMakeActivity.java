@@ -390,7 +390,6 @@ public class StockMakeActivity extends AppCompatActivity {
     private void fatchdata() {
 
         progressDialog = new ProgressDialog(StockMakeActivity.this);
-        progressDialog.setTitle("Stock Make");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 

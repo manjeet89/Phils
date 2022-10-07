@@ -38,6 +38,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.RequisitionAdapterClass;
 import com.example.phils.R;
+import com.example.phils.RequsitionComplete;
 import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -332,6 +333,15 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),RequisitionListActivity.class));
             }
         });
+
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
+            }
+        });
+
 
         add_reqlist = findViewById(R.id.add_reqlist);
         add_reqlist.setOnClickListener(new View.OnClickListener() {

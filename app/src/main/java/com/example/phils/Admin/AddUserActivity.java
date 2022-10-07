@@ -378,12 +378,12 @@ public class AddUserActivity extends AppCompatActivity {
                     {
                         setgender.setText("");
                         setgender.setText("1");
-                        Toast.makeText(AddUserActivity.this, setgender.getText(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(AddUserActivity.this, setgender.getText(), Toast.LENGTH_SHORT).show();
                     }
                     else{
                         setgender.setText("");
                         setgender.setText("0");
-                        Toast.makeText(AddUserActivity.this, setgender.getText(), Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(AddUserActivity.this, setgender.getText(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -414,13 +414,13 @@ public class AddUserActivity extends AppCompatActivity {
 
                         setemployetype.setText("");
                         setemployetype.setText("1");
-                        Toast.makeText(AddUserActivity.this, setemployetype.getText(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(AddUserActivity.this, setemployetype.getText(), Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
                         setemployetype.setText("");
                         setemployetype.setText("0");
-                        Toast.makeText(AddUserActivity.this, setemployetype.getText(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AddUserActivity.this, setemployetype.getText(), Toast.LENGTH_SHORT).show();
 
                         emailtext.setVisibility(View.GONE);
                         email.setVisibility(View.GONE);
@@ -602,7 +602,7 @@ public class AddUserActivity extends AppCompatActivity {
                         userlocation.setText(sp.location_name);
                         setlocation.setText(sp.location_id);
                         dialog.dismiss();
-                        Toast.makeText(AddUserActivity.this, sp.location_id, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(AddUserActivity.this, sp.location_id, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -723,7 +723,7 @@ public class AddUserActivity extends AppCompatActivity {
                         emppost.setText(sp.emp_type_name);
                         setemployetypespinner.setText(sp.emp_type_id);
                         dialog.dismiss();
-                        Toast.makeText(AddUserActivity.this, sp.emp_type_id, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(AddUserActivity.this, sp.emp_type_id, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -847,7 +847,7 @@ public class AddUserActivity extends AppCompatActivity {
                         reportmanager.setText(sp.user_full_name);
                         setreportmanager.setText(sp.user_id);
                         dialog.dismiss();
-                        Toast.makeText(AddUserActivity.this, sp.user_id, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(AddUserActivity.this, sp.user_id, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

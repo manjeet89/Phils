@@ -246,7 +246,7 @@
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Sr.No."
+                                android:text="SR.NR."
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

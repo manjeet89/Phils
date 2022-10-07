@@ -1,5 +1,6 @@
 package com.example.phils.Admin;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -7,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,9 +172,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                     }
 
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseTokenGenerate(user_id,user_email_id);
+
+//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
                                 }
 
                             }
@@ -202,6 +209,71 @@ public class LoginActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
         requestQueue.add(request);
+    }
+
+    private void FirebaseTokenGenerate(String userId,String UserEmail) {
+
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d( "Fetching", String.valueOf(task.getException()));
+                            return;
+                        }
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        Log.d("firebasetoken",token);
+
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = new JSONObject(response);
+                                            String message = jsonObject.getString("message");
+                                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                            progressDialog.dismiss();
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        {
+
+                            @Nullable
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String,String> params = new HashMap<String,String>();
+                                params.put("user_id",userId);
+                                params.put("user_email_id",UserEmail);
+                                params.put("firebase_user_token",token);
+
+                                return  params;
+                            }
+
+
+                        };
+                        RequestQueue  requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                        requestQueue.add(request);
+                    }
+                });
     }
 
     private void displayUserInformation(String message)

@@ -144,7 +144,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - job add"
+                android:text="  | Home - Job Add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -311,7 +311,7 @@
                         android:background="#f2ebeb"
                         android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                         android:gravity="center_vertical"
-                        android:hint="select job category"
+                        android:hint="Select Job Category"
                         android:padding="10dp"
                         android:textColor="@color/black" />
 
@@ -359,7 +359,7 @@
                         android:background="#f2ebeb"
                         android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                         android:gravity="center_vertical"
-                        android:hint="select job Size"
+                        android:hint="Select Job Size"
                         android:padding="10dp"
                         android:textColor="@color/black" />
 
@@ -580,7 +580,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginBottom="8dp"
-                        android:text="status"
+                        android:text="Status"
                         android:textColor="#3e403f"
                         android:textSize="15sp"
                         android:textStyle="bold" />

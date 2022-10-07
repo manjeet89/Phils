@@ -114,7 +114,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - job size add"
+                android:text="  | Home - Job Size Add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -176,7 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/category_insert"
-                    android:hint="category name"
+                    android:hint="Enter Size Name"
                     android:textSize="15sp"
                     android:padding="10dp"
                     android:background="#f2ebeb"
@@ -200,7 +200,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status"
+                    android:text="Status"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"

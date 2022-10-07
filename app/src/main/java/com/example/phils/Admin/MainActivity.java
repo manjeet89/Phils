@@ -16,7 +16,9 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,8 +29,13 @@ import android.widget.Toast;
 
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.onesignal.OneSignal;
 
 import org.json.JSONException;
@@ -71,7 +78,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         appConfig = new AppConfig(this);
+
+
+//        FirebaseMessaging.getInstance().getToken()
+//                .addOnCompleteListener(new OnCompleteListener<String>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<String> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.d( "Fetching", String.valueOf(task.getException()));
+//                            return;
+//                        }
+//                        // Get new FCM registration token
+//                        String token = task.getResult();
+//                        Log.d("firebasetoken",token);
 //
+//                        // Log and toast
+////                        String msg = getString(R.string.msg_token_fmt, token);
+////                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+
 //        // Enable verbose OneSignal logging to debug issues if needed.
 //        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 //

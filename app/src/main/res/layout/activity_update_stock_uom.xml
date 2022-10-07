@@ -124,7 +124,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - stock UOM Add"
+                android:text="  | Home - Stock UOM Add"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -149,116 +149,115 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="15sp">
+                android:layout_margin="15sp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="0dp">
+                    android:layout_margin="0dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stock UOM Name"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#3e403f"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#db0711"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:text="Stock UOM Name"
+                        android:textColor="#3e403f"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginBottom="8dp"
+                        android:text=" *"
+                        android:textColor="#db0711"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/uom_name_add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/uom_name_add"
+                    android:layout_marginTop="1dp"
+                    android:background="#f2ebeb"
+                    android:gravity="center_vertical"
                     android:hint="Enter Name Uom"
                     android:padding="10dp"
-                    android:textSize="14sp"
-                    android:background="#f2ebeb"
                     android:textColor="@color/black"
-                    android:layout_marginTop="1dp"
-                    android:gravity="center_vertical"
-                    />
+                    android:textSize="14sp" />
             </LinearLayout>
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="15sp">
+                android:layout_margin="15sp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="0dp">
+                    android:layout_margin="0dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#3e403f"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="0dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#db0711"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginBottom="8dp"
+                        android:text="Status"
+                        android:textColor="#3e403f"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        />
+                        android:layout_marginBottom="8dp"
+                        android:text=" *"
+                        android:textColor="#db0711"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <TextView
+                    android:id="@+id/stock_size_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/stock_size_status"
-                    android:hint="status"
-                    android:padding="10dp"
-                    android:background="#f2ebeb"
-                    android:textColor="@color/black"
                     android:layout_marginTop="1dp"
-                    android:gravity="center_vertical"
+                    android:background="#f2ebeb"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                    />
+                    android:gravity="center_vertical"
+                    android:hint="Status"
+                    android:padding="10dp"
+                    android:textColor="@color/black" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:background="@drawable/curve_shap"
                 android:gravity="center"
-                android:background="@drawable/curve_shap">
+                android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/uom_insert"
                     android:layout_width="120sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/uom_insert"
                     android:layout_marginTop="20sp"
-                    android:text="Submit"
                     android:backgroundTint="#1ca6eb"
+                    android:text="Submit"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
-                    />
+                    android:textSize="13sp" />
             </LinearLayout>
 
 

@@ -402,7 +402,6 @@ public class StockCategoryActivity extends AppCompatActivity {
 
     private void fatchdata() {
         progressDialog = new ProgressDialog(StockCategoryActivity.this);
-        progressDialog.setTitle("Stock Category");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 

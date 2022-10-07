@@ -1,5 +1,6 @@
 package com.example.phils.Admin;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -7,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +89,7 @@ public class TwoStepVerification extends AppCompatActivity {
         String emp_type_name = getIntent().getStringExtra("emp_type_name");
         String emp_type_id = getIntent().getStringExtra("emp_type_id");
         String project_location_id = getIntent().getStringExtra("project_location_id");
+        String location_name = getIntent().getStringExtra("location_name");
 
         String number =   first.getText().toString()+second.getText().toString()+third.getText().toString()+fourth.getText().toString();
 
@@ -97,7 +103,6 @@ public class TwoStepVerification extends AppCompatActivity {
                             String message = jsonObject.getString("message");
                             String code = jsonObject.getString("code");
                             String status = jsonObject.getString("status");
-                            //Toast.makeText(LoginActivity.this, code, Toast.LENGTH_SHORT).show();
 
                             if(code.equals("200")){
                                 String user_token = jsonObject.getString("user_token");
@@ -106,25 +111,23 @@ public class TwoStepVerification extends AppCompatActivity {
                                 JSONObject jsonObject1 = new JSONObject(data);
 
                                 String user_name = jsonObject1.getString("user_name");
-
                                 String userId = getIntent().getStringExtra("user_id");
-                                String user_full_name = getIntent().getStringExtra("user_full_name");
                                 String user_email_id = getIntent().getStringExtra("user_email_id");
                                 String user_employee_type = getIntent().getStringExtra("user_employee_type");
-                                String employee_type = getIntent().getStringExtra("employee_type");
-                                String emp_type_name = getIntent().getStringExtra("emp_type_name");
-                                String emp_type_id = getIntent().getStringExtra("emp_type_id");
-                                String project_location_id = jsonObject1.getString("project_location_id");
-                                String location_name = jsonObject1.getString("location_name");
 
+//                                String employee_type = getIntent().getStringExtra("employee_type");
+//                                String emp_type_name = getIntent().getStringExtra("emp_type_name");
+//                                String emp_type_id = getIntent().getStringExtra("emp_type_id");
+//                                String project_location_id = jsonObject1.getString("project_location_id");
+//                                String location_name = jsonObject1.getString("location_name");
+//                                String user_full_name = getIntent().getStringExtra("user_full_name");
 
                                 if (isRememberUserLogin) {
 
+
                                         appConfig.updateUserLoginStatus(true);
                                         appConfig.Saveuser_name(user_name);
-
                                         appConfig.Saveuser_id(userId);
-                                        appConfig.Saveuser_full_name(user_full_name);
                                         appConfig.Saveuser_email_id(user_email_id);
                                         appConfig.Saveuser_employee_type(user_employee_type);
                                         appConfig.Saveemployee_type(employee_type);
@@ -133,10 +136,14 @@ public class TwoStepVerification extends AppCompatActivity {
                                         appConfig.Saveuser_token(user_token);
                                         appConfig.SaveLocation(location_name);
                                         appConfig.SaveLocationId(project_location_id);
+                                        appConfig.Saveuser_full_name(user_full_name);
 
-                                        Intent intent = new Intent(TwoStepVerification.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        FirebaseTokenGenerate(userId,user_email_id);
+
+
+//                                    Intent intent = new Intent(TwoStepVerification.this, MainActivity.class);
+//                                        startActivity(intent);
+//                                        finish();
                                     }
                             }
                             else
@@ -225,6 +232,71 @@ public class TwoStepVerification extends AppCompatActivity {
 //
 //        requestQueue.add(jsonObjectRequest1);
 //    }
+
+    private void FirebaseTokenGenerate(String userId,String UserEmail) {
+
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d( "Fetching", String.valueOf(task.getException()));
+                            return;
+                        }
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        Log.d("firebasetoken",token);
+
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        JSONObject jsonObject = null;
+                                        try {
+                                            jsonObject = new JSONObject(response);
+                                            String message = jsonObject.getString("message");
+                                            Toast.makeText(TwoStepVerification.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                            progressDialog.dismiss();
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(TwoStepVerification.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        {
+
+                            @Nullable
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String,String> params = new HashMap<String,String>();
+                                params.put("user_id",userId);
+                                params.put("user_email_id",UserEmail);
+                                params.put("firebase_user_token",token);
+
+                                return  params;
+                            }
+
+
+                        };
+                        RequestQueue  requestQueue = Volley.newRequestQueue(TwoStepVerification.this);
+                        requestQueue.add(request);
+                    }
+                });
+    }
 
     private void displayUserInformation(String message)
     {

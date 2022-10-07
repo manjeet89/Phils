@@ -373,7 +373,6 @@ public class StockTypeActivity extends AppCompatActivity {
 
     private void fatchdata() {
         progressDialog = new ProgressDialog(StockTypeActivity.this);
-        progressDialog.setTitle("Stock Type");
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 

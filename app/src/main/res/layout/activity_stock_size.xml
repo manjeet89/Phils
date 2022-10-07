@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Size"
+                android:text="  | Home - Stock Size"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"
@@ -190,7 +190,7 @@
                                 android:layout_width="50sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Sr.No."
+                                android:text="SR.NO."
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />
@@ -240,7 +240,7 @@
                                 android:layout_width="100sp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="7sp"
-                                android:text="Action"
+                                android:text="ACTION"
                                 android:textColor="@color/lightgray"
                                 android:textSize="12dp"
                                 android:textStyle="bold" />

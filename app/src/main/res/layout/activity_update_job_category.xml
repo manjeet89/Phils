@@ -98,32 +98,37 @@
                     />
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
-            android:orientation="horizontal"
-            android:layout_margin="15sp"
-            >
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="15sp"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Job Category Update"
-                android:textColor="@color/black"
-                android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif"
+                android:text="Job Category Update"
+                android:textColor="@color/black"
 
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Job category Update"
-                android:textColor="@color/lightgray"
-                android:fontFamily="sans-serif"
-                android:textSize="11sp"
                 android:layout_margin="5sp"
-                android:textStyle="bold"/>
+                android:fontFamily="sans-serif"
+                android:text="  | Home - Job Category Update"
+                android:textColor="@color/lightgray"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -178,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/job_name"
-                    android:hint="category name"
+                    android:hint="Category Name"
                     android:textSize="15sp"
                     android:padding="10dp"
                     android:background="#f2ebeb"
@@ -204,7 +209,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="status"
+                    android:text="Status"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="#3e403f"
