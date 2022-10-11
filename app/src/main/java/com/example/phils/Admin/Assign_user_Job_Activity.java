@@ -335,6 +335,8 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                 String token = getIntent().getStringExtra("token");
                 String userId = getIntent().getStringExtra("userId");
                 String location = getIntent().getStringExtra("location");
+                String user_employee_type = appConfig.getuser_employee_type();
+
                 StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/job_assign_user",
                         new Response.Listener<String>() {
                             @Override
@@ -344,13 +346,22 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                                     jsonObject = new JSONObject(response);
                                     String message = jsonObject.getString("message");
 
-                                    Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(),Assign_user_Job_Activity.class));
+                                    if(message.equals("Invalid user request")){
+                                        Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                        appConfig.updateUserLoginStatus(false);
+                                        startActivity(new Intent(Assign_user_Job_Activity.this, LoginActivity.class));
+                                        finish();
+                                    }
+                                    else {
 
+                                        Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), Assign_user_Job_Activity.class));
+                                    }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
                                 //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
                             }
                         }, new Response.ErrorListener() {
@@ -367,6 +378,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                         headers.put("user_token",token);
                         headers.put("user_id", userId);
                         headers.put("project_location_id", location);
+                        headers.put("user_employee_type", user_employee_type);
 
                         return headers;
                     }
@@ -396,6 +408,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_incomplete",
@@ -406,30 +419,35 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                         try {
 
                             JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
+                            String message = jsonObject.getString("message");
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(Assign_user_Job_Activity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                jobValue = new String[jsonArray.length()];
+                                jobId = new String[jsonArray.length()];
+                                joblength = new boolean[jobValue.length];
 
-                            jobValue = new String[jsonArray.length()];
-                            jobId = new String[jsonArray.length()];
-                            joblength = new boolean[jobValue.length];
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                            for(int i=0; i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
+                                    String job_id = object.getString("job_id");
+                                    String job_number = object.getString("job_number");
 
-                                   String job_id = object.getString("job_id");
-                                   String  job_number = object.getString("job_number");
+                                    jobValue[i] = job_number;
+                                    jobId[i] = job_id;
 
-                                jobValue[i]=job_number;
-                                jobId[i]=job_id;
+                                }
+
+                                Collections.reverse(Arrays.asList(jobValue));
+                                Collections.reverse(Arrays.asList(jobId));
 
                             }
-
-                            Collections.reverse(Arrays.asList(jobValue));
-                            Collections.reverse(Arrays.asList(jobId));
-
-
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -448,6 +466,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -591,6 +610,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -681,90 +701,6 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
         });
 
 
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                // Initialize alert dialog
-//                AlertDialog.Builder builder = new AlertDialog.Builder(Assign_user_Job_Activity.this);
-//
-//                // set title
-//                builder.setTitle("Select Language");
-//
-//                // set dialog non cancelable
-//                builder.setCancelable(false);
-//
-//
-//                builder.setMultiChoiceItems(langArray, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-//                        // check condition
-//                        if (b) {
-//                            // when checkbox selected
-//                            // Add position  in lang list
-//                            langList.add(String.valueOf(i));
-//
-//                            //Log.d("Nilesh",i+" / "+String.valueOf(i)+ langList.get(i));
-//                            // Sort array list
-//                            Collections.sort(langList);
-//                        } else {
-//                            // when checkbox unselected
-//                            // Remove position from langList
-//                            langList.remove(Integer.valueOf(i));
-//                        }
-//                    }
-//                });
-//
-//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // Initialize string builder
-//                        StringBuilder stringBuilder = new StringBuilder();
-//                        // use for loop
-//                        for (int j = 0; j < langList.size(); j++) {
-//                            // concat array value
-//                            stringBuilder.append(langArray[Integer.parseInt(langList.get(j))]);
-//                            // check condition
-//                            if (j != langList.size() - 1) {
-//                                // When j value  not equal
-//                                // to lang list size - 1
-//                                // add comma
-//                                stringBuilder.append(", ");
-//                            }
-//                        }
-//                        // set text on textView
-//                        textView.setText(stringBuilder.toString());
-//
-//                        String s= textView.getText().toString();
-//                        Toast.makeText(Assign_user_Job_Activity.this, s, Toast.LENGTH_SHORT).show();
-//                        }
-//                });
-//
-//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // dismiss dialog
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        // use for loop
-//                        for (int j = 0; j < selectedLanguage.length; j++) {
-//                            // remove all selection
-//                            selectedLanguage[j] = false;
-//                            // clear language list
-//                            langList.clear();
-//                            // clear text view value
-//                            textView.setText("");
-//                        }
-//                    }
-//                });
-//                // show dialog
-//                builder.show();
-//            }
-//        });
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.ResponseModels;
 
 public class ResponseModelRequisitionComplete {
     String sn,req_id,req_user_id,req_by_user_id,req_job_id,seam_number,req_category_id,req_type_id,req_size_id,req_quantity,

@@ -527,6 +527,7 @@ public class AssignStockRequisition extends AppCompatActivity {
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
         String useremptype = appConfig.getuser_employee_type();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         String req_id = getIntent().getStringExtra("id");
         //Toast.makeText(this, token+"/"+userId+"/"+location+"/"+useremptype+"/"+req_id, Toast.LENGTH_SHORT).show();
@@ -602,13 +603,17 @@ public class AssignStockRequisition extends AppCompatActivity {
 //                                        Toast.makeText(AssignStockRequisition.this, String.valueOf(p), Toast.LENGTH_SHORT).show();
                                         String AvailableStock = String.valueOf(q);
 //
-                                        responseModelAssignRequisition = new ResponseModelAssignRequisition(AvailableStock,stock_id, stock_location_id, stock_category_id, stock_type_id, stock_size_id,
-                                                stock_batch_number, stock_invoice_number, stock_distributor_name, stock_make_id, stock_uom_id, safety_stock,
-                                                stock_quantity, stock_lot, stock_price, is_stock_transfer, stock_status, stock_type_name, stock_size_name, make_name,
-                                                uom_name, stock_category_name, assign_quantity);
-                                        data.add(responseModelAssignRequisition);
-                                        assignRequisitionAdapterClass.notifyDataSetChanged();
-                                        progressDialog.dismiss();
+                                        if(sum == 0){
+
+                                        }else {
+                                            responseModelAssignRequisition = new ResponseModelAssignRequisition(AvailableStock, stock_id, stock_location_id, stock_category_id, stock_type_id, stock_size_id,
+                                                    stock_batch_number, stock_invoice_number, stock_distributor_name, stock_make_id, stock_uom_id, safety_stock,
+                                                    stock_quantity, stock_lot, stock_price, is_stock_transfer, stock_status, stock_type_name, stock_size_name, make_name,
+                                                    uom_name, stock_category_name, assign_quantity);
+                                            data.add(responseModelAssignRequisition);
+                                            assignRequisitionAdapterClass.notifyDataSetChanged();
+                                            progressDialog.dismiss();
+                                        }
                                     }
 
 
@@ -697,6 +702,7 @@ public class AssignStockRequisition extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

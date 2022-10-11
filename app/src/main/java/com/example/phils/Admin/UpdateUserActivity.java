@@ -548,6 +548,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/location_list",
                 new com.android.volley.Response.Listener<String>() {
@@ -599,6 +600,7 @@ public class UpdateUserActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -713,6 +715,7 @@ public class UpdateUserActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }
@@ -839,6 +842,7 @@ public class UpdateUserActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }
@@ -967,6 +971,7 @@ public class UpdateUserActivity extends AppCompatActivity {
             String userId = appConfig.getuser_id();
             String location = appConfig.getLocationId();
             String id = getIntent().getStringExtra("id");
+            String user_employee_type = appConfig.getuser_employee_type();
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/add_user",
                     new Response.Listener<String>() {
@@ -1007,6 +1012,7 @@ public class UpdateUserActivity extends AppCompatActivity {
                     headers.put("user_token", token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

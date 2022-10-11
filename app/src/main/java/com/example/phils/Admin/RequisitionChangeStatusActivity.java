@@ -317,6 +317,7 @@ public class RequisitionChangeStatusActivity extends AppCompatActivity {
         quantity = findViewById(R.id.quantity);
         reqQuantity = findViewById(R.id.reqQuantity);
         changestats = findViewById(R.id.changestats);
+
         String id = getIntent().getStringExtra("id");
         String changecategory = getIntent().getStringExtra("stockcategory");
         String changetype = getIntent().getStringExtra("stocktype");

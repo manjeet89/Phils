@@ -114,6 +114,11 @@ public class Add_Job_List_Activity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(),Job_List_Activity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_job_list);
@@ -1173,6 +1178,7 @@ public class Add_Job_List_Activity extends AppCompatActivity {
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
+            String user_employee_type = appConfig.getuser_employee_type();
 
 //        Log.d("check",consumable);
 //        Log.d("check",weldergrinder);
@@ -1214,6 +1220,7 @@ public class Add_Job_List_Activity extends AppCompatActivity {
                     headers.put("user_token", token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

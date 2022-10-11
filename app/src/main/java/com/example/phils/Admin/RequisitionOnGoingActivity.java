@@ -482,64 +482,6 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-//                Button changestatus = dialog.findViewById(R.id.changestatus);
-//                Button assignstock = dialog.findViewById(R.id.assignstock);
-//                Button delete = dialog.findViewById(R.id.delete);
-//                delete.setVisibility(View.GONE);
-//                changestatus.setVisibility(View.GONE);
-//
-//                String id = data.get(position).getReq_id();
-//                String catGroup = data.get(position).getStock_category_name();
-//                String category = data.get(position).getStock_type_name();
-//                String status = data.get(position).getStock_size_name();
-//                String changestatu = data.get(position).getReq_manager_status();
-//                String stockcategory = data.get(position).getStock_category_name();
-//                String stocktype = data.get(position).getStock_type_name();
-//                String stocksize = data.get(position).getStock_size_name();
-//                String quantityAssign = data.get(position).getAssign_quantity();
-//                String quantityreq = data.get(position).getReq_quantity();
-//                String managerstatus = data.get(position).getReq_manager_status();
-//
-//                String token = appConfig.getuser_token();
-//                String userId = appConfig.getuser_id();
-//                String location = appConfig.getLocationId();
-////
-//                // Toast.makeText(RequisitionOnGoingActivity.this, changestatu, Toast.LENGTH_SHORT).show();
-//                if(changestatu.equals("Declined"))
-//                {
-//                    assignstock.setVisibility(View.GONE);
-//                }
-//                changestatus.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                        Intent intent = new Intent(getApplicationContext(), RequisitionChangeStatusActivity.class);
-//
-//                        intent.putExtra("stockcategory",stockcategory);
-//                        intent.putExtra("stocktype",stocktype);
-//                        intent.putExtra("stocksize",stocksize);
-//                        intent.putExtra("quantityAssign",quantityAssign);
-//                        intent.putExtra("quantityreq",quantityreq);
-//                        intent.putExtra("managerstatus",managerstatus);
-//
-//                        intent.putExtra("id",id);
-//                        intent.putExtra("token",token);
-//                        intent.putExtra("userId",userId);
-//                        intent.putExtra("location",location);
-//                        startActivity(intent);
-//
-//                    }
-//                });
-//
-//                String token = appConfig.getuser_token();
-//                String userId = appConfig.getuser_id();
-//                String location = appConfig.getLocationId();
-//
-//                Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
-//                intent.putExtra("id",id);
-//                intent.putExtra("token",token);
-//                intent.putExtra("userId",userId);
-//                intent.putExtra("location",location);
             }
         };
     }
@@ -571,99 +513,107 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                             String stringBuilder;
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
-                            String data1 = jsonObject.getString("data");
-                            if(data1.equals("false")) {
-                                Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
-                            }else {
-
-                                if (message.equals("Invalid user request")) {
-                                    Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
-                                    appConfig.updateUserLoginStatus(false);
-                                    startActivity(new Intent(RequisitionOnGoingActivity.this, LoginActivity.class));
-                                    finish();
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(RequisitionOnGoingActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                String data1 = jsonObject.getString("data");
+                                if (data1.equals("false")) {
+                                    Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                 } else {
 
-                                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        j++;
-                                        JSONObject object = jsonArray.getJSONObject(i);
-                                        String sn = String.valueOf(j);
+                                    if (message.equals("Invalid user request")) {
+                                        Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
+                                        appConfig.updateUserLoginStatus(false);
+                                        startActivity(new Intent(RequisitionOnGoingActivity.this, LoginActivity.class));
+                                        finish();
+                                    } else {
 
-                                        String req_id = object.getString("req_id");
-                                        String req_user_id = object.getString("req_user_id");
-                                        String req_user_id_details = object.getString("req_user_id_details");
+                                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            j++;
+                                            JSONObject object = jsonArray.getJSONObject(i);
+                                            String sn = String.valueOf(j);
 
-                                        wokerList.clear();
-                                        String[] strSplit = req_user_id.split(",");
-                                        for (String name : strSplit) {
-                                            JSONObject jsonObject1 = new JSONObject(req_user_id_details);
-                                            String idnumber = jsonObject1.getString(name);
-                                            // Log.d("please",idnumber);
-                                            wokerList.add(idnumber);
+                                            String req_id = object.getString("req_id");
+                                            String req_user_id = object.getString("req_user_id");
+                                            String req_user_id_details = object.getString("req_user_id_details");
+
+                                            wokerList.clear();
+                                            String[] strSplit = req_user_id.split(",");
+                                            for (String name : strSplit) {
+                                                JSONObject jsonObject1 = new JSONObject(req_user_id_details);
+                                                String idnumber = jsonObject1.getString(name);
+                                                // Log.d("please",idnumber);
+                                                wokerList.add(idnumber);
+                                            }
+                                            String stringbuilder = String.join(",", wokerList);
+
+                                            String req_by_user_id = object.getString("req_by_user_id");
+                                            String req_job_id = object.getString("req_job_id");
+                                            String seam_number = object.getString("seam_number");
+                                            String req_category_id = object.getString("req_category_id");
+                                            String req_type_id = object.getString("req_type_id");
+                                            String req_size_id = object.getString("req_size_id");
+                                            String req_quantity = object.getString("req_quantity");
+                                            String req_remark = object.getString("req_remark");
+                                            String req_location_id = object.getString("req_location_id");
+                                            req_manager_id = object.getString("req_manager_id");
+
+
+                                            if (req_manager_id.equals("null")) {
+                                                req_manager_id = "Default";
+                                            }
+
+                                            String req_manager_comment = object.getString("req_manager_comment");
+                                            req_manager_status = object.getString("req_manager_status");
+
+                                            if (req_manager_status.equals(String.valueOf(0))) {
+                                                req_manager_status = "Requested";
+                                            } else if (req_manager_status.equals(String.valueOf(1))) {
+                                                req_manager_status = "Accepted";
+                                            } else {
+                                                req_manager_status = "Declined";
+                                            }
+
+                                            req_status = object.getString("req_status");
+
+                                            if (req_status.equals(String.valueOf(0))) {
+                                                req_status = "In Progress";
+                                            } else {
+                                                req_status = "Completed";
+                                            }
+                                            String req_updated_on = object.getString("req_updated_on");
+                                            String req_created_on = object.getString("req_created_on");
+                                            String stock_type_name = object.getString("stock_type_name");
+                                            String stock_size_name = object.getString("stock_size_name");
+                                            if (stock_size_name.equals("null")) {
+                                                stock_size_name = " ";
+                                            }
+                                            String stock_category_name = object.getString("stock_category_name");
+                                            String job_number = object.getString("job_number");
+                                            String user_full_name = object.getString("user_full_name");
+                                            String user_employee_id = object.getString("user_employee_id");
+                                            assign_quantity = object.getString("assign_quantity");
+                                            if (assign_quantity.equals("null")) {
+                                                assign_quantity = "0";
+                                            }
+
+                                            //Toast.makeText(RequisitionOnGoingActivity.this, sn, Toast.LENGTH_SHORT).show();
+                                            responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
+                                                    seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
+                                                    req_manager_status, req_status, req_updated_on, req_created_on, stock_type_name, stock_size_name, stock_category_name,
+                                                    job_number, user_full_name, user_employee_id, assign_quantity,req_user_id_details);
+                                            data.add(responseModelRequisitionList);
+                                            requisitionAdapterClass.notifyDataSetChanged();
+
+                                            progressDialog.dismiss();
+
                                         }
-                                        String stringbuilder = String.join(",", wokerList);
-
-                                        String req_by_user_id = object.getString("req_by_user_id");
-                                        String req_job_id = object.getString("req_job_id");
-                                        String seam_number = object.getString("seam_number");
-                                        String req_category_id = object.getString("req_category_id");
-                                        String req_type_id = object.getString("req_type_id");
-                                        String req_size_id = object.getString("req_size_id");
-                                        String req_quantity = object.getString("req_quantity");
-                                        String req_remark = object.getString("req_remark");
-                                        String req_location_id = object.getString("req_location_id");
-                                        req_manager_id = object.getString("req_manager_id");
-
-
-                                        if (req_manager_id.equals("null")) {
-                                            req_manager_id = "Default";
-                                        }
-
-                                        String req_manager_comment = object.getString("req_manager_comment");
-                                        req_manager_status = object.getString("req_manager_status");
-
-                                        if (req_manager_status.equals(String.valueOf(0))) {
-                                            req_manager_status = "Requested";
-                                        } else if (req_manager_status.equals(String.valueOf(1))) {
-                                            req_manager_status = "Accepted";
-                                        } else {
-                                            req_manager_status = "Declined";
-                                        }
-
-                                        req_status = object.getString("req_status");
-
-                                        if (req_status.equals(String.valueOf(0))) {
-                                            req_status = "In Progress";
-                                        } else {
-                                            req_status = "Completed";
-                                        }
-                                        String req_updated_on = object.getString("req_updated_on");
-                                        String req_created_on = object.getString("req_created_on");
-                                        String stock_type_name = object.getString("stock_type_name");
-                                        String stock_size_name = object.getString("stock_size_name");
-                                        if (stock_size_name.equals("null")) {
-                                            stock_size_name = " ";
-                                        }
-                                        String stock_category_name = object.getString("stock_category_name");
-                                        String job_number = object.getString("job_number");
-                                        String user_full_name = object.getString("user_full_name");
-                                        String user_employee_id = object.getString("user_employee_id");
-                                        assign_quantity = object.getString("assign_quantity");
-                                        if (assign_quantity.equals("null")) {
-                                            assign_quantity = "0";
-                                        }
-
-                                        //Toast.makeText(RequisitionOnGoingActivity.this, sn, Toast.LENGTH_SHORT).show();
-                                        responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
-                                                seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
-                                                req_manager_status, req_status, req_updated_on, req_created_on, stock_type_name, stock_size_name, stock_category_name,
-                                                job_number, user_full_name, user_employee_id, assign_quantity);
-                                        data.add(responseModelRequisitionList);
-                                        requisitionAdapterClass.notifyDataSetChanged();
-
-                                        progressDialog.dismiss();
-
                                     }
                                 }
                             }

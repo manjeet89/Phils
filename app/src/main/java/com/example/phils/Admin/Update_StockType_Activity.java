@@ -358,6 +358,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new com.android.volley.Response.Listener<String>() {
@@ -411,6 +412,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -570,6 +572,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
         if (TextUtils.isEmpty(e1)) {
             id12.setError("Please Select Category Group");
@@ -633,6 +636,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
                     headers.put("user_token",token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

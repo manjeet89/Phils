@@ -421,6 +421,7 @@ public class Update_JobSize_Activity extends AppCompatActivity {
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
             String id = getIntent().getStringExtra("id");
+            String user_employee_type = appConfig.getuser_employee_type();
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/update_job_size",
                     new Response.Listener<String>() {
@@ -455,6 +456,7 @@ public class Update_JobSize_Activity extends AppCompatActivity {
                     headers.put("user_token",token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

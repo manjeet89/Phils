@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Admin.RequisitionAddActivity">
+    tools:context=".Admin.UpdateRequisitionListActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,20 +135,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consumable Requisition Add"
+                android:text="Consumable Requisition Update"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
-                android:textSize="9dp"
+                android:textSize="9sp"
                 android:layout_marginStart="15sp"
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Consumable Requisition Add"
+                android:text="  | Home - Consumable Requisition Update"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
-                android:textSize="9dp"
+                android:textSize="9sp"
                 android:layout_margin="5sp"
                 android:textStyle="bold"/>
 
@@ -181,16 +181,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Job Number"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Job Number"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -232,16 +232,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Requisition User"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                       />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Requisition User"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -279,16 +279,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Category"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -327,16 +327,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Stock Type"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stock Type"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -453,16 +453,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Quantity"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#3e403f"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="0dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quantity"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="#3e403f"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="0dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"

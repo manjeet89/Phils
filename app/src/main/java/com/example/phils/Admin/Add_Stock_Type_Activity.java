@@ -357,6 +357,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -408,6 +409,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -591,6 +593,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
+            String user_employee_type = appConfig.getuser_employee_type();
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/add_stock_type",
                     new Response.Listener<String>() {
@@ -625,6 +628,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                     headers.put("user_token",token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

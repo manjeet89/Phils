@@ -43,7 +43,7 @@ public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClas
         holder.sn.setText(data.get(position).getSn());
         holder.jobclint.setText(data.get(position).getJob_name());
         holder.jobnumber.setText(data.get(position).getJob_number());
-        holder.projectmanager.setText(data.get(position).getJob_manager_id());
+        holder.projectmanager.setText(data.get(position).getUser_full_name());
         holder.statuslist.setText(data.get(position).getJob_status());
         if(data.get(position).getJob_status().equals("In Progress"))
             holder.statuslist.setTextColor(Color.parseColor("#ed0e1d"));

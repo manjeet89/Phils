@@ -400,6 +400,7 @@ public class StockListActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_list",
                 new com.android.volley.Response.Listener<String>() {
@@ -412,66 +413,70 @@ public class StockListActivity extends AppCompatActivity {
                             String assign_quantity;
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(StockListActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(StockListActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                            else {
 //                            Toast.makeText(StockListActivity.this, message, Toast.LENGTH_SHORT).show();
 //                            progressDialog.dismiss();
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
-                                j++;
-                                JSONObject object = jsonArray.getJSONObject(i);
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    j++;
+                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                                String sn = String.valueOf(j);
-                                String stock_id  = object.getString("stock_id");
-                                String stock_location_id = object.getString("stock_location_id");
-                                String stock_category_id = object.getString("stock_category_id");
-                                String stock_type_id = object.getString("stock_type_id");
-                                String stock_size_id = object.getString("stock_size_id");
-                                String stock_batch_number = object.getString("stock_batch_number");
-                                String stock_invoice_number = object.getString("stock_invoice_number");
-                                String stock_distributor_name = object.getString("stock_distributor_name");
-                                String stock_make_id = object.getString("stock_make_id");
-                                String stock_uom_id = object.getString("stock_uom_id");
-                                String safety_stock = object.getString("safety_stock");
-                                       stock_quantity = object.getString("stock_quantity");
-                               // Log.d("nobita",stock_quantity);
+                                    String sn = String.valueOf(j);
+                                    String stock_id = object.getString("stock_id");
+                                    String stock_location_id = object.getString("stock_location_id");
+                                    String stock_category_id = object.getString("stock_category_id");
+                                    String stock_type_id = object.getString("stock_type_id");
+                                    String stock_size_id = object.getString("stock_size_id");
+                                    String stock_batch_number = object.getString("stock_batch_number");
+                                    String stock_invoice_number = object.getString("stock_invoice_number");
+                                    String stock_distributor_name = object.getString("stock_distributor_name");
+                                    String stock_make_id = object.getString("stock_make_id");
+                                    String stock_uom_id = object.getString("stock_uom_id");
+                                    String safety_stock = object.getString("safety_stock");
+                                    stock_quantity = object.getString("stock_quantity");
+                                    // Log.d("nobita",stock_quantity);
 
-                                String stock_lot = object.getString("stock_lot");
-                                String stock_price = object.getString("stock_price");
-                                String is_stock_transfer = object.getString("is_stock_transfer");
-                                String stock_status = object.getString("stock_status");
-                                String stock_type_name = object.getString("stock_type_name");
-                                String stock_size_name = object.getString("stock_size_name");
-                                if(stock_size_name.equals("null"))
-                                {
-                                    stock_size_name = " ";
-                                }
-                                String make_name = object.getString("make_name");
-                                if(make_name.equals("null"))
-                                {
-                                    make_name = " ";
-                                }
-                                String uom_name = object.getString("uom_name");
-                                String stock_category_name = object.getString("stock_category_name");
-                                 assign_quantity = object.getString("assign_quantity");
-                                if(assign_quantity.equals("null"))
-                                {
-                                    assign_quantity = "0";
-                                }
+                                    String stock_lot = object.getString("stock_lot");
+                                    String stock_price = object.getString("stock_price");
+                                    String is_stock_transfer = object.getString("is_stock_transfer");
+                                    String stock_status = object.getString("stock_status");
+                                    String stock_type_name = object.getString("stock_type_name");
+                                    String stock_size_name = object.getString("stock_size_name");
+                                    if (stock_size_name.equals("null")) {
+                                        stock_size_name = " ";
+                                    }
+                                    String make_name = object.getString("make_name");
+                                    if (make_name.equals("null")) {
+                                        make_name = " ";
+                                    }
+                                    String uom_name = object.getString("uom_name");
+                                    String stock_category_name = object.getString("stock_category_name");
+                                    assign_quantity = object.getString("assign_quantity");
+                                    if (assign_quantity.equals("null")) {
+                                        assign_quantity = "0";
+                                    }
 //                                int p = Integer.parseInt(stock_quantity);
 //                                int q = Integer.parseInt(assign_quantity);
 
-                               // Log.d("nobita",String.valueOf(p) +"/"+String.valueOf(q));
+                                    // Log.d("nobita",String.valueOf(p) +"/"+String.valueOf(q));
 //                                int k = p-q;
 //                                String quantity = String.valueOf(k);
-                                responseModelStockList = new ResponseModelStockList(sn,stock_id,stock_location_id,stock_category_id,stock_type_id,
-                                        stock_size_id,stock_batch_number,stock_invoice_number,stock_distributor_name,stock_make_id,
-                                        stock_uom_id,safety_stock,stock_quantity,stock_lot,stock_price,is_stock_transfer,stock_status,stock_type_name,
-                                        stock_size_name,make_name,uom_name,stock_category_name,assign_quantity);
-                                data.add(responseModelStockList);
-                                stockListAdapterClass.notifyDataSetChanged();
-                                progressDialog.dismiss();
+                                    responseModelStockList = new ResponseModelStockList(sn, stock_id, stock_location_id, stock_category_id, stock_type_id,
+                                            stock_size_id, stock_batch_number, stock_invoice_number, stock_distributor_name, stock_make_id,
+                                            stock_uom_id, safety_stock, stock_quantity, stock_lot, stock_price, is_stock_transfer, stock_status, stock_type_name,
+                                            stock_size_name, make_name, uom_name, stock_category_name, assign_quantity);
+                                    data.add(responseModelStockList);
+                                    stockListAdapterClass.notifyDataSetChanged();
+                                    progressDialog.dismiss();
 
+                                }
                             }
 
                         }
@@ -494,6 +499,7 @@ public class StockListActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -541,6 +547,7 @@ public class StockListActivity extends AppCompatActivity {
                 String token = appConfig.getuser_token();
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
+                String user_employee_type = appConfig.getuser_employee_type();
 
                 Dialog  dialog=new Dialog(StockListActivity.this);
 
@@ -612,6 +619,7 @@ public class StockListActivity extends AppCompatActivity {
                                 headers.put("user_token",token);
                                 headers.put("user_id", userId);
                                 headers.put("project_location_id", location);
+                                headers.put("user_employee_type", user_employee_type);
 
                                 return headers;
                             }

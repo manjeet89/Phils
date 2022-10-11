@@ -171,7 +171,11 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String stock_distributor_name = getIntent().getStringExtra("stock_distributor_name");
 
         setcategoryid.setText(stock_category_id);
+        CategoryIdPass(stock_category_id);
+
         setypeid.setText(stock_type_id);
+        TypeIdPass(stock_type_id);
+
         setsizeid.setText(stock_size_id);
 
         select_category.setText(Stock_category_name);
@@ -440,6 +444,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, categoryurl,
@@ -492,6 +497,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -571,6 +577,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, uomurl,
@@ -622,6 +629,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -697,6 +705,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, makeurl,
@@ -747,6 +756,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }
@@ -828,6 +838,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, categoryIdurl,
                 new com.android.volley.Response.Listener<String>() {
@@ -887,6 +898,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
 
@@ -976,6 +988,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, typeIdurl,
                 new com.android.volley.Response.Listener<String>() {
@@ -1034,6 +1047,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }
@@ -1166,6 +1180,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
             String id = getIntent().getStringExtra("id");
+            String user_employee_type = appConfig.getuser_employee_type();
 
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock",
@@ -1201,6 +1216,7 @@ public class Update_StockList_Activity extends AppCompatActivity {
                     headers.put("user_token",token);
                     headers.put("user_id", userId);
                     headers.put("project_location_id", location);
+                    headers.put("user_employee_type", user_employee_type);
 
                     return headers;
                 }

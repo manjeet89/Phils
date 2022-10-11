@@ -22,6 +22,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -408,8 +409,11 @@ public class StockCategoryActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
-        //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, token+"/"+userId+"/"+location+"/"+user_employee_type, Toast.LENGTH_SHORT).show();
+//
+
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_category",
                 new com.android.volley.Response.Listener<String>() {
@@ -431,7 +435,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                                 finish();
                             }
                             else {
-
+//
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     j++;
@@ -483,9 +487,11 @@ public class StockCategoryActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
+
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

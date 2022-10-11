@@ -338,6 +338,8 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                 String token = getIntent().getStringExtra("token");
                 String userId = getIntent().getStringExtra("userId");
                 String location = getIntent().getStringExtra("location");
+                String user_employee_type = appConfig.getuser_employee_type();
+
                 StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/job_replace_user",
                         new Response.Listener<String>() {
                             @Override
@@ -370,6 +372,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                         headers.put("user_token",token);
                         headers.put("user_id", userId);
                         headers.put("project_location_id", location);
+                        headers.put("user_employee_type", user_employee_type);
 
                         return headers;
                     }
@@ -393,6 +396,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
         WR = findViewById(R.id.WR);
         replace = findViewById(R.id.replace);
@@ -408,29 +412,35 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                         try {
 
                             JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            wokerValue = new String[jsonArray.length()];
-                            wokerId = new String[jsonArray.length()];
-                            wokerlenght = new boolean[wokerValue.length];
-
-                            for(int i=0; i<jsonArray.length();i++)
-                            {
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String user_id = object.getString("user_id");
-                                String user_name = object.getString("user_full_name");
-                                String user_employee_id = object.getString("user_employee_id");
-
-                                wokerValue[i]=user_name+" - "+user_employee_id;
-                                wokerId[i]=user_id;
-
+                            String message = jsonObject.getString("message");
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(JobReplaceUseerActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(JobReplaceUseerActivity.this, LoginActivity.class));
+                                finish();
                             }
+                            else {
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                                wokerValue = new String[jsonArray.length()];
+                                wokerId = new String[jsonArray.length()];
+                                wokerlenght = new boolean[wokerValue.length];
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String user_id = object.getString("user_id");
+                                    String user_name = object.getString("user_full_name");
+                                    String user_employee_id = object.getString("user_employee_id");
+
+                                    wokerValue[i] = user_name + " - " + user_employee_id;
+                                    wokerId[i] = user_id;
+
+                                }
 
 //                            Collections.reverse(Arrays.asList(wokerValue));
 //                            Collections.reverse(Arrays.asList(wokerId));
 
+                            }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -449,6 +459,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -593,6 +604,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

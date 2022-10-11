@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Phils"
         tools:targetApi="31">
         <activity
+            android:name=".Admin.UpdateRequisitionListActivity"
+            android:exported="false" />
+        <activity
             android:name=".RequsitionComplete"
             android:exported="false" />
         <activity

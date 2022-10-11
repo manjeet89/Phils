@@ -450,6 +450,7 @@ public class RequisitionReciverList extends AppCompatActivity {
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
+                            Toast.makeText(RequisitionReciverList.this, message, Toast.LENGTH_SHORT).show();
                             String data1 = jsonObject.getString("data");
                             if(data1.equals("false")) {
                                 Toast.makeText(RequisitionReciverList.this, "No Data Available", Toast.LENGTH_SHORT).show();

@@ -176,63 +176,6 @@ public class TwoStepVerification extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-//    private void CheckTwoStapVerification() {
-//        progressDialog = new ProgressDialog(TwoStepVerification.this);
-//        progressDialog.setMessage("Loading... Please Wait!");
-//        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-//        progressDialog.show();
-//
-//        String id =getIntent().getStringExtra("id");
-//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/TwoStepVerification.php?user_id="+id, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String user_id= jsonObject.optString("user_id");
-//                                String user_name= jsonObject.optString("user_name");
-//                                String user_full_name= jsonObject.optString("user_full_name");
-//                                String user_otp= jsonObject.optString("user_otp");
-//
-//                                String number =   first.getText().toString()+second.getText().toString()+third.getText().toString()+fourth.getText().toString();
-//                                if(user_otp.equals(number))
-//                                {
-//                                    if(isRememberUserLogin)
-//                                    {
-//                                        appConfig.updateUserLoginStatus(true);
-//                                        appConfig.saveNameOfUser(user_full_name);
-//                                        appConfig.saveUserName(user_name);
-//                                        appConfig.saveIdOfUser(user_id);
-//                                    }
-//
-//                                    Intent intent = new Intent(TwoStepVerification.this, MainActivity.class);
-//                                    intent.putExtra("name", user_full_name);
-//                                    intent.putExtra("id", user_id);
-//                                    startActivity(intent);
-//                                    finish();
-//                                    progressDialog.dismiss();
-//                                }else
-//                                {
-//                                    Toast.makeText(TwoStepVerification.this, "Invalid Otp", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest1);
-//    }
-
     private void FirebaseTokenGenerate(String userId,String UserEmail) {
 
 

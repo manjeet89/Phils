@@ -390,12 +390,12 @@ public class UserActivity extends AppCompatActivity {
     private void fatchdata() {
         progressDialog = new ProgressDialog(UserActivity.this);
         progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/user_list",
                 new Response.Listener<String>() {
@@ -407,14 +407,14 @@ public class UserActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
-                            //Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
-                            if(message.equals("Invalid user request")){
-                                Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
-                                appConfig.updateUserLoginStatus(false);
-                                startActivity(new Intent(UserActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                            else {
+                            Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
+//                            if(message.equals("Invalid user request")){
+//                                Toast.makeText(UserActivity.this, message, Toast.LENGTH_SHORT).show();
+//                                appConfig.updateUserLoginStatus(false);
+//                                startActivity(new Intent(UserActivity.this, LoginActivity.class));
+//                                finish();
+//                            }
+//                            else {
 
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -470,7 +470,7 @@ public class UserActivity extends AppCompatActivity {
                                     adapter.notifyDataSetChanged();
                                     progressDialog.dismiss();
 
-                                }
+                               // }
                             }
 
                         }
@@ -492,6 +492,7 @@ public class UserActivity extends AppCompatActivity {
                 headers.put("user_token", token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }

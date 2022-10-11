@@ -135,7 +135,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Other Requisition Add"
+                android:text="Add Store Requisition"
                 android:textColor="@color/black"
                 android:fontFamily="sans-serif"
                 android:layout_marginStart="15sp"
@@ -144,7 +144,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  | Home - Other Requisition Add"
+                android:text="  | Home - Add Store Requisition"
                 android:textColor="@color/lightgray"
                 android:fontFamily="sans-serif"
                 android:textSize="11sp"

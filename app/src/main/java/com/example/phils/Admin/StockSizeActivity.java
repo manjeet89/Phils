@@ -397,6 +397,7 @@ public class StockSizeActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_size",
                 new com.android.volley.Response.Listener<String>() {
@@ -474,6 +475,7 @@ public class StockSizeActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

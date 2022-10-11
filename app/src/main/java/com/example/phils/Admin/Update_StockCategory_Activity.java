@@ -355,6 +355,7 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_employee_category",
@@ -403,6 +404,7 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -468,63 +470,6 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
                         setcategoryid.setText(empSpinner.emp_type_id);
                         dialog.dismiss();
 
-//                        String token = getIntent().getStringExtra("token");
-//                        String userId = getIntent().getStringExtra("userId");
-//                        String location = getIntent().getStringExtra("location");
-//
-//
-//                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_employee_category",
-//                                new com.android.volley.Response.Listener<String>() {
-//                                    @Override
-//                                    public void onResponse(String response) {
-//
-//                                        try {
-//                                            String ss = textview.getText().toString();
-//
-//                                            JSONObject jsonObject = new JSONObject(response);
-//                                            //String message = jsonObject.getString("message");
-//
-//                                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                                            for(int i=0;i<jsonArray.length();i++)
-//                                            {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//                                                String emp_type_id = object.getString("emp_type_id");
-//                                                String emp_type_name = object.getString("emp_type_name");
-//                                                if(ss.equals(emp_type_name)){
-//                                                    String idea = emp_type_id;
-//                                                    setcategoryid.setText(idea);
-//
-//                                                    //Toast.makeText(Update_StockCategory_Activity.this, idea, Toast.LENGTH_SHORT).show();
-//                                                }
-//                                            }
-//                                        }
-//                                        catch (JSONException e) {
-//                                            e.printStackTrace();
-//                                        }
-//                                    }
-//                                }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Toast.makeText(Update_StockCategory_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        {
-//                            @Override
-//                            public Map<String, String> getHeaders() throws AuthFailureError {
-//                                HashMap headers = new HashMap();
-//                                headers.put("user_token",token);
-//                                headers.put("user_id", userId);
-//                                headers.put("project_location_id", location);
-//
-//                                return headers;
-//                                //return super.getHeaders();
-//                            }
-//                        };
-//
-//                        RequestQueue requestQueue = Volley.newRequestQueue(Update_StockCategory_Activity.this);
-//                        requestQueue.add(request);
-//                        // Dismiss dialog
-//                        dialog.dismiss();
                     }
                 });
             }
@@ -650,6 +595,7 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
+            String user_employee_type = appConfig.getuser_employee_type();
 
             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock_category",
                                     new Response.Listener<String>() {
@@ -687,6 +633,7 @@ public class Update_StockCategory_Activity extends AppCompatActivity {
                                     headers.put("user_token",token);
                                     headers.put("user_id", userId);
                                     headers.put("project_location_id", location);
+                                    headers.put("user_employee_type", user_employee_type);
 
                                     return headers;
                                 }

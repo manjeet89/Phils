@@ -331,6 +331,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocation();
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -386,6 +387,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -461,6 +463,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocation();
         String locationName = setlocation.getText().toString();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/set_location",
                 new Response.Listener<String>() {
@@ -509,6 +512,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
             }

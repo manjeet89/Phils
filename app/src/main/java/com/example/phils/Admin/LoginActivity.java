@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else {
 
-                                    String user_token = jsonObject.getString("user_token");
+                                    String user_token = jsonObject.getString("user_token").trim();
                                     // Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
                                     String data = jsonObject.getString("data");
                                     JSONObject jsonObject1 = new JSONObject(data);
@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
                                     String project_location_id = jsonObject1.getString("project_location_id");
                                     String location_name = jsonObject1.getString("location_name");
+                                    Log.d("tokennnn",user_token +"/"+user_id+"/"+project_location_id+"/"+user_employee_type+"/"+emp_type_name);
 
                                     if (isRememberUserLogin) {
                                         appConfig.updateUserLoginStatus(true);
@@ -172,11 +173,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                     }
 
-                                    FirebaseTokenGenerate(user_id,user_email_id);
+                                    //FirebaseTokenGenerate(user_id,user_email_id);
 
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    startActivity(intent);
-//                                    finish();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
 
                             }
@@ -223,8 +224,8 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         // Get new FCM registration token
-                        String token = task.getResult();
-                        Log.d("firebasetoken",token);
+                        String firebasetoken = task.getResult();
+                        Log.d("firebasetoken",firebasetoken);
 
                         // Log and toast
 //                        String msg = getString(R.string.msg_token_fmt, token);
@@ -263,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Map<String,String> params = new HashMap<String,String>();
                                 params.put("user_id",userId);
                                 params.put("user_email_id",UserEmail);
-                                params.put("firebase_user_token",token);
+                                params.put("firebase_user_token",firebasetoken);
 
                                 return  params;
                             }

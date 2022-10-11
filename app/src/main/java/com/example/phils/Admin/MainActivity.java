@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         appConfig = new AppConfig(this);
 
+        String token = appConfig.getuser_token();
+        String location = appConfig.getLocationId();
+        String locationName = appConfig.getLocation();
+        Log.d("tokennn",token);
+//        Toast.makeText(this, token+"/"+locationName+"/"+location, Toast.LENGTH_SHORT).show();
 
 //        FirebaseMessaging.getInstance().getToken()
 //                .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -110,49 +115,49 @@ public class MainActivity extends AppCompatActivity {
 //        // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 7)
 //        OneSignal.promptForPushNotifications();
 
-        String token = appConfig.getuser_token();
+       // String token = appConfig.getuser_token();
 
 
-        String externalUserId = token; // You will supply the external user id to the OneSignal SDK
-
-// Setting External User Id with Callback Available in SDK Version 4.0.0+
-        OneSignal.setExternalUserId(externalUserId, new OneSignal.OSExternalUserIdUpdateCompletionHandler() {
-            @Override
-            public void onSuccess(JSONObject results) {
-                try {
-                    if (results.has("push") && results.getJSONObject("push").has("success")) {
-                        boolean isPushSuccess = results.getJSONObject("push").getBoolean("success");
-                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for push status: " + isPushSuccess);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (results.has("email") && results.getJSONObject("email").has("success")) {
-                        boolean isEmailSuccess = results.getJSONObject("email").getBoolean("success");
-                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for email status: " + isEmailSuccess);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    if (results.has("sms") && results.getJSONObject("sms").has("success")) {
-                        boolean isSmsSuccess = results.getJSONObject("sms").getBoolean("success");
-                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for sms status: " + isSmsSuccess);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(OneSignal.ExternalIdError error) {
-                // The results will contain channel failure statuses
-                // Use this to detect if external_user_id was not set and retry when a better network connection is made
-                OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id done with error: " + error.toString());
-            }
-        });
+//        String externalUserId = token; // You will supply the external user id to the OneSignal SDK
+//
+//// Setting External User Id with Callback Available in SDK Version 4.0.0+
+//        OneSignal.setExternalUserId(externalUserId, new OneSignal.OSExternalUserIdUpdateCompletionHandler() {
+//            @Override
+//            public void onSuccess(JSONObject results) {
+//                try {
+//                    if (results.has("push") && results.getJSONObject("push").has("success")) {
+//                        boolean isPushSuccess = results.getJSONObject("push").getBoolean("success");
+//                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for push status: " + isPushSuccess);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    if (results.has("email") && results.getJSONObject("email").has("success")) {
+//                        boolean isEmailSuccess = results.getJSONObject("email").getBoolean("success");
+//                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for email status: " + isEmailSuccess);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    if (results.has("sms") && results.getJSONObject("sms").has("success")) {
+//                        boolean isSmsSuccess = results.getJSONObject("sms").getBoolean("success");
+//                        OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id for sms status: " + isSmsSuccess);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(OneSignal.ExternalIdError error) {
+//                // The results will contain channel failure statuses
+//                // Use this to detect if external_user_id was not set and retry when a better network connection is made
+//                OneSignal.onesignalLog(OneSignal.LOG_LEVEL.VERBOSE, "Set external user id done with error: " + error.toString());
+//            }
+//        });
 
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);

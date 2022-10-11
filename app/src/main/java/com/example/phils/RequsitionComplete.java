@@ -37,6 +37,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Adapter.RequisitionCompleteAdapterClass;
 import com.example.phils.Admin.ChangePasswordActivity;
 import com.example.phils.Admin.ConsumptionActivity;
 import com.example.phils.Admin.ConsumptionDetailActivity;
@@ -53,7 +54,6 @@ import com.example.phils.Admin.ReportsActivity;
 import com.example.phils.Admin.RequisitionAddActivity;
 import com.example.phils.Admin.RequisitionListActivity;
 import com.example.phils.Admin.RequisitionOnGoingActivity;
-import com.example.phils.Admin.RequisitionReciverComplete;
 import com.example.phils.Admin.RequisitionReciverList;
 import com.example.phils.Admin.StockCategoryActivity;
 import com.example.phils.Admin.StockListActivity;
@@ -62,7 +62,7 @@ import com.example.phils.Admin.StockSizeActivity;
 import com.example.phils.Admin.StockTypeActivity;
 import com.example.phils.Admin.StockUomActivity;
 import com.example.phils.Admin.UserActivity;
-import com.example.phils.ResponseModels.ResponseModelReciverComplete;
+import com.example.phils.ResponseModels.ResponseModelRequisitionComplete;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -592,12 +592,15 @@ public class RequsitionComplete extends AppCompatActivity {
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(RequsitionComplete.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(RequsitionComplete.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequsitionComplete.this, " Server Error", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         })
         {

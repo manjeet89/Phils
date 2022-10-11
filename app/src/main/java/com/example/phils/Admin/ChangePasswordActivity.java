@@ -443,30 +443,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 RequestQueue  requestQueue = Volley.newRequestQueue(ChangePasswordActivity.this);
                 requestQueue.add(request);
 
-//                StringRequest request  = new StringRequest(Request.Method.POST, "https://investment-wizards.com/manjeet/Phils_Stock/ChangePasswordUser.php",
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                Toast.makeText(ChangePasswordActivity.this, response, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(ChangePasswordActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }){
-//                    @Nullable
-//                    @Override
-//                    protected Map<String, String> getParams() throws AuthFailureError {
-//                        Map<String, String> params = new HashMap<String, String>();
-//                      //  params.put("user_id", userId);
-//                        params.put("oldpass", oldpassword);
-//                        params.put("newpass", newpassword);
-//                        return params;
-//                    }
-//                };
-//                RequestQueue requestQueue = Volley.newRequestQueue(ChangePasswordActivity.this);
-//                requestQueue.add(request);
             }
             else
             {

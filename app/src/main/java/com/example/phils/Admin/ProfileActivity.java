@@ -319,6 +319,7 @@ public class ProfileActivity extends AppCompatActivity {
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
@@ -381,6 +382,7 @@ public class ProfileActivity extends AppCompatActivity {
                 headers.put("user_token",token);
                 headers.put("user_id", userId);
                 headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
