@@ -65,6 +65,8 @@ public class JobCategoryAdapterClass extends RecyclerView.Adapter<JobCategoryAda
             status = itemView.findViewById(R.id.status_job);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

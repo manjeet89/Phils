@@ -191,4 +191,17 @@ public class AppConfig {
 
 
 
+    public void Saveaccess_module(String access_module)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.access_module),access_module);
+        editor.apply();
+    }
+    public String getaccess_module()
+    {
+        return sharedPreferences.getString(context.getString(R.string.access_module),"access_module");
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.phils.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,8 @@ public class RequisitionAdapterClass extends RecyclerView.Adapter<RequisitionAda
             manager_status = itemView.findViewById(R.id.manager_status);
             editid = itemView.findViewById(R.id.editid);
             editid.setOnClickListener(this);
+            editid.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

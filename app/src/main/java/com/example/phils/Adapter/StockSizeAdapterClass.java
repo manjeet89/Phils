@@ -76,6 +76,8 @@ public class StockSizeAdapterClass extends RecyclerView.Adapter<StockSizeAdapter
             btn = itemView.findViewById(R.id.id);
             stock_size_status = itemView.findViewById(R.id.statussize);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
 
 
         }

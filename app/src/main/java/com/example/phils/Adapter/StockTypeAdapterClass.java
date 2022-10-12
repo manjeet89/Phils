@@ -306,6 +306,8 @@ public class StockTypeAdapterClass extends RecyclerView.Adapter<StockTypeAdapter
             btn = itemView.findViewById(R.id.id);
             refrance = itemView.findViewById(R.id.refrance);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
 
 
         }

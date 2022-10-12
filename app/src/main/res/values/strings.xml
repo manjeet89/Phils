@@ -26,5 +26,6 @@
 
     <string name="done"> done </string>
 
+    <string name="access_module">access_module</string>
 
 </resources>

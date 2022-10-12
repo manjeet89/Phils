@@ -130,13 +130,14 @@
 
                 <Button
                     android:id="@+id/id"
-                    android:layout_width="80sp"
+                    android:layout_width="120sp"
                     android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:textSize="12dp"
-                    android:backgroundTint="#1ca6eb"
-                    android:textColor="@color/white"
+                    android:text="Action"
+                    android:textSize="10dp"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:layout_margin="7sp"/>
             </TableRow>
         </TableLayout>

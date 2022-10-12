@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Button submitlogin;
     CoordinatorLayout layout;
     ProgressDialog progressDialog;
+    TextView settoken;
 
 
     public boolean isRememberUserLogin = true;
@@ -58,11 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         appConfig = new AppConfig(this);
         if(appConfig.isUserLogin())
         {
-//            String name = appConfig.getNameOfUser();
-//            String id = appConfig.getIdOfUser();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            intent.putExtra("name",name);
-//            intent.putExtra("id",id);
             startActivity(intent);
             finish();
         }
@@ -72,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         submitlogin = findViewById(R.id.submitlogin);
         layout = findViewById(R.id.layoutchal);
 
+        settoken = findViewById(R.id.settoken);
 
         submitlogin.setOnClickListener(
                 new View.OnClickListener() {
@@ -88,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
+
         String username1 = username.getText().toString().trim();
         String password1 = password.getText().toString().trim();
 
@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String project_location_id = jsonObject1.getString("project_location_id");
                                     String location_name = jsonObject1.getString("location_name");
 
+                                    String access_module = jsonObject.getString("access_module");
 
                                     Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
                                     intent.putExtra("user_id",user_id);
@@ -134,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("emp_type_id",emp_type_id);
                                     intent.putExtra("project_location_id",project_location_id);
                                     intent.putExtra("location_name",location_name);
+                                    intent.putExtra("access_module",access_module);
 
 
                                     startActivity(intent);
@@ -155,7 +157,23 @@ public class LoginActivity extends AppCompatActivity {
                                     String emp_type_id = jsonObject1.getString("emp_type_id");
                                     String project_location_id = jsonObject1.getString("project_location_id");
                                     String location_name = jsonObject1.getString("location_name");
-                                    Log.d("tokennnn",user_token +"/"+user_id+"/"+project_location_id+"/"+user_employee_type+"/"+emp_type_name);
+
+                                    String access_module = jsonObject.getString("access_module");
+
+//                                    String text = access_module.toString().replace("[", "").replace("]", "");
+//                                    String withoutQuotes_line1 = text.replace("\"", "");
+//                                   // Log.d("mekya",withoutQuotes_line1);
+//                                    String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+//
+//                                    for (int i =0;i<items.length;i++)
+//                                    {
+//                                        if(items[i].equals("stock_low"))
+//                                            Log.d("mekya",items[i]);
+//
+//                                    }
+
+
+                                    //Log.d("tokennnn",user_token +"/"+user_id+"/"+project_location_id+"/"+user_employee_type+"/"+emp_type_name);
 
                                     if (isRememberUserLogin) {
                                         appConfig.updateUserLoginStatus(true);
@@ -169,14 +187,18 @@ public class LoginActivity extends AppCompatActivity {
                                         appConfig.Saveuser_token(user_token);
                                         appConfig.SaveLocation(location_name);
                                         appConfig.SaveLocationId(project_location_id);
+                                        appConfig.Saveaccess_module(access_module);
 
 
                                     }
 
-                                    //FirebaseTokenGenerate(user_id,user_email_id);
+                                    FirebaseTokenGenerate(user_id,user_email_id);
 
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
+//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    intent.putExtra("user_email_id",user_email_id);
+//                                    intent.putExtra("user_id",user_id);
+//                                    intent.putExtra("access_module",access_module);
+//                                    startActivity(intent);
                                     finish();
                                 }
 
@@ -212,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void FirebaseTokenGenerate(String userId,String UserEmail) {
+        private void FirebaseTokenGenerate(String userId,String UserEmail) {
 
 
         FirebaseMessaging.getInstance().getToken()
@@ -224,8 +246,8 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         // Get new FCM registration token
-                        String firebasetoken = task.getResult();
-                        Log.d("firebasetoken",firebasetoken);
+                        String token = task.getResult();
+                        Log.d("firebasetoken",token);
 
                         // Log and toast
 //                        String msg = getString(R.string.msg_token_fmt, token);
@@ -264,7 +286,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Map<String,String> params = new HashMap<String,String>();
                                 params.put("user_id",userId);
                                 params.put("user_email_id",UserEmail);
-                                params.put("firebase_user_token",firebasetoken);
+                                params.put("firebase_user_token",token);
 
                                 return  params;
                             }
@@ -276,6 +298,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void displayUserInformation(String message)
     {

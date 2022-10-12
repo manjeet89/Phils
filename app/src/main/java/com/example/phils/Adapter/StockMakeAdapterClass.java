@@ -65,6 +65,8 @@ public class StockMakeAdapterClass extends RecyclerView.Adapter<StockMakeAdapter
             make_status = itemView.findViewById(R.id.make_status);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

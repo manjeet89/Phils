@@ -102,6 +102,7 @@ public class StockCategoryAdapterClass extends RecyclerView.Adapter<StockCategor
             btn = itemView.findViewById(R.id.id);
             refrance = itemView.findViewById(R.id.refrance);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
         }
         @Override
         public void onClick(View view) {

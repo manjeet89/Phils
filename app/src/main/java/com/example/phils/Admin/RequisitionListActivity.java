@@ -221,10 +221,187 @@ public class RequisitionListActivity extends AppCompatActivity {
 
 
 
+        String access_module = appConfig.getaccess_module().trim();
+//        String access_module = getIntent().getStringExtra("access_module");
+//
+        String text = access_module.toString().replace("[", "").replace("]", "");
+        String withoutQuotes_line1 = text.replace("\"", "");
+        // Log.d("mekya",withoutQuotes_line1);
+        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
 
-        if(1==2) {
-            Menu menu = navigationView.getMenu();
-            MenuItem menuItem = menu.findItem(R.id.ghar);
+        String userlist="",stock="",stockcategorylist="",stocktypelist="",stocksizelist="",stockmakelist="",stockuomlist="",stocklist="";
+        String job="",jobcategorylist="",jobsizelist="",joblist="";
+        String requisition="",requisitionlist="",receiverlist="";
+        for (int i =0;i<items.length;i++) {
+
+            Log.d("itemshar",items[i]);
+
+            //Stock
+            if (items[i].equals("user-list")) { userlist = "user-list"; }
+            if (items[i].equals("stock")) { stock = "stock"; }
+            if (items[i].equals("stock-category-list")) { stockcategorylist = "stock-category-list"; }
+            if (items[i].equals("stock-type-list")) { stocktypelist = "stock-type-list"; }
+            if (items[i].equals("stock-size-list")) { stocksizelist = "stock-size-list"; }
+            if (items[i].equals("stock-make-list")) { stockmakelist = "stock-make-list"; }
+            if (items[i].equals("stock-uom-list")) { stockuomlist = "stock-uom-list"; }
+            if (items[i].equals("stock-list")) { stocklist = "stock-list"; }
+
+            //job
+            if (items[i].equals("job")) { job = "job"; }
+            if (items[i].equals("job-category-list")) { jobcategorylist = "job-category-list"; }
+            if (items[i].equals("job-size-list")) { jobsizelist = "job-size-list"; }
+            if (items[i].equals("job-list")) { joblist = "job-list"; }
+
+            //Requisition
+            if (items[i].equals("requisition")) { requisition = "requisition"; }
+            if (items[i].equals("requisition-list")) { requisitionlist = "requisition-list"; }
+            if (items[i].equals("receiver-list")) { receiverlist = "receiver-list"; }
+        }
+        Menu menu = navigationView.getMenu();
+
+        //Requisition
+        if(requisition.equals("requisition")){
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
+            menuItem.setVisible(false);
+        }
+//
+        if(requisitionlist.equals("requisition-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(false);
+        }
+
+        if(receiverlist.equals("receiver-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(false);
+        }
+
+
+
+        //Job Portion
+
+        if(job.equals("job")){
+            MenuItem menuItem = menu.findItem(R.id.jobnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.jobnav);
+            menuItem.setVisible(false);
+        }
+//
+        if(jobcategorylist.equals("job-category-list")){
+            MenuItem menuItem = menu.findItem(R.id.category_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.category_job);
+            menuItem.setVisible(false);
+        }
+
+        if(jobsizelist.equals("job-size-list")){
+            MenuItem menuItem = menu.findItem(R.id.Size_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.Size_job);
+            menuItem.setVisible(false);
+        }
+
+        if(joblist.equals("job-list")){
+            MenuItem menuItem = menu.findItem(R.id.List_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.List_job);
+            menuItem.setVisible(false);
+        }
+
+
+        //Stock portion
+        if (userlist.equals("user-list")) {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(false);
+        }
+
+        if (stock.equals("stock")) {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(false);
+        }
+
+        if(stockcategorylist.equals("stock-category-list")){
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocktypelist.equals("stock-type-list")){
+            MenuItem menuItem = menu.findItem(R.id.type_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.type_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocksizelist.equals("stock-size-list")){
+            MenuItem menuItem = menu.findItem(R.id.size_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.size_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stockmakelist.equals("stock-make-list")){
+            MenuItem menuItem = menu.findItem(R.id.make_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.make_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stockuomlist.equals("stock-uom-list")){
+            MenuItem menuItem = menu.findItem(R.id.umo_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.umo_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocklist.equals("stock-list")){
+            MenuItem menuItem = menu.findItem(R.id.list_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.list_stock);
             menuItem.setVisible(false);
         }
 
@@ -330,6 +507,8 @@ public class RequisitionListActivity extends AppCompatActivity {
 
         checklist = findViewById(R.id.checklist);
         ongoing = findViewById(R.id.ongoing);
+
+
         ongoing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -346,6 +525,36 @@ public class RequisitionListActivity extends AppCompatActivity {
         });
 
         add_reqlist = findViewById(R.id.add_reqlist);
+        other_reqlist = findViewById(R.id.other_reqlist);
+
+//        String access_module = appConfig.getaccess_module().trim();
+//        String text = access_module.toString().replace("[", "").replace("]", "");
+//        String withoutQuotes_line1 = text.replace("\"", "");
+//        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+        String otherrequisition = "", addrequisition = "";
+
+        for (int i =0;i<items.length;i++) {
+
+            if (items[i].equals("other-requisition")) { otherrequisition = "other-requisition"; }
+            if (items[i].equals("add-requisition")) { addrequisition = "add-requisition"; }
+
+        }
+        if(otherrequisition.equals("other-requisition")){
+            other_reqlist.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            other_reqlist.setVisibility(View.GONE);
+        }
+        if(addrequisition.equals("add-requisition")){
+            add_reqlist.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            add_reqlist.setVisibility(View.GONE);
+        }
+
         add_reqlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,7 +572,6 @@ public class RequisitionListActivity extends AppCompatActivity {
             }
         });
 
-        other_reqlist = findViewById(R.id.other_reqlist);
         other_reqlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -452,6 +660,57 @@ public class RequisitionListActivity extends AppCompatActivity {
                 Button assignstock = dialog.findViewById(R.id.assignstock);
                 Button delete = dialog.findViewById(R.id.delete);
                 Button edit = dialog.findViewById(R.id.edit);
+
+
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String updaterequisition = "",assignrequisition="",changestatusrequisition="",deleterequisition="";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("update-requisition")) { updaterequisition = "update-requisition"; }
+                    if (items[i].equals("assign-requisition")) { assignrequisition = "assign-requisition"; }
+                    if (items[i].equals("change-status-requisition")) { changestatusrequisition = "change-status-requisition"; }
+                    if (items[i].equals("delete-requisition")) { deleterequisition = "delete-requisition"; }
+
+                }
+                if(updaterequisition.equals("update-requisition")){
+                    edit.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    edit.setVisibility(View.GONE);
+                }
+
+                if(assignrequisition.equals("assign-requisition")){
+                    assignstock.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    assignstock.setVisibility(View.GONE);
+                }
+
+
+                if(changestatusrequisition.equals("change-status-requisition")){
+                    changestatus.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    changestatus.setVisibility(View.GONE);
+                }
+
+                if(deleterequisition.equals("delete-requisition")){
+                    delete.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    delete.setVisibility(View.GONE);
+                }
+
 
 
                 String id = data.get(position).getReq_id();
@@ -762,17 +1021,26 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             assign_quantity = object.getString("assign_quantity");
                                             if (assign_quantity.equals("null")) {
                                                 assign_quantity = "0";
+
+                                                responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
+                                                        seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
+                                                        req_manager_status, req_status, req_updated_on, req_created_on, stock_type_name, stock_size_name, stock_category_name,
+                                                        job_number, user_full_name, user_employee_id, assign_quantity, req_user_id);
+                                                data.add(responseModelRequisitionList);
+                                                requisitionAdapterClass.notifyDataSetChanged();
+
+                                                progressDialog.dismiss();
                                             }
-
-                                            //Toast.makeText(RequisitionListActivity.this, sn, Toast.LENGTH_SHORT).show();
-                                            responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
-                                                    seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
-                                                    req_manager_status, req_status, req_updated_on, req_created_on, stock_type_name, stock_size_name, stock_category_name,
-                                                    job_number, user_full_name, user_employee_id, assign_quantity,req_user_id);
-                                            data.add(responseModelRequisitionList);
-                                            requisitionAdapterClass.notifyDataSetChanged();
-
-                                            progressDialog.dismiss();
+//                                            if(assign_quantity==String.valueOf(0)) {
+//
+//                                                //Toast.makeText(RequisitionListActivity.this, sn, Toast.LENGTH_SHORT).show();
+//
+                                        //    }
+                                        else
+                                            {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(RequisitionListActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                                            }
 
                                         }
                                     }

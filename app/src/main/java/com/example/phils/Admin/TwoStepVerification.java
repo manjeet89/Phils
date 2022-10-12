@@ -81,6 +81,7 @@ public class TwoStepVerification extends AppCompatActivity {
         progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
         progressDialog.show();
 
+
         String userId = getIntent().getStringExtra("user_id");
         String user_full_name = getIntent().getStringExtra("user_full_name");
         String user_email_id = getIntent().getStringExtra("user_email_id");
@@ -90,6 +91,7 @@ public class TwoStepVerification extends AppCompatActivity {
         String emp_type_id = getIntent().getStringExtra("emp_type_id");
         String project_location_id = getIntent().getStringExtra("project_location_id");
         String location_name = getIntent().getStringExtra("location_name");
+        String access_module = getIntent().getStringExtra("access_module");
 
         String number =   first.getText().toString()+second.getText().toString()+third.getText().toString()+fourth.getText().toString();
 
@@ -123,8 +125,6 @@ public class TwoStepVerification extends AppCompatActivity {
 //                                String user_full_name = getIntent().getStringExtra("user_full_name");
 
                                 if (isRememberUserLogin) {
-
-
                                         appConfig.updateUserLoginStatus(true);
                                         appConfig.Saveuser_name(user_name);
                                         appConfig.Saveuser_id(userId);
@@ -137,6 +137,7 @@ public class TwoStepVerification extends AppCompatActivity {
                                         appConfig.SaveLocation(location_name);
                                         appConfig.SaveLocationId(project_location_id);
                                         appConfig.Saveuser_full_name(user_full_name);
+                                        appConfig.Saveaccess_module(access_module);
 
                                         FirebaseTokenGenerate(userId,user_email_id);
 

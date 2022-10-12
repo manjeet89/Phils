@@ -16,7 +16,8 @@
         />
 
   <item
-      android:title="Stock">
+      android:title="Stock"
+      android:id="@+id/stockidnav">
       <menu>
           <item
               android:id="@+id/category_stock"
@@ -53,7 +54,8 @@
   </item>
 
     <item
-        android:title="Job">
+        android:title="Job"
+        android:id="@+id/jobnav">
         <menu>
 
             <item
@@ -75,7 +77,8 @@
     </item>
 
     <item
-        android:title="Requisition">
+        android:title="Requisition"
+        android:id="@+id/requisitionnav">
         <menu>
 
             <item

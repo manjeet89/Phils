@@ -78,6 +78,8 @@ public class UserAdapterClass extends RecyclerView.Adapter<UserAdapterClass.MyVi
             user_status = itemView.findViewById(R.id.user_status);
             button = itemView.findViewById(R.id.id);
             button.setOnClickListener(this);
+            button.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

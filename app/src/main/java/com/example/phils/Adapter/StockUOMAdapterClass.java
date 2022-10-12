@@ -67,6 +67,8 @@ public class StockUOMAdapterClass extends RecyclerView.Adapter<StockUOMAdapterCl
             uom_status = itemView.findViewById(R.id.uom_status);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

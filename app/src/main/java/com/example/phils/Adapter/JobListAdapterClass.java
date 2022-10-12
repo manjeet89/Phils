@@ -70,6 +70,8 @@ public class JobListAdapterClass extends RecyclerView.Adapter<JobListAdapterClas
             statuslist = itemView.findViewById(R.id.statuslist);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

@@ -21,6 +21,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,12 +87,33 @@ public class StockUomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_uom);
+        appConfig = new AppConfig(this);
 
         recview = findViewById(R.id.recview);
         searchView = findViewById(R.id.search);
         searchView.clearFocus();
 
         uom = findViewById(R.id.uom);
+
+        String access_module = appConfig.getaccess_module().trim();
+        String text = access_module.toString().replace("[", "").replace("]", "");
+        String withoutQuotes_line1 = text.replace("\"", "");
+        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+        String adduom = "";
+
+        for (int i =0;i<items.length;i++) {
+
+            if (items[i].equals("add-stock-uom")) { adduom = "add-stock-uom"; }
+        }
+        if(adduom.equals("add-stock-uom")){
+            uom.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            uom.setVisibility(View.GONE);
+        }
+
         uom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +132,6 @@ public class StockUomActivity extends AppCompatActivity {
         });
 
 
-        appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
@@ -237,12 +258,190 @@ public class StockUomActivity extends AppCompatActivity {
 
 
 
+//        String access_module = appConfig.getaccess_module().trim();
+////        String access_module = getIntent().getStringExtra("access_module");
+////
+//        String text = access_module.toString().replace("[", "").replace("]", "");
+//        String withoutQuotes_line1 = text.replace("\"", "");
+//        // Log.d("mekya",withoutQuotes_line1);
+//        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
 
-        if(1==2) {
-            Menu menu = navigationView.getMenu();
-            MenuItem menuItem = menu.findItem(R.id.ghar);
+        String userlist="",stock="",stockcategorylist="",stocktypelist="",stocksizelist="",stockmakelist="",stockuomlist="",stocklist="";
+        String job="",jobcategorylist="",jobsizelist="",joblist="";
+        String requisition="",requisitionlist="",receiverlist="";
+        for (int i =0;i<items.length;i++) {
+
+            Log.d("itemshar",items[i]);
+
+            //Stock
+            if (items[i].equals("user-list")) { userlist = "user-list"; }
+            if (items[i].equals("stock")) { stock = "stock"; }
+            if (items[i].equals("stock-category-list")) { stockcategorylist = "stock-category-list"; }
+            if (items[i].equals("stock-type-list")) { stocktypelist = "stock-type-list"; }
+            if (items[i].equals("stock-size-list")) { stocksizelist = "stock-size-list"; }
+            if (items[i].equals("stock-make-list")) { stockmakelist = "stock-make-list"; }
+            if (items[i].equals("stock-uom-list")) { stockuomlist = "stock-uom-list"; }
+            if (items[i].equals("stock-list")) { stocklist = "stock-list"; }
+
+            //job
+            if (items[i].equals("job")) { job = "job"; }
+            if (items[i].equals("job-category-list")) { jobcategorylist = "job-category-list"; }
+            if (items[i].equals("job-size-list")) { jobsizelist = "job-size-list"; }
+            if (items[i].equals("job-list")) { joblist = "job-list"; }
+
+            //Requisition
+            if (items[i].equals("requisition")) { requisition = "requisition"; }
+            if (items[i].equals("requisition-list")) { requisitionlist = "requisition-list"; }
+            if (items[i].equals("receiver-list")) { receiverlist = "receiver-list"; }
+        }
+        Menu menu = navigationView.getMenu();
+
+        //Requisition
+        if(requisition.equals("requisition")){
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
             menuItem.setVisible(false);
         }
+//
+        if(requisitionlist.equals("requisition-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(false);
+        }
+
+        if(receiverlist.equals("receiver-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(false);
+        }
+
+
+
+        //Job Portion
+
+        if(job.equals("job")){
+            MenuItem menuItem = menu.findItem(R.id.jobnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.jobnav);
+            menuItem.setVisible(false);
+        }
+//
+        if(jobcategorylist.equals("job-category-list")){
+            MenuItem menuItem = menu.findItem(R.id.category_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.category_job);
+            menuItem.setVisible(false);
+        }
+
+        if(jobsizelist.equals("job-size-list")){
+            MenuItem menuItem = menu.findItem(R.id.Size_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.Size_job);
+            menuItem.setVisible(false);
+        }
+
+        if(joblist.equals("job-list")){
+            MenuItem menuItem = menu.findItem(R.id.List_job);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.List_job);
+            menuItem.setVisible(false);
+        }
+
+
+        //Stock portion
+        if (userlist.equals("user-list")) {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(false);
+        }
+
+        if (stock.equals("stock")) {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(false);
+        }
+
+        if(stockcategorylist.equals("stock-category-list")){
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocktypelist.equals("stock-type-list")){
+            MenuItem menuItem = menu.findItem(R.id.type_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.type_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocksizelist.equals("stock-size-list")){
+            MenuItem menuItem = menu.findItem(R.id.size_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.size_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stockmakelist.equals("stock-make-list")){
+            MenuItem menuItem = menu.findItem(R.id.make_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.make_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stockuomlist.equals("stock-uom-list")){
+            MenuItem menuItem = menu.findItem(R.id.umo_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.umo_stock);
+            menuItem.setVisible(false);
+        }
+
+        if(stocklist.equals("stock-list")){
+            MenuItem menuItem = menu.findItem(R.id.list_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.list_stock);
+            menuItem.setVisible(false);
+        }
+
 
 
 

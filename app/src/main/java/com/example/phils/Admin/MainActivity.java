@@ -1,11 +1,13 @@
 package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -27,6 +29,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,10 +50,13 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private static long back_pressed;
-    TextView test;
+    TextView settoken;
 
     TextView location_save;
     Button logout,location;
@@ -53,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     TextView locationtext;
     AppConfig appConfig;
     Dialog dialog;
+
+    ProgressDialog progressDialog;
+    static int z=0;
 
     private static final String CHANNEL_ID = "My Channel";
     private static final int NOTIFICATION_ID = 100;
@@ -77,13 +92,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressDialog = new ProgressDialog(this);
         appConfig = new AppConfig(this);
 
         String token = appConfig.getuser_token();
         String location = appConfig.getLocationId();
         String locationName = appConfig.getLocation();
         Log.d("tokennn",token);
-//        Toast.makeText(this, token+"/"+locationName+"/"+location, Toast.LENGTH_SHORT).show();
+//        String user_id = getIntent().getStringExtra("user_id");
+//        String user_email_id = getIntent().getStringExtra("user_email_id");
+
+        settoken = findViewById(R.id.settoken);
+
+        String user_id = appConfig.getuser_id();
+        String user_email_id = appConfig.getuser_email_id();
+
+        //Grenerate();
+
 
 //        FirebaseMessaging.getInstance().getToken()
 //                .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -97,11 +122,40 @@ public class MainActivity extends AppCompatActivity {
 //                        String token = task.getResult();
 //                        Log.d("firebasetoken",token);
 //
+//                        settoken.setText(token);
+//                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+//                                new Response.Listener<String>() {
+//                                    @Override
+//                                    public void onResponse(String response) {
+//
+//                                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }, new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//
+//                            }
+//                        }){
+//                            @Nullable
+//                            @Override
+//                            protected Map<String, String> getParams() throws AuthFailureError {
+//                                Map<String, String> params = new HashMap<String, String>();
+//                                params.put("user_id", user_id);
+//                                params.put("user_email_id", user_email_id);
+//                                params.put("firebase_user_token", token);
+//
+//                                return params;
+//                            }
+//
+//                        };
+//                        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+//                        requestQueue.add(request);
 //                        // Log and toast
 ////                        String msg = getString(R.string.msg_token_fmt, token);
 ////                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 //                    }
 //                });
+
 
 
 //        // Enable verbose OneSignal logging to debug issues if needed.
@@ -159,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
@@ -189,7 +242,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Notification_Activity.class));
             }
         });
-
 //        logout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -238,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 nameAdmin.setText(fullName);
                 post.setText(emp_name);
 
+
                 ImageView profile  = dialog.findViewById(R.id.profile);
                 Bitmap mbitmap=((BitmapDrawable) getResources().getDrawable(R.drawable.admin)).getBitmap();
                 Bitmap imageRounded=Bitmap.createBitmap(mbitmap.getWidth(), mbitmap.getHeight(), mbitmap.getConfig());
@@ -255,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
                 logout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        z=0;
                         appConfig.updateUserLoginStatus(false);
                         startActivity(new Intent(MainActivity.this,LoginActivity.class));
                         finish();
@@ -313,12 +367,207 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        String access_module = appConfig.getaccess_module().trim();
+//        String access_module = getIntent().getStringExtra("access_module");
+//
+        String text = access_module.toString().replace("[", "").replace("]", "");
+        String withoutQuotes_line1 = text.replace("\"", "");
+        // Log.d("mekya",withoutQuotes_line1);
+        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
 
-        if(1==2) {
-            Menu menu = navigationView.getMenu();
-            MenuItem menuItem = menu.findItem(R.id.ghar);
+        String userlist="",stock="",stockcategorylist="",stocktypelist="",stocksizelist="",stockmakelist="",stockuomlist="",stocklist="";
+        String job="",jobcategorylist="",jobsizelist="",joblist="";
+        String requisition="",requisitionlist="",receiverlist="";
+        for (int i =0;i<items.length;i++) {
+
+            Log.d("itemshar",items[i]);
+
+            //Stock
+            if (items[i].equals("user-list")) { userlist = "user-list"; }
+            if (items[i].equals("stock")) { stock = "stock"; }
+            if (items[i].equals("stock-category-list")) { stockcategorylist = "stock-category-list"; }
+            if (items[i].equals("stock-type-list")) { stocktypelist = "stock-type-list"; }
+            if (items[i].equals("stock-size-list")) { stocksizelist = "stock-size-list"; }
+            if (items[i].equals("stock-make-list")) { stockmakelist = "stock-make-list"; }
+            if (items[i].equals("stock-uom-list")) { stockuomlist = "stock-uom-list"; }
+            if (items[i].equals("stock-list")) { stocklist = "stock-list"; }
+
+            //job
+            if (items[i].equals("job")) { job = "job"; }
+            if (items[i].equals("job-category-list")) { jobcategorylist = "job-category-list"; }
+            if (items[i].equals("job-size-list")) { jobsizelist = "job-size-list"; }
+            if (items[i].equals("job-list")) { joblist = "job-list"; }
+
+            //Requisition
+            if (items[i].equals("requisition")) { requisition = "requisition"; }
+            if (items[i].equals("requisition-list")) { requisitionlist = "requisition-list"; }
+            if (items[i].equals("receiver-list")) { receiverlist = "receiver-list"; }
+        }
+        Menu menu = navigationView.getMenu();
+
+        //Requisition
+        if(requisition.equals("requisition")){
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.requisitionnav);
             menuItem.setVisible(false);
         }
+//
+        if(requisitionlist.equals("requisition-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_list);
+            menuItem.setVisible(false);
+        }
+
+        if(receiverlist.equals("receiver-list")){
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.resqu_reviever);
+            menuItem.setVisible(false);
+        }
+
+
+
+        //Job Portion
+
+            if(job.equals("job")){
+                MenuItem menuItem = menu.findItem(R.id.jobnav);
+                menuItem.setVisible(true);
+            }
+              else
+            {
+                MenuItem menuItem = menu.findItem(R.id.jobnav);
+                menuItem.setVisible(false);
+            }
+//
+            if(jobcategorylist.equals("job-category-list")){
+                MenuItem menuItem = menu.findItem(R.id.category_job);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.category_job);
+                menuItem.setVisible(false);
+            }
+
+            if(jobsizelist.equals("job-size-list")){
+                MenuItem menuItem = menu.findItem(R.id.Size_job);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.Size_job);
+                menuItem.setVisible(false);
+            }
+
+            if(joblist.equals("job-list")){
+                MenuItem menuItem = menu.findItem(R.id.List_job);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.List_job);
+                menuItem.setVisible(false);
+            }
+
+
+        //Stock portion
+        if (userlist.equals("user-list")) {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.user);
+            menuItem.setVisible(false);
+        }
+
+        if (stock.equals("stock")) {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(true);
+        }
+        else
+        {
+            MenuItem menuItem = menu.findItem(R.id.stockidnav);
+            menuItem.setVisible(false);
+        }
+
+        if(stockcategorylist.equals("stock-category-list")){
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(true);
+        }else
+        {
+            MenuItem menuItem = menu.findItem(R.id.category_stock);
+            menuItem.setVisible(false);
+        }
+
+            if(stocktypelist.equals("stock-type-list")){
+                MenuItem menuItem = menu.findItem(R.id.type_stock);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.type_stock);
+                menuItem.setVisible(false);
+            }
+
+            if(stocksizelist.equals("stock-size-list")){
+                MenuItem menuItem = menu.findItem(R.id.size_stock);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.size_stock);
+                menuItem.setVisible(false);
+            }
+
+            if(stockmakelist.equals("stock-make-list")){
+                MenuItem menuItem = menu.findItem(R.id.make_stock);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.make_stock);
+                menuItem.setVisible(false);
+            }
+
+            if(stockuomlist.equals("stock-uom-list")){
+                MenuItem menuItem = menu.findItem(R.id.umo_stock);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.umo_stock);
+                menuItem.setVisible(false);
+            }
+
+            if(stocklist.equals("stock-list")){
+                MenuItem menuItem = menu.findItem(R.id.list_stock);
+                menuItem.setVisible(true);
+            }else
+            {
+                MenuItem menuItem = menu.findItem(R.id.list_stock);
+                menuItem.setVisible(false);
+            }
+
+
+
+
+
+
+
+
+
+
+       // }
+
+
+//        if(1==2) {
+//            Menu menu = navigationView.getMenu();
+//            MenuItem menuItem = menu.findItem(R.id.ghar);
+//            menuItem.setVisible(false);
+//        }
 
 
 
@@ -415,6 +664,78 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+    }
+
+    private void Grenerate() {
+
+        String user_id = appConfig.getuser_id();
+        String user_email_id = appConfig.getuser_email_id();
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("Fetching", String.valueOf(task.getException()));
+                            return;
+                        }
+                        // Get new FCM registration token
+                        String firebasetoken = task.getResult();
+                        settoken.setText(firebasetoken);
+
+
+//                        Log.d("chalns",settoken.getText().toString());
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+        String firetoken = "settoken.getText().toString()";
+        Log.d("chalns",firetoken);
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            //progressDialog.dismiss();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", user_id);
+                params.put("user_email_id", user_email_id);
+                params.put("firebase_user_token", firetoken);
+
+                return params;
+            }
+
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        requestQueue.add(request);
 
     }
 }

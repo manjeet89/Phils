@@ -1,6 +1,7 @@
 package com.example.phils.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ public class StockListAdapterClass extends RecyclerView.Adapter<StockListAdapter
 //            list_status = itemView.findViewById(R.id.list_status);
             btn = itemView.findViewById(R.id.id);
             btn.setOnClickListener(this);
+            btn.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.example.phils.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class ReciverCompleteAdapterClass extends RecyclerView.Adapter<ReciverCom
             reciverquantity = itemView.findViewById(R.id.reciverquantity);
             id = itemView.findViewById(R.id.id);
             id.setOnClickListener(this);
+            id.setTextColor(Color.parseColor("#1ca6eb"));
+
 
 
 //            btn.setOnClickListener(this);

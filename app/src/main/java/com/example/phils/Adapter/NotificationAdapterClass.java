@@ -74,6 +74,8 @@ public class NotificationAdapterClass extends RecyclerView.Adapter<NotificationA
             noti_status = itemView.findViewById(R.id.noti_status);
             id = itemView.findViewById(R.id.id);
             id.setOnClickListener(this);
+            id.setTextColor(Color.parseColor("#1ca6eb"));
+
         }
 
         public void onClick(View view) {
