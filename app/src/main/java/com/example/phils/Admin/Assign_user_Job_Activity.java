@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -84,6 +85,8 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
     TextView locationtext;
     Dialog dialog;
 
+    ProgressDialog progressDialog;
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(),Job_List_Activity.class));
@@ -93,8 +96,10 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_user_job);
-
         appConfig = new AppConfig(this);
+        progressDialog = new ProgressDialog(this);
+
+
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
@@ -519,12 +524,18 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Please Wait");
+                progressDialog.show();
+
                 String token = getIntent().getStringExtra("token");
                 String userId = getIntent().getStringExtra("userId");
                 String location = getIntent().getStringExtra("location");
                 String user_employee_type = appConfig.getuser_employee_type();
 
-                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/job_assign_user",
+                //Toast.makeText(Assign_user_Job_Activity.this, setjob.getText().toString()+"/"+setwg.getText().toString(), Toast.LENGTH_SHORT).show();
+
+               // Log.d("matchts",token+"/"+setjob.getText().toString()+"/"+setwg.getText().toString());
+                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_assign_user",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -542,6 +553,7 @@ public class Assign_user_Job_Activity extends AppCompatActivity {
                                     else {
 
                                         Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                         startActivity(new Intent(getApplicationContext(), Assign_user_Job_Activity.class));
                                     }
 

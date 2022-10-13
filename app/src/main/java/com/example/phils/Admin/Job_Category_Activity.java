@@ -744,16 +744,64 @@ public class Job_Category_Activity extends AppCompatActivity {
                     String userId = appConfig.getuser_id();
                     String location = appConfig.getLocation();
 
-                    Intent intent = new Intent(getApplicationContext(), Update_JobCategory_Activity.class);
-                    intent.putExtra("id", kk);
-                    intent.putExtra("Jobname", Jobname);
-                    intent.putExtra("jobstatus", jobstatus);
 
-                    intent.putExtra("token", token);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("location", location);
+                    Dialog  dialog=new Dialog(Job_Category_Activity.this);
 
-                    startActivity(intent);
+                    // set custom dialog
+                    dialog.setContentView(R.layout.custom_stock_category_button);
+
+                    // set custom height and width
+                    dialog.getWindow().setLayout(650,750);
+
+                    // set transparent background
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                    // show dialog
+                    dialog.show();
+
+                    Button add = dialog.findViewById(R.id.add);
+
+                    String access_module = appConfig.getaccess_module().trim();
+                    String text = access_module.toString().replace("[", "").replace("]", "");
+                    String withoutQuotes_line1 = text.replace("\"", "");
+                    String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                    String updatejobcategory = "";
+
+                    for (int i =0;i<items.length;i++) {
+
+                        if (items[i].equals("update-job-category")) { updatejobcategory = "update-job-category"; }
+                    }
+                    if(updatejobcategory.equals("update-job-category")){
+                        add.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        add.setVisibility(View.GONE);
+                        Toast.makeText(Job_Category_Activity.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+
+
+                    add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+
+                            Intent intent = new Intent(getApplicationContext(), Update_JobCategory_Activity.class);
+                            intent.putExtra("id", kk);
+                            intent.putExtra("Jobname", Jobname);
+                            intent.putExtra("jobstatus", jobstatus);
+
+                            intent.putExtra("token", token);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("location", location);
+
+                            startActivity(intent);
+
+                        }
+                    });
+
                 }
             };
         }

@@ -516,13 +516,13 @@ public class RequisitionListActivity extends AppCompatActivity {
             }
         });
 
-        Button complete = findViewById(R.id.complete);
-        complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
-            }
-        });
+//        Button complete = findViewById(R.id.complete);
+//        complete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
+//            }
+//        });
 
         add_reqlist = findViewById(R.id.add_reqlist);
         other_reqlist = findViewById(R.id.other_reqlist);
@@ -663,53 +663,6 @@ public class RequisitionListActivity extends AppCompatActivity {
 
 
 
-                String access_module = appConfig.getaccess_module().trim();
-                String text = access_module.toString().replace("[", "").replace("]", "");
-                String withoutQuotes_line1 = text.replace("\"", "");
-                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
-
-                String updaterequisition = "",assignrequisition="",changestatusrequisition="",deleterequisition="";
-
-                for (int i =0;i<items.length;i++) {
-
-                    if (items[i].equals("update-requisition")) { updaterequisition = "update-requisition"; }
-                    if (items[i].equals("assign-requisition")) { assignrequisition = "assign-requisition"; }
-                    if (items[i].equals("change-status-requisition")) { changestatusrequisition = "change-status-requisition"; }
-                    if (items[i].equals("delete-requisition")) { deleterequisition = "delete-requisition"; }
-
-                }
-                if(updaterequisition.equals("update-requisition")){
-                    edit.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    edit.setVisibility(View.GONE);
-                }
-
-                if(assignrequisition.equals("assign-requisition")){
-                    assignstock.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    assignstock.setVisibility(View.GONE);
-                }
-
-
-                if(changestatusrequisition.equals("change-status-requisition")){
-                    changestatus.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    changestatus.setVisibility(View.GONE);
-                }
-
-                if(deleterequisition.equals("delete-requisition")){
-                    delete.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    delete.setVisibility(View.GONE);
-                }
 
 
 
@@ -744,6 +697,61 @@ public class RequisitionListActivity extends AppCompatActivity {
                 String user_employee_type = appConfig.getuser_employee_type();
 //
                 // Toast.makeText(RequisitionListActivity.this, changestatu, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String updaterequisition = "",assignrequisition="",changestatusrequisition="",deleterequisition="";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("update-requisition")) { updaterequisition = "update-requisition"; }
+                    if (items[i].equals("assign-requisition")) { assignrequisition = "assign-requisition"; }
+                    if (items[i].equals("change-status-requisition")) { changestatusrequisition = "change-status-requisition"; }
+                    if (items[i].equals("delete-requisition")) { deleterequisition = "delete-requisition"; }
+
+                }
+
+                if(updaterequisition.equals("update-requisition")){
+                    edit.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    edit.setVisibility(View.GONE);
+                }
+
+                if(assignrequisition.equals("assign-requisition")){
+                    assignstock.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    assignstock.setVisibility(View.GONE);
+                }
+
+
+                if(changestatusrequisition.equals("change-status-requisition")){
+                    changestatus.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    changestatus.setVisibility(View.GONE);
+                }
+
+                if(deleterequisition.equals("delete-requisition")){
+                    delete.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    delete.setVisibility(View.GONE);
+                }
+
+
                 if(changestatu.equals("Declined"))
                 {
                     assignstock.setVisibility(View.GONE);
@@ -752,15 +760,19 @@ public class RequisitionListActivity extends AppCompatActivity {
                 else if(changestatu.equals("Accepted"))
                 {
 
-                    assignstock.setVisibility(View.VISIBLE);
+                    //assignstock.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.GONE);
+                   // Toast.makeText(RequisitionListActivity.this, "No Access Available ", Toast.LENGTH_SHORT).show();
+                    //dialog.dismiss();
                 }
                 else
                 {
-                    edit.setVisibility(View.VISIBLE);
+                    //edit.setVisibility(View.VISIBLE);
                     assignstock.setVisibility(View.GONE);
 
                 }
+
+
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -935,10 +947,7 @@ public class RequisitionListActivity extends AppCompatActivity {
 
 
                                 String data1 = jsonObject.getString("data");
-                                if (data1.equals("false")) {
-                                    Toast.makeText(RequisitionListActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-                                } else {
+
                                     if (message.equals("Invalid user request")) {
                                         Toast.makeText(RequisitionListActivity.this, message, Toast.LENGTH_SHORT).show();
                                         appConfig.updateUserLoginStatus(false);
@@ -982,6 +991,13 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             if (req_manager_id.equals("null")) {
                                                 req_manager_id = "Default";
                                             }
+                                            else if(req_manager_id.equals("1")) {
+                                                req_manager_id = "Phils ERP";
+                                            }
+                                            else
+                                            {
+                                                req_manager_id = object.getString("req_manager_id");
+                                            }
 //                                    else
 //                                    {
 //                                       String req_manager_id1 = req_manager_id;
@@ -1014,6 +1030,9 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             if (stock_size_name.equals("null")) {
                                                 stock_size_name = " ";
                                             }
+                                            else{
+                                                stock_size_name = object.getString("stock_size_name");
+                                            }
                                             String stock_category_name = object.getString("stock_category_name");
                                             String job_number = object.getString("job_number");
                                             String user_full_name = object.getString("user_full_name");
@@ -1021,6 +1040,13 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             assign_quantity = object.getString("assign_quantity");
                                             if (assign_quantity.equals("null")) {
                                                 assign_quantity = "0";
+                                            }else
+                                            {
+                                                assign_quantity = object.getString("assign_quantity");
+                                            }
+
+                                            if(0>=Integer.parseInt(assign_quantity))
+                                            {
 
                                                 responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
                                                         seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
@@ -1028,21 +1054,19 @@ public class RequisitionListActivity extends AppCompatActivity {
                                                         job_number, user_full_name, user_employee_id, assign_quantity, req_user_id);
                                                 data.add(responseModelRequisitionList);
                                                 requisitionAdapterClass.notifyDataSetChanged();
+                                                Log.d("Dikkat","Tujhse kya ");
+                                                Toast.makeText(RequisitionListActivity.this, " Data Available", Toast.LENGTH_SHORT).show();
 
                                                 progressDialog.dismiss();
                                             }
-//                                            if(assign_quantity==String.valueOf(0)) {
-//
-//                                                //Toast.makeText(RequisitionListActivity.this, sn, Toast.LENGTH_SHORT).show();
-//
-                                        //    }
                                         else
                                             {
                                                 progressDialog.dismiss();
                                                 Toast.makeText(RequisitionListActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                                                Log.d("Dikkat","tujhe dikkat kya hai be");
                                             }
 
-                                        }
+
                                     }
                                 }
                             }
@@ -1057,7 +1081,8 @@ public class RequisitionListActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequisitionListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequisitionListActivity.this, "Try Again", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         })
         {

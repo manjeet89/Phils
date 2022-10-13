@@ -720,18 +720,63 @@ public class StockCategoryActivity extends AppCompatActivity {
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
 
+                Dialog  dialog=new Dialog(StockCategoryActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_stock_category_button);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                Button add = dialog.findViewById(R.id.add);
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String updatestockcategory = "";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("update-stock-category")) { updatestockcategory = "update-stock-category"; }
+                }
+
+                if(updatestockcategory.equals("update-stock-category")){
+                    add.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    add.setVisibility(View.GONE);
+                    Toast.makeText(StockCategoryActivity.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
+                        intent.putExtra("id",id);
+                        intent.putExtra("token",token);
+                        intent.putExtra("userId",userId);
+                        intent.putExtra("location",location);
+
+                        intent.putExtra("catGroup",catGroup);
+                        intent.putExtra("category",category);
+                        intent.putExtra("status",status);
+                        startActivity(intent);
+
+                    }
+                });
 
 
-                Intent intent = new Intent(getApplicationContext(), Update_StockCategory_Activity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("token",token);
-                intent.putExtra("userId",userId);
-                intent.putExtra("location",location);
 
-                intent.putExtra("catGroup",catGroup);
-                intent.putExtra("category",category);
-                intent.putExtra("status",status);
-                startActivity(intent);
+
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }
         };

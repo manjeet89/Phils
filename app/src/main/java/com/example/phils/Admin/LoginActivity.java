@@ -8,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,81 +85,95 @@ public class LoginActivity extends AppCompatActivity {
 
     private void userLogin() {
         progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setMessage("Loading... Please Wait!");
-        progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
-        progressDialog.show();
+
+
 
         String username1 = username.getText().toString().trim();
         String password1 = password.getText().toString().trim();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login",
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
-                        try {
+        if (TextUtils.isEmpty(username1)) {
+            username.setError("Enter User Name");
+            Toast.makeText(LoginActivity.this, "Enter User Name", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (TextUtils.isEmpty(password1)) {
+            password.setError("Enter Password");
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            //
-                            String message = jsonObject.getString("message");
-                            String code = jsonObject.getString("code");
-                            String status = jsonObject.getString("status");
-                            //Toast.makeText(LoginActivity.this, code, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
 
+            progressDialog.setMessage("Loading... Please Wait!");
+            progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
+            progressDialog.show();
 
-                            if(code.equals("200")){
+            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login",
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                                if(message.equals("Please verify OTP")){
+                            try {
 
-                                    String data = jsonObject.getString("data");
-                                    JSONObject jsonObject1 = new JSONObject(data);
-
-                                    String user_id = jsonObject1.getString("user_id");
-                                    String user_full_name = jsonObject1.getString("user_full_name");
-                                    String user_email_id = jsonObject1.getString("user_email_id");
-                                    String user_employee_type = jsonObject1.getString("user_employee_type");
-                                    String employee_type = jsonObject1.getString("employee_type");
-                                    String emp_type_name = jsonObject1.getString("emp_type_name");
-                                    String emp_type_id = jsonObject1.getString("emp_type_id");
-                                    String project_location_id = jsonObject1.getString("project_location_id");
-                                    String location_name = jsonObject1.getString("location_name");
-
-                                    String access_module = jsonObject.getString("access_module");
-
-                                    Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
-                                    intent.putExtra("user_id",user_id);
-                                    intent.putExtra("user_full_name",user_full_name);
-                                    intent.putExtra("user_email_id",user_email_id);
-                                    intent.putExtra("user_employee_type",user_employee_type);
-                                    intent.putExtra("employee_type",employee_type);
-                                    intent.putExtra("emp_type_name",emp_type_name);
-                                    intent.putExtra("emp_type_id",emp_type_id);
-                                    intent.putExtra("project_location_id",project_location_id);
-                                    intent.putExtra("location_name",location_name);
-                                    intent.putExtra("access_module",access_module);
+                                JSONObject jsonObject = new JSONObject(response);
+                                //
+                                String message = jsonObject.getString("message");
+                                String code = jsonObject.getString("code");
+                                String status = jsonObject.getString("status");
+                                //Toast.makeText(LoginActivity.this, code, Toast.LENGTH_SHORT).show();
 
 
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                else {
+                                if (code.equals("200")) {
 
-                                    String user_token = jsonObject.getString("user_token").trim();
-                                    // Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
-                                    String data = jsonObject.getString("data");
-                                    JSONObject jsonObject1 = new JSONObject(data);
+                                    if (message.equals("Please verify OTP")) {
 
-                                    String user_id = jsonObject1.getString("user_id");
-                                    String user_full_name = jsonObject1.getString("user_full_name");
-                                    String user_email_id = jsonObject1.getString("user_email_id");
-                                    String user_employee_type = jsonObject1.getString("user_employee_type");
-                                    String employee_type = jsonObject1.getString("employee_type");
-                                    String emp_type_name = jsonObject1.getString("emp_type_name");
-                                    String emp_type_id = jsonObject1.getString("emp_type_id");
-                                    String project_location_id = jsonObject1.getString("project_location_id");
-                                    String location_name = jsonObject1.getString("location_name");
+                                        String data = jsonObject.getString("data");
+                                        JSONObject jsonObject1 = new JSONObject(data);
 
-                                    String access_module = jsonObject.getString("access_module");
+                                        String user_id = jsonObject1.getString("user_id");
+                                        String user_full_name = jsonObject1.getString("user_full_name");
+                                        String user_email_id = jsonObject1.getString("user_email_id");
+                                        String user_employee_type = jsonObject1.getString("user_employee_type");
+                                        String employee_type = jsonObject1.getString("employee_type");
+                                        String emp_type_name = jsonObject1.getString("emp_type_name");
+                                        String emp_type_id = jsonObject1.getString("emp_type_id");
+                                        String project_location_id = jsonObject1.getString("project_location_id");
+                                        String location_name = jsonObject1.getString("location_name");
+
+                                        String access_module = jsonObject.getString("access_module");
+
+                                        Intent intent = new Intent(LoginActivity.this, TwoStepVerification.class);
+                                        intent.putExtra("user_id", user_id);
+                                        intent.putExtra("user_full_name", user_full_name);
+                                        intent.putExtra("user_email_id", user_email_id);
+                                        intent.putExtra("user_employee_type", user_employee_type);
+                                        intent.putExtra("employee_type", employee_type);
+                                        intent.putExtra("emp_type_name", emp_type_name);
+                                        intent.putExtra("emp_type_id", emp_type_id);
+                                        intent.putExtra("project_location_id", project_location_id);
+                                        intent.putExtra("location_name", location_name);
+                                        intent.putExtra("access_module", access_module);
+
+
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+
+                                        String user_token = jsonObject.getString("user_token").trim();
+                                        // Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
+                                        String data = jsonObject.getString("data");
+                                        JSONObject jsonObject1 = new JSONObject(data);
+
+                                        String user_id = jsonObject1.getString("user_id");
+                                        String user_full_name = jsonObject1.getString("user_full_name");
+                                        String user_email_id = jsonObject1.getString("user_email_id");
+                                        String user_employee_type = jsonObject1.getString("user_employee_type");
+                                        String employee_type = jsonObject1.getString("employee_type");
+                                        String emp_type_name = jsonObject1.getString("emp_type_name");
+                                        String emp_type_id = jsonObject1.getString("emp_type_id");
+                                        String project_location_id = jsonObject1.getString("project_location_id");
+                                        String location_name = jsonObject1.getString("location_name");
+
+                                        String access_module = jsonObject.getString("access_module");
 
 //                                    String text = access_module.toString().replace("[", "").replace("]", "");
 //                                    String withoutQuotes_line1 = text.replace("\"", "");
@@ -173,67 +188,63 @@ public class LoginActivity extends AppCompatActivity {
 //                                    }
 
 
-                                    //Log.d("tokennnn",user_token +"/"+user_id+"/"+project_location_id+"/"+user_employee_type+"/"+emp_type_name);
+                                        //Log.d("tokennnn",user_token +"/"+user_id+"/"+project_location_id+"/"+user_employee_type+"/"+emp_type_name);
 
-                                    if (isRememberUserLogin) {
-                                        appConfig.updateUserLoginStatus(true);
-                                        appConfig.Saveuser_id(user_id);
-                                        appConfig.Saveuser_full_name(user_full_name);
-                                        appConfig.Saveuser_email_id(user_email_id);
-                                        appConfig.Saveuser_employee_type(user_employee_type);
-                                        appConfig.Saveemployee_type(employee_type);
-                                        appConfig.Saveemp_type_name(emp_type_name);
-                                        appConfig.Saveemp_type_id(emp_type_id);
-                                        appConfig.Saveuser_token(user_token);
-                                        appConfig.SaveLocation(location_name);
-                                        appConfig.SaveLocationId(project_location_id);
-                                        appConfig.Saveaccess_module(access_module);
+                                        if (isRememberUserLogin) {
+                                            appConfig.updateUserLoginStatus(true);
+                                            appConfig.Saveuser_id(user_id);
+                                            appConfig.Saveuser_full_name(user_full_name);
+                                            appConfig.Saveuser_email_id(user_email_id);
+                                            appConfig.Saveuser_employee_type(user_employee_type);
+                                            appConfig.Saveemployee_type(employee_type);
+                                            appConfig.Saveemp_type_name(emp_type_name);
+                                            appConfig.Saveemp_type_id(emp_type_id);
+                                            appConfig.Saveuser_token(user_token);
+                                            appConfig.SaveLocation(location_name);
+                                            appConfig.SaveLocationId(project_location_id);
+                                            appConfig.Saveaccess_module(access_module);
 
 
+                                        }
+
+                                        FirebaseTokenGenerate(user_id, user_email_id);
+
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("user_email_id",user_email_id);
+                                    intent.putExtra("user_id",user_id);
+//                                    intent.putExtra("access_module",access_module);
+                                    startActivity(intent);
+                                        finish();
                                     }
 
-                                    FirebaseTokenGenerate(user_id,user_email_id);
-
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    intent.putExtra("user_email_id",user_email_id);
-//                                    intent.putExtra("user_id",user_id);
-//                                    intent.putExtra("access_module",access_module);
-//                                    startActivity(intent);
-                                    finish();
+                                } else {
+                                    displayUserInformation(message);
                                 }
-
-                            }
-                            else
-                            {
-                                displayUserInformation(message);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        })
-        {
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
 
 
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String,String>();
-                params.put("user_name",username1);
-                params.put("user_password",password1);
-                return  params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-        requestQueue.add(request);
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("user_name", username1);
+                    params.put("user_password", password1);
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+            requestQueue.add(request);
+        }
     }
-
         private void FirebaseTokenGenerate(String userId,String UserEmail) {
 
 

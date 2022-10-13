@@ -37,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
+import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +48,7 @@ import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.onesignal.OneSignal;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         String location = appConfig.getLocationId();
         String locationName = appConfig.getLocation();
         Log.d("tokennn",token);
+
 //        String user_id = getIntent().getStringExtra("user_id");
 //        String user_email_id = getIntent().getStringExtra("user_email_id");
 
@@ -106,56 +109,67 @@ public class MainActivity extends AppCompatActivity {
 
         String user_id = appConfig.getuser_id();
         String user_email_id = appConfig.getuser_email_id();
+        progressDialog.setTitle("Welcome to Home Page");
+        progressDialog.setMessage("Please Wait!");
+        progressDialog.show();
 
-        //Grenerate();
+        String userId = appConfig.getuser_id();
+        String user_employee_type = appConfig.getuser_employee_type();
 
 
-//        FirebaseMessaging.getInstance().getToken()
-//                .addOnCompleteListener(new OnCompleteListener<String>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<String> task) {
-//                        if (!task.isSuccessful()) {
-//                            Log.d( "Fetching", String.valueOf(task.getException()));
-//                            return;
-//                        }
-//                        // Get new FCM registration token
-//                        String token = task.getResult();
-//                        Log.d("firebasetoken",token);
-//
-//                        settoken.setText(token);
-//                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
-//                                new Response.Listener<String>() {
-//                                    @Override
-//                                    public void onResponse(String response) {
-//
-//                                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        }){
-//                            @Nullable
-//                            @Override
-//                            protected Map<String, String> getParams() throws AuthFailureError {
-//                                Map<String, String> params = new HashMap<String, String>();
-//                                params.put("user_id", user_id);
-//                                params.put("user_email_id", user_email_id);
-//                                params.put("firebase_user_token", token);
-//
-//                                return params;
-//                            }
-//
-//                        };
-//                        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-//                        requestQueue.add(request);
-//                        // Log and toast
-////                        String msg = getString(R.string.msg_token_fmt, token);
-////                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/location_list",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
+                        try {
+                            int j=0;
+                            String stock_category_status;
+                            String emp_type_name;
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                           // Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                            if(message.equals("Invalid user request")){
+                                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                                appConfig.updateUserLoginStatus(false);
+                                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                                finish();
+                            }
+                            else {
+                                String access_module = jsonObject.getString("access_module");
+                                appConfig.Saveaccess_module(access_module);
+                                progressDialog.dismiss();
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+
+                headers.put("user_token",token);
+                headers.put("user_id", userId);
+                headers.put("project_location_id", location);
+                headers.put("user_employee_type", user_employee_type);
+
+                return headers;
+                //return super.getHeaders();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        requestQueue.add(request);
 
 
 //        // Enable verbose OneSignal logging to debug issues if needed.
@@ -220,20 +234,37 @@ public class MainActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
 
 
-        locationtext = findViewById(R.id.locationtext);
-        locationtext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
-            }
-        });
-        location_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+            locationtext = findViewById(R.id.locationtext);
+            locationtext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String emp_name = appConfig.getuser_id();
+                    if(emp_name.equals("1")) {
+                    startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "Only Admin Can Change Location", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                        //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    }
+                }
+            });
+            location_save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String emp_name = appConfig.getuser_id();
+                        if(emp_name.equals("1")) {
+                    startActivity(new Intent(getApplicationContext(), ProjectLocationActivity.class));
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this, "Only Admin Can Change Location", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        }
+                }
+            });
+
 
         img = findViewById(R.id.img);
         img.setOnClickListener(new View.OnClickListener() {

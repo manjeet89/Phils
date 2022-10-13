@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -89,10 +90,13 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), Job_List_Activity.class));
     }
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_replace_useer);
+        progressDialog = new ProgressDialog(this);
 
         appConfig = new AppConfig(this);
         location_save = findViewById(R.id.location_save);
@@ -514,12 +518,18 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                progressDialog.setMessage("Please Wait");
+                progressDialog.show();
+
                 String token = getIntent().getStringExtra("token");
                 String userId = getIntent().getStringExtra("userId");
                 String location = getIntent().getStringExtra("location");
                 String user_employee_type = appConfig.getuser_employee_type();
 
-                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/job_replace_user",
+//                Toast.makeText(JobReplaceUseerActivity.this, setwgreplace.getText().toString()+"/"+setreplaceuser.getText().toString(), Toast.LENGTH_SHORT).show();
+//                Log.d("matchtv",setwgreplace.getText().toString()+"/"+setreplaceuser.getText().toString());
+
+                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_replace_user",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -529,6 +539,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                                     String message = jsonObject.getString("message");
 
                                     Toast.makeText(JobReplaceUseerActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                     startActivity(new Intent(getApplicationContext(),Assign_user_Job_Activity.class));
 
 
@@ -560,7 +571,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> params = new HashMap<String,String>();
-                        params.put("job_id[]",setwgreplace.getText().toString());
+                        params.put("user_id[]",setwgreplace.getText().toString());
                         params.put("job_emp_user[]",setreplaceuser.getText().toString());
                         return  params;
                     }
@@ -815,7 +826,7 @@ public class JobReplaceUseerActivity extends AppCompatActivity {
                             jobList.add(jobId[i]);
                             jobListvalue.add(jobValue[i]);
 
-                            Log.d("Nilesh",wokerId[i]);
+//                            Log.d("Nilesh",wokerId[i]);
 
 
                             // Sort array list

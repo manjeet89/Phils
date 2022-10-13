@@ -489,7 +489,6 @@ public class RequisitionReciverComplete extends AppCompatActivity {
                         break;
 
 
-
                     default:
                         return true;
                 }
@@ -612,13 +611,34 @@ public class RequisitionReciverComplete extends AppCompatActivity {
                 String SIZE = data.get(position).getStock_size_name();
                 String QUANTITY = data.get(position).getAssign_quantity();
 
-                Intent intent = new Intent(getApplicationContext(), ReturnStock.class);
-                intent.putExtra("id",id);
-                intent.putExtra("CATEGORY",CATEGORY);
-                intent.putExtra("TYPE",TYPE);
-                intent.putExtra("SIZE",SIZE);
-                intent.putExtra("QUANTITY",QUANTITY);
-                startActivity(intent);
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String returnstock = "";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("return-stock")) { returnstock = "return-stock"; }
+                }
+                if(returnstock.equals("return-stock")){
+
+                    Intent intent = new Intent(getApplicationContext(), ReturnStock.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("CATEGORY",CATEGORY);
+                    intent.putExtra("TYPE",TYPE);
+                    intent.putExtra("SIZE",SIZE);
+                    intent.putExtra("QUANTITY",QUANTITY);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(RequisitionReciverComplete.this, "No Access Available", Toast.LENGTH_SHORT).show();
+
+                }
+
+
             }
         };
     }

@@ -624,13 +624,58 @@ public class RequisitionReciverList extends AppCompatActivity {
                 String SIZE = data.get(position).getStock_size_name();
                 String QUANTITY = data.get(position).getAssign_quantity();
 
-                Intent intent = new Intent(getApplicationContext(), ReturnStock.class);
-                intent.putExtra("id",id);
-                intent.putExtra("CATEGORY",CATEGORY);
-                intent.putExtra("TYPE",TYPE);
-                intent.putExtra("SIZE",SIZE);
-                intent.putExtra("QUANTITY",QUANTITY);
-                startActivity(intent);
+                Dialog  dialog=new Dialog(RequisitionReciverList.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_requisition_reciver_list_button);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                Button add = dialog.findViewById(R.id.add);
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String returnstock = "";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("return-stock")) { returnstock = "return-stock"; }
+                }
+                if(returnstock.equals("return-stock")){
+                    add.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    add.setVisibility(View.GONE);
+                    Toast.makeText(RequisitionReciverList.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), ReturnStock.class);
+                        intent.putExtra("id",id);
+                        intent.putExtra("CATEGORY",CATEGORY);
+                        intent.putExtra("TYPE",TYPE);
+                        intent.putExtra("SIZE",SIZE);
+                        intent.putExtra("QUANTITY",QUANTITY);
+                        startActivity(intent);
+
+                    }
+                });
+
+
 
 
 

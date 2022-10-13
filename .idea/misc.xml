@@ -70,6 +70,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_stock_uom.xml" value="0.22" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_update_user.xml" value="0.18" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/activity_user.xml" value="0.25" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_assign_stock.xml" value="0.15234375" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_assign_stock_requisition.xml" value="0.15234375" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_job_category_activity.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_job_list.xml" value="0.203125" />
@@ -81,6 +82,7 @@
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_requisition_on_going_button.xml" value="0.21" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_requisition_reciver_complete.xml" value="0.18" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_requisition_reciver_list.xml" value="0.153125" />
+        <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_requisition_reciver_list_button.xml" value="0.15234375" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_requsition_open_list.xml" value="0.153125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_roles_and_privileges.xml" value="0.203125" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/Phils/app/src/main/res/layout/custom_stock_category_activity.xml" value="0.17074275362318841" />

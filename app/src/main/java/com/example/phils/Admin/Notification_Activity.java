@@ -581,7 +581,7 @@ public class Notification_Activity extends AppCompatActivity {
                                     j++;
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     String sn = String.valueOf(j);
-                                    String noti_user_id = object.getString("noti_user_id");
+                                    String noti_user_id = object.getString("noti_id");
                                     String url_created = object.getString("url_created");
                                     String noti_message = object.getString("noti_message");
 
@@ -734,7 +734,7 @@ public class Notification_Activity extends AppCompatActivity {
                 remove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String id = data.get(position).getNoti_id();
+                        String id = data.get(position).getNoti_user_id();
                         String token = appConfig.getuser_token();
                         String userId = appConfig.getuser_id();
                         String location = appConfig.getLocationId();
@@ -796,8 +796,11 @@ public class Notification_Activity extends AppCompatActivity {
                 markread.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String id = data.get(position).getNoti_id();
+                        String id = data.get(position).getNoti_user_id();
+
                         String token = appConfig.getuser_token();
+                        //Log.d("justcheck",id+"/"+token);
+
                         String userId = appConfig.getuser_id();
                         String location = appConfig.getLocationId();
                         String user_employee_type= appConfig.getuser_employee_type();
@@ -851,7 +854,7 @@ public class Notification_Activity extends AppCompatActivity {
                         };
                         RequestQueue  requestQueue = Volley.newRequestQueue(Notification_Activity.this);
                         requestQueue.add(request);
-//                        Toast.makeText(Notification_Activity.this, id, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Notification_Activity.this, id, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

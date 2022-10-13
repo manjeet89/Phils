@@ -768,28 +768,74 @@ public class Job_List_Activity extends AppCompatActivity {
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
 
-                Intent intent = new Intent(getApplicationContext(), Update_JobList_Activity.class);
-                intent.putExtra("id", kk);
-
-                intent.putExtra("token", token);
-                intent.putExtra("userId", userId);
-                intent.putExtra("location", location);
 
 
-                intent.putExtra("job_name", job_name);
-                intent.putExtra("job_category_id", job_category_id);
-                intent.putExtra("job_category_name", job_category_name);
-                intent.putExtra("job_size_id", job_size_id);
-                intent.putExtra("job_size_name", job_size_name);
-                intent.putExtra("job_manager_id", job_manager_id);
-                intent.putExtra("user_full_name", user_full_name);
-                intent.putExtra("job_number", job_number);
-                intent.putExtra("consumables_items", consumables_items);
-                intent.putExtra("seam_number", seam_number);
-                intent.putExtra("job_emp_user", job_emp_user);
-                intent.putExtra("job_status", job_status);
+                Dialog  dialog=new Dialog(Job_List_Activity.this);
 
-                startActivity(intent);
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_stock_category_button);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                Button add = dialog.findViewById(R.id.add);
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String updatejob = "";
+                int k=0;
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("update-job")) { updatejob = "update-job"; }
+                }
+                if(updatejob.equals("update-job")){
+                    add.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    add.setVisibility(View.GONE);
+                    Toast.makeText(Job_List_Activity.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+                    add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), Update_JobList_Activity.class);
+                            intent.putExtra("id", kk);
+
+                            intent.putExtra("token", token);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("location", location);
+
+
+                            intent.putExtra("job_name", job_name);
+                            intent.putExtra("job_category_id", job_category_id);
+                            intent.putExtra("job_category_name", job_category_name);
+                            intent.putExtra("job_size_id", job_size_id);
+                            intent.putExtra("job_size_name", job_size_name);
+                            intent.putExtra("job_manager_id", job_manager_id);
+                            intent.putExtra("user_full_name", user_full_name);
+                            intent.putExtra("job_number", job_number);
+                            intent.putExtra("consumables_items", consumables_items);
+                            intent.putExtra("seam_number", seam_number);
+                            intent.putExtra("job_emp_user", job_emp_user);
+                            intent.putExtra("job_status", job_status);
+
+                            startActivity(intent);
+                        }
+                    });
+
             }
         };
     }

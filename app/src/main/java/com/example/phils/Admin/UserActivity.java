@@ -730,21 +730,68 @@ public class UserActivity extends AppCompatActivity {
                 String reporting_manager = data.get(position).getReporting_manager();
                 String user_status = data.get(position).getUser_status();
 
-                Intent intent = new Intent(getApplicationContext(), UpdateUserActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("employee_type",employee_type);
-                intent.putExtra("user_full_name",user_full_name);
-                intent.putExtra("user_password",user_password);
-                intent.putExtra("user_name",user_name);
-                intent.putExtra("gender",gender);
-                intent.putExtra("user_employee_id",user_employee_id);
-                intent.putExtra("user_mobile_number",user_mobile_number);
-                intent.putExtra("user_email_id",user_email_id);
-                intent.putExtra("user_employee_type",user_employee_type);
-                intent.putExtra("reporting_manager",reporting_manager);
-                intent.putExtra("user_status",user_status);
+                Dialog  dialog=new Dialog(UserActivity.this);
 
-                startActivity(intent);
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_stock_category_button);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                Button add = dialog.findViewById(R.id.add);
+
+                String access_module = appConfig.getaccess_module().trim();
+        String text = access_module.toString().replace("[", "").replace("]", "");
+        String withoutQuotes_line1 = text.replace("\"", "");
+        String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String updateuser = "";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("update-user")) { updateuser = "update-user"; }
+                }
+                if(updateuser.equals("update-user")){
+                    add.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    add.setVisibility(View.GONE);
+                    Toast.makeText(UserActivity.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(getApplicationContext(), UpdateUserActivity.class);
+                        intent.putExtra("id",id);
+                        intent.putExtra("employee_type",employee_type);
+                        intent.putExtra("user_full_name",user_full_name);
+                        intent.putExtra("user_password",user_password);
+                        intent.putExtra("user_name",user_name);
+                        intent.putExtra("gender",gender);
+                        intent.putExtra("user_employee_id",user_employee_id);
+                        intent.putExtra("user_mobile_number",user_mobile_number);
+                        intent.putExtra("user_email_id",user_email_id);
+                        intent.putExtra("user_employee_type",user_employee_type);
+                        intent.putExtra("reporting_manager",reporting_manager);
+                        intent.putExtra("user_status",user_status);
+
+                        startActivity(intent);
+
+                    }
+                });
+
+
+
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }
         };

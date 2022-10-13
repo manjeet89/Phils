@@ -215,14 +215,14 @@
                     android:text="On Going"
                     android:textColor="@color/black" />
 
-                <Button
-                    android:id="@+id/complete"
-                    android:layout_width="125dp"
-                    android:layout_height="41dp"
-                    android:layout_marginStart="5dp"
-                    android:backgroundTint="@color/white"
-                    android:text="Completed"
-                    android:textColor="@color/black" />
+<!--                <Button-->
+<!--                    android:id="@+id/complete"-->
+<!--                    android:layout_width="125dp"-->
+<!--                    android:layout_height="41dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:backgroundTint="@color/white"-->
+<!--                    android:text="Completed"-->
+<!--                    android:textColor="@color/black" />-->
 
             </LinearLayout>
 

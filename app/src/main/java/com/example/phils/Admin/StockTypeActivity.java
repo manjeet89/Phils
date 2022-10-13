@@ -700,19 +700,65 @@ public class StockTypeActivity extends AppCompatActivity {
                 String userId = appConfig.getuser_id();
                 String location = appConfig.getLocationId();
 
-                Intent intent = new Intent(getApplicationContext(), Update_StockType_Activity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("token",token);
-                intent.putExtra("userId",userId);
-                intent.putExtra("location",location);
 
-                intent.putExtra("categoryid",categoryid);
-                intent.putExtra("category",category);
-                intent.putExtra("name",name);
-                intent.putExtra("status",status);
+                Dialog  dialog=new Dialog(StockTypeActivity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.custom_stock_category_button);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(650,750);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // show dialog
+                dialog.show();
+
+                Button add = dialog.findViewById(R.id.add);
+
+                String access_module = appConfig.getaccess_module().trim();
+                String text = access_module.toString().replace("[", "").replace("]", "");
+                String withoutQuotes_line1 = text.replace("\"", "");
+                String [] items = withoutQuotes_line1.split("\\s*,\\s*");
+
+                String addstocktype = "";
+
+                for (int i =0;i<items.length;i++) {
+
+                    if (items[i].equals("add-stock-type")) { addstocktype = "add-stock-type"; }
+                }
+                if(addstocktype.equals("add-stock-type")){
+                    add.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    add.setVisibility(View.GONE);
+                    Toast.makeText(StockTypeActivity.this, "No Access Available", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), Update_StockType_Activity.class);
+                        intent.putExtra("id",id);
+                        intent.putExtra("token",token);
+                        intent.putExtra("userId",userId);
+                        intent.putExtra("location",location);
+
+                        intent.putExtra("categoryid",categoryid);
+                        intent.putExtra("category",category);
+                        intent.putExtra("name",name);
+                        intent.putExtra("status",status);
 
 
-                startActivity(intent);
+                        startActivity(intent);
+
+                    }
+                });
+
+
                 //Toast.makeText(UserActivity.this, kk, Toast.LENGTH_SHORT).show();
             }
         };
