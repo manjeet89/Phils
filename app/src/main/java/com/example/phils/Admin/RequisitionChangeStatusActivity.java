@@ -540,7 +540,7 @@ public class RequisitionChangeStatusActivity extends AppCompatActivity {
                 }
                 String statusvale = stat;
 
-                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requistion_change_status",
+                StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requistion_change_status",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -549,15 +549,18 @@ public class RequisitionChangeStatusActivity extends AppCompatActivity {
                                     jsonObject = new JSONObject(response);
                                     String message = jsonObject.getString("message");
 
-                                    if(message.equals("Requisition status changed successfully")) {
-                                        Toast.makeText(RequisitionChangeStatusActivity.this, message, Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(RequisitionChangeStatusActivity.this, message, Toast.LENGTH_SHORT).show();
+//                                    if(message.equals("Requisition status changed successfully")) {
+//                                        Toast.makeText(RequisitionChangeStatusActivity.this, message, Toast.LENGTH_SHORT).show();
+//
+//
+//                                    }
+//                                    else
+//                                    {
+                                    Toast.makeText(RequisitionChangeStatusActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), RequisitionListActivity.class));
+                                    progressDialog.dismiss();
 
-                                    }
+                                    //}
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -574,10 +577,10 @@ public class RequisitionChangeStatusActivity extends AppCompatActivity {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         HashMap headers = new HashMap();
-                        headers.put("user_token", token);
-                        headers.put("user_id", userId);
-                        headers.put("project_location_id", location);
-                        headers.put("user_employee_type", user_employee_type);
+                        headers.put("Usertoken",token);
+                        headers.put("Userid", userId);
+                        headers.put("Projectlocationid", location);
+                        headers.put("Useremployeetype", user_employee_type);
 
                         return headers;
                     }

@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,30 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.RequisitionCompleteAdapterClass;
-import com.example.phils.Admin.ChangePasswordActivity;
-import com.example.phils.Admin.ConsumptionActivity;
-import com.example.phils.Admin.ConsumptionDetailActivity;
-import com.example.phils.Admin.Job_Category_Activity;
-import com.example.phils.Admin.Job_List_Activity;
-import com.example.phils.Admin.Job_Size_Activity;
-import com.example.phils.Admin.LoginActivity;
-import com.example.phils.Admin.MainActivity;
-import com.example.phils.Admin.Notification_Activity;
-import com.example.phils.Admin.OtherRequisitionAddActivity;
-import com.example.phils.Admin.ProfileActivity;
-import com.example.phils.Admin.ProjectLocationActivity;
-import com.example.phils.Admin.ReportsActivity;
-import com.example.phils.Admin.RequisitionAddActivity;
-import com.example.phils.Admin.RequisitionListActivity;
-import com.example.phils.Admin.RequisitionOnGoingActivity;
-import com.example.phils.Admin.RequisitionReciverList;
-import com.example.phils.Admin.StockCategoryActivity;
-import com.example.phils.Admin.StockListActivity;
-import com.example.phils.Admin.StockMakeActivity;
-import com.example.phils.Admin.StockSizeActivity;
-import com.example.phils.Admin.StockTypeActivity;
-import com.example.phils.Admin.StockUomActivity;
-import com.example.phils.Admin.UserActivity;
+import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelRequisitionComplete;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -643,6 +620,15 @@ public class RequsitionComplete extends AppCompatActivity {
     }
 
     private void fatchdata(int value) {
+
+        appConfig = new AppConfig(this);
+        String spi = appConfig.getRequisition();
+        String spname = appConfig.getManagerName();
+
+        Log.d("ssssss",spi);
+        Log.d("ssssss",spname);
+
+
         progressDialog = new ProgressDialog(RequsitionComplete.this);
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
@@ -661,150 +647,169 @@ public class RequsitionComplete extends AppCompatActivity {
         //progressDialog.dismiss();
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requisition_completed",
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
-                        try {
-                            int j=0;
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requisition_completed",
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
+                            try {
+                                int j = 0;
 
-                            Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+                                JSONObject jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
 
-                            if(message.equals("Invalid user request")){
-                                Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
-                                appConfig.updateUserLoginStatus(false);
-                                startActivity(new Intent(RequsitionComplete.this, LoginActivity.class));
-                                finish();
-                            }
-                            else {
+                               // Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
 
-                                JSONArray jsonArray = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String sn = String.valueOf(j);
+                                if (message.equals("Invalid user request")) {
+                                    Toast.makeText(RequsitionComplete.this, message, Toast.LENGTH_SHORT).show();
+                                    appConfig.updateUserLoginStatus(false);
+                                    startActivity(new Intent(RequsitionComplete.this, LoginActivity.class));
+                                    finish();
+                                } else {
 
-                                    String req_id = object.getString("req_id");
-                                    String req_user_id = object.getString("req_user_id");
-                                    String req_by_user_id = object.getString("req_by_user_id");
+                                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        j++;
+                                        JSONObject object = jsonArray.getJSONObject(i);
+                                        String sn = String.valueOf(j);
 
-                                    String req_job_id =object.getString("req_job_id");
-                                    String seam_number = object.getString("seam_number");
-                                    String req_category_id = object.getString("req_category_id");
+                                        String req_id = object.getString("req_id");
+                                        String req_user_id = object.getString("req_user_id");
+                                        String req_by_user_id = object.getString("req_by_user_id");
 
-                                    String req_type_id = object.getString("req_type_id");
-                                    String req_size_id = object.getString("req_size_id");
-                                    String req_quantity = object.getString("req_quantity");
-                                    String req_remark = object.getString("req_remark");
+                                        String req_job_id = object.getString("req_job_id");
+                                        String seam_number = object.getString("seam_number");
+                                        String req_category_id = object.getString("req_category_id");
 
-
+                                        String req_type_id = object.getString("req_type_id");
+                                        String req_size_id = object.getString("req_size_id");
+                                        String req_quantity = object.getString("req_quantity");
+                                        String req_remark = object.getString("req_remark");
 
 
-                                    String req_location_id = object.getString("req_location_id");
-                                    String req_manager_id = object.getString("req_manager_id");
+                                        String req_location_id = object.getString("req_location_id");
+                                        String req_manager_id = object.getString("req_manager_id");
 
-                                    if (req_manager_id.equals("null")) {
-                                        req_manager_id = "Default";
+                                        if (req_manager_id.equals("null")) {
+                                            req_manager_id = "Default";
+                                        }
+                                        String req_manager_comment = object.getString("req_manager_comment");
+                                        if (req_manager_comment.equals("null")) {
+                                            req_manager_comment = "Default ";
+                                        }
+                                        else
+                                        {
+                                            int value = Integer.parseInt(req_manager_id) - 5;
+                                            String[] arrayid = spi.split(",");
+                                            String[] arrayname = spname.split(",");
+
+                                            String printname ="";
+                                            for(int k=0;k<arrayid.length;k++){
+                                                // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
+
+                                                if(value==k){
+
+                                                    printname = arrayname[k];
+                                                    String printid = arrayid[k];
+
+                                                    Log.d("apppp",printname +"/"+printid);
+                                                }
+                                            }
+                                            req_manager_id = printname;
+                                        }
+
+                                        String req_manager_status = object.getString("req_manager_status");
+                                        if (req_manager_status.equals(String.valueOf(0))) {
+                                            req_manager_status = "Requested";
+                                        } else if (req_manager_status.equals(String.valueOf(1))) {
+                                            req_manager_status = "Accepted";
+                                        } else {
+                                            req_manager_status = "Declined";
+                                        }
+                                        String req_status = object.getString("req_status");
+                                        String req_updated_on = object.getString("req_updated_on");
+                                        String req_created_on = object.getString("req_created_on");
+
+                                        String stock_type_name = object.getString("stock_type_name");
+                                        String stock_size_name = object.getString("stock_size_name");
+                                        if (stock_size_name.equals("null"))
+                                            stock_size_name = " ";
+                                        String stock_category_name = object.getString("stock_category_name");
+                                        String job_number = object.getString("job_number");
+
+                                        String user_full_name = object.getString("user_full_name");
+                                        String user_employee_id = object.getString("user_employee_id");
+                                        String assign_quantity = object.getString("assign_quantity");
+                                        if (assign_quantity.equals("null")) {
+                                            assign_quantity = "0";
+                                        }
+                                        String req_user_id_details = object.getString("req_user_id_details");
+
+                                        wokerList.clear();
+                                        String[] strSplit = req_user_id.split(",");
+                                        for (String name : strSplit) {
+                                            JSONObject jsonObject1 = new JSONObject(req_user_id_details);
+                                            String idnumber = jsonObject1.getString(name);
+                                            // Log.d("please",idnumber);
+                                            wokerList.add(idnumber);
+                                        }
+                                        String stringbuilder = String.join(",", wokerList);
+
+
+                                        // Toast.makeText(RequsitionComplete.this, assign_quantity, Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(RequisitionReciverList.this, job_number, Toast.LENGTH_SHORT).show();
+                                        responseModelRequisitionComplete = new ResponseModelRequisitionComplete(sn, req_id, req_user_id, req_by_user_id, req_job_id,
+                                                seam_number, req_category_id,
+                                                req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id,
+                                                req_manager_comment, req_manager_status, req_status, req_updated_on,
+                                                req_created_on, stock_type_name, stock_size_name, stock_category_name, job_number, user_full_name,
+                                                user_employee_id, assign_quantity, stringbuilder);
+
+                                        data.add(responseModelRequisitionComplete);
+                                        requisitionCompleteAdapterClass.notifyDataSetChanged();
+                                        progressDialog.dismiss();
+
                                     }
-                                    String req_manager_comment = object.getString("req_manager_comment");
-                                    if (req_manager_comment.equals("null")) {
-                                        req_manager_comment = "Default ";
-                                    }
-
-                                    String req_manager_status = object.getString("req_manager_status");
-                                    if (req_manager_status.equals(String.valueOf(0))) {
-                                        req_manager_status = "Requested";
-                                    } else if (req_manager_status.equals(String.valueOf(1))) {
-                                        req_manager_status = "Accepted";
-                                    } else {
-                                        req_manager_status = "Declined";
-                                    }
-                                    String req_status = object.getString("req_status");
-                                    String req_updated_on = object.getString("req_updated_on");
-                                    String req_created_on = object.getString("req_created_on");
-
-                                    String stock_type_name = object.getString("stock_type_name");
-                                    String stock_size_name = object.getString("stock_size_name");
-                                    if(stock_size_name.equals("null"))
-                                        stock_size_name = " ";
-                                    String stock_category_name = object.getString("stock_category_name");
-                                    String job_number = object.getString("job_number");
-
-                                    String user_full_name = object.getString("user_full_name");
-                                    String user_employee_id = object.getString("user_employee_id");
-                                    String assign_quantity = object.getString("assign_quantity");
-                                    String req_user_id_details = object.getString("req_user_id_details");
-
-                                    wokerList.clear();
-                                    String[] strSplit = req_user_id.split(",");
-                                    for (String name : strSplit) {
-                                        JSONObject jsonObject1 = new JSONObject(req_user_id_details);
-                                        String idnumber = jsonObject1.getString(name);
-                                        // Log.d("please",idnumber);
-                                        wokerList.add(idnumber);
-                                    }
-                                    String stringbuilder = String.join(",", wokerList);
-
-
-                                   // Toast.makeText(RequsitionComplete.this, assign_quantity, Toast.LENGTH_SHORT).show();
-                                    // Toast.makeText(RequisitionReciverList.this, job_number, Toast.LENGTH_SHORT).show();
-                                    responseModelRequisitionComplete = new ResponseModelRequisitionComplete(sn,req_id,req_user_id,req_by_user_id,req_job_id,
-                                            seam_number,req_category_id,
-                                            req_type_id,req_size_id,req_quantity,req_remark,req_location_id,req_manager_id,
-                                            req_manager_comment,req_manager_status,req_status,req_updated_on,
-                                            req_created_on,stock_type_name,stock_size_name,stock_category_name,job_number,user_full_name,
-                                            user_employee_id,assign_quantity,stringbuilder);
-
-
-
-                                    data.add(responseModelRequisitionComplete);
-                                    requisitionCompleteAdapterClass.notifyDataSetChanged();
-                                    progressDialog.dismiss();
-
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(RequsitionComplete.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(RequsitionComplete.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequsitionComplete.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(RequsitionComplete.this, " Server Error", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(RequsitionComplete.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RequsitionComplete.this, " Server Error", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap headers = new HashMap();
+                    headers.put("Usertoken", token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
-                return headers;
-                //return super.getHeaders();
-            }
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String,String>();
-                params.put("last_record_count", String.valueOf(store));
-                return  params;
-            }
-        };
+                    return headers;
+                    //return super.getHeaders();
+                }
 
-        RequestQueue requestQueue = Volley.newRequestQueue(RequsitionComplete.this);
-        requestQueue.add(request);
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("last_record_count", String.valueOf(store));
+                    return params;
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(RequsitionComplete.this);
+            requestQueue.add(request);
+
 
     }
 }

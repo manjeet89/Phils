@@ -503,7 +503,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/profile",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/profile",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -515,7 +515,7 @@ public class ProfileActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
-                            Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                             if(message.equals("Invalid user request")){
                                 Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                                 appConfig.updateUserLoginStatus(false);
@@ -559,11 +559,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
-
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
                 return headers;
                 //return super.getHeaders();
             }

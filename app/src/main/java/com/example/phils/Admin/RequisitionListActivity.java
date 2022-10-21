@@ -40,7 +40,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.RequisitionAdapterClass;
 import com.example.phils.R;
-import com.example.phils.RequsitionComplete;
 import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -51,6 +50,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -59,6 +59,8 @@ import java.util.Map;
 public class RequisitionListActivity extends AppCompatActivity {
 
     ArrayList<String> wokerList = new ArrayList<>();
+
+     String dekhna = "";
 
     Button add_reqlist;
     AppConfig appConfig;
@@ -69,12 +71,17 @@ public class RequisitionListActivity extends AppCompatActivity {
     RecyclerView recview;
     Button other_reqlist,ongoing;
 
+    TextView setmanager;
 
     List<ResponseModelRequisitionList> data;
     RequisitionAdapterClass requisitionAdapterClass;
     ResponseModelRequisitionList responseModelRequisitionList;
 
     private RequisitionAdapterClass.RecycleViewClickListener listener;
+
+
+    ArrayList<String> managerlist = new ArrayList<>();
+    ArrayList<String> managerlistvalue   = new ArrayList<>();
 
     @Override
     public void onBackPressed() {
@@ -98,6 +105,8 @@ public class RequisitionListActivity extends AppCompatActivity {
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
+
+        setmanager = findViewById(R.id.setmanagername);
 
         locationtext = findViewById(R.id.locationtext);
         locationtext.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +139,84 @@ public class RequisitionListActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
+
+
+        appConfig = new AppConfig(this);
+
+        String token = appConfig.getuser_token();
+        String userId = appConfig.getuser_id();
+        String location = appConfig.getLocationId();
+        String user_employee_type = appConfig.getuser_employee_type();
+
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/user_list",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String user_id = object.getString("user_id");
+                                String  user_full_name = object.getString("user_full_name");
+
+                                Log.d("idssss",user_id);
+                                Log.d("idddd",user_full_name);
+
+                                managerlist.add(user_id);
+                                managerlistvalue.add(user_full_name);
+                            }
+
+                            Collections.reverse(managerlist);
+                            Collections.reverse(managerlistvalue);
+
+                            String id = String.valueOf(managerlist);
+                            String idmana = id.toString().replace("[", "").replace("]", "");
+                            Log.d("arraylist",idmana );
+
+                            String name = String.valueOf(managerlistvalue);
+                            String namemana = name.toString().replace("[", "").replace("]", "");
+
+                            Log.d("arraylist",namemana );
+                            appConfig.SaveRequisition(idmana);
+                            appConfig.SaveManagerName(namemana);
+
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RequisitionListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap headers = new HashMap();
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
+
+                return headers;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(RequisitionListActivity.this);
+        requestQueue.add(request);
+
+
+
+
+
 
         profile = findViewById(R.id.profile);
 
@@ -516,13 +603,13 @@ public class RequisitionListActivity extends AppCompatActivity {
             }
         });
 
-//        Button complete = findViewById(R.id.complete);
-//        complete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
-//            }
-//        });
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
+            }
+        });
 
         add_reqlist = findViewById(R.id.add_reqlist);
         other_reqlist = findViewById(R.id.other_reqlist);
@@ -880,10 +967,10 @@ public class RequisitionListActivity extends AppCompatActivity {
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 HashMap headers = new HashMap();
-                                headers.put("user_token",token);
-                                headers.put("user_id", userId);
-                                headers.put("project_location_id", location);
-                                headers.put("user_employee_type", user_employee_type);
+                                headers.put("Usertoken",token);
+                                headers.put("Userid", userId);
+                                headers.put("Projectlocationid", location);
+                                headers.put("Useremployeetype", user_employee_type);
 
                                 return headers;
                             }
@@ -910,6 +997,15 @@ public class RequisitionListActivity extends AppCompatActivity {
 
 
     private void fatchdata() {
+
+        appConfig = new AppConfig(this);
+        String spi = appConfig.getRequisition();
+        String spname = appConfig.getManagerName();
+
+//        Log.d("ssssss",spi);
+//        Log.d("ssssss",spname);
+
+
         progressDialog = new ProgressDialog(RequisitionListActivity.this);
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
@@ -921,7 +1017,7 @@ public class RequisitionListActivity extends AppCompatActivity {
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requisition_open",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requisition_open",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -933,6 +1029,8 @@ public class RequisitionListActivity extends AppCompatActivity {
                             String assign_quantity;
                             String req_manager_id;
                             String stringBuilder;
+
+                            String dirst = "";
                             JSONObject jsonObject = new JSONObject(response);
 
                             String message = jsonObject.getString("message");
@@ -958,9 +1056,8 @@ public class RequisitionListActivity extends AppCompatActivity {
                                         JSONArray jsonArray = jsonObject.getJSONArray("data");
 
                                         for (int i = 0; i < jsonArray.length(); i++) {
-                                            j++;
+
                                             JSONObject object = jsonArray.getJSONObject(i);
-                                            String sn = String.valueOf(j);
 
                                             String req_id = object.getString("req_id");
                                             String req_user_id = object.getString("req_user_id");
@@ -985,19 +1082,7 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             String req_quantity = object.getString("req_quantity");
                                             String req_remark = object.getString("req_remark");
                                             String req_location_id = object.getString("req_location_id");
-                                            req_manager_id = object.getString("req_manager_id");
 
-
-                                            if (req_manager_id.equals("null")) {
-                                                req_manager_id = "Default";
-                                            }
-                                            else if(req_manager_id.equals("1")) {
-                                                req_manager_id = "Phils ERP";
-                                            }
-                                            else
-                                            {
-                                                req_manager_id = object.getString("req_manager_id");
-                                            }
 //                                    else
 //                                    {
 //                                       String req_manager_id1 = req_manager_id;
@@ -1030,9 +1115,7 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             if (stock_size_name.equals("null")) {
                                                 stock_size_name = " ";
                                             }
-                                            else{
-                                                stock_size_name = object.getString("stock_size_name");
-                                            }
+
                                             String stock_category_name = object.getString("stock_category_name");
                                             String job_number = object.getString("job_number");
                                             String user_full_name = object.getString("user_full_name");
@@ -1040,13 +1123,42 @@ public class RequisitionListActivity extends AppCompatActivity {
                                             assign_quantity = object.getString("assign_quantity");
                                             if (assign_quantity.equals("null")) {
                                                 assign_quantity = "0";
-                                            }else
-                                            {
-                                                assign_quantity = object.getString("assign_quantity");
                                             }
 
-                                            if(0>=Integer.parseInt(assign_quantity))
+                                            if(0>=(Double)Double.parseDouble(assign_quantity))
                                             {
+                                                j++;
+                                                String sn = String.valueOf(j);
+
+                                                req_manager_id = object.getString("req_manager_id");
+
+                                                if (req_manager_id.equals("null")) {
+                                                    req_manager_id = "Default";
+                                                }
+                                                else if(req_manager_id.equals("1")) {
+                                                    req_manager_id = "Phils ERP";
+                                                }
+                                                else
+                                                {
+                                                    int value = Integer.parseInt(req_manager_id) - 5;
+                                                    String[] arrayid = spi.split(",");
+                                                    String[] arrayname = spname.split(",");
+
+                                                    String printname ="";
+                                                    for(int k=0;k<arrayid.length;k++){
+                                                        // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
+
+                                                        if(value==k){
+
+                                                            printname = arrayname[k];
+                                                            String printid = arrayid[k];
+
+                                                            Log.d("apppp",printname +"/"+printid);
+                                                        }
+                                                    }
+                                                    req_manager_id = printname;
+                                                }
+
 
                                                 responseModelRequisitionList = new ResponseModelRequisitionList(sn, req_id, stringbuilder, req_by_user_id, req_job_id,
                                                         seam_number, req_category_id, req_type_id, req_size_id, req_quantity, req_remark, req_location_id, req_manager_id, req_manager_comment,
@@ -1054,15 +1166,15 @@ public class RequisitionListActivity extends AppCompatActivity {
                                                         job_number, user_full_name, user_employee_id, assign_quantity, req_user_id);
                                                 data.add(responseModelRequisitionList);
                                                 requisitionAdapterClass.notifyDataSetChanged();
-                                                Log.d("Dikkat","Tujhse kya ");
-                                                Toast.makeText(RequisitionListActivity.this, " Data Available", Toast.LENGTH_SHORT).show();
-
                                                 progressDialog.dismiss();
+
+                                                Log.d("Dikkat"," be");
+
                                             }
                                         else
                                             {
                                                 progressDialog.dismiss();
-                                                Toast.makeText(RequisitionListActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+//                                                Toast.makeText(RequisitionListActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
                                                 Log.d("Dikkat","tujhe dikkat kya hai be");
                                             }
 
@@ -1070,6 +1182,8 @@ public class RequisitionListActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            Log.d("setmanager",setmanager.getText().toString());
+
 
                         }
                         catch (JSONException e) {
@@ -1089,10 +1203,10 @@ public class RequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1102,7 +1216,79 @@ public class RequisitionListActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(RequisitionListActivity.this);
         requestQueue.add(request);
 
+
     }
+
+//    private void ManagerNameGet(String managerid) {
+//
+//        String token = appConfig.getuser_token();
+//        String userId = appConfig.getuser_id();
+//        String location = appConfig.getLocationId();
+//        String user_employee_type = appConfig.getuser_employee_type();
+//
+//        // setmanager.setText(" ");
+//        //Log.d("sana",managerid);
+//        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/user_list",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String message = jsonObject.getString("message");
+//
+//                            Toast.makeText(RequisitionListActivity.this, message, Toast.LENGTH_SHORT).show();
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String user_id = object.getString("user_id");
+//                                String user_full_name = object.getString("user_full_name");
+//
+//                                if(user_id.equals(managerid))
+//                                {
+//                                    dekhna = user_full_name;
+//                                    setmanager.setText(user_full_name);
+//
+//                                }
+//
+//                            }
+//
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(RequisitionListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("Usertoken",token);
+//                headers.put("Userid", userId);
+//                headers.put("Projectlocationid", location);
+//                headers.put("Useremployeetype", user_employee_type);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(RequisitionListActivity.this);
+//        requestQueue.add(request);
+//
+//    }
+
+
 
 
 }

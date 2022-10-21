@@ -204,4 +204,36 @@ public class AppConfig {
 
 
 
+
+
+
+
+
+
+    //Requisition approved name
+
+    public void SaveRequisition(String Requisition)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.Requisitionsave),Requisition);
+        editor.apply();
+    }
+    public String getRequisition()
+    {
+        return sharedPreferences.getString(context.getString(R.string.Requisitionsave),"false");
+    }
+
+    public void SaveManagerName(String Requisition)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.managername),Requisition);
+        editor.apply();
+    }
+    public String getManagerName()
+    {
+        return sharedPreferences.getString(context.getString(R.string.managername),"false");
+    }
+
+
+
 }

@@ -15,9 +15,9 @@
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="5dp"
             android:padding="8dp"
-            android:background="#FFCC80"
+            android:background="#ffffff"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -25,37 +25,26 @@
         <LinearLayout
             android:id="@+id/linear3"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
             android:padding="8dp"
-            android:background="#FFCC80"
+            android:background="#ffffff"
             android:gravity="center_horizontal"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/textview2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Welcome to Phils ERP"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="serif"
-                android:textColor="#EF6C00"/>
-            <TextView
-                android:id="@+id/textview3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Discover Amazing Phils Erp\n     with great build tools"
-                android:textSize="18sp"
-                android:fontFamily="serif"
-                android:textColor="#EF6C00"/>
+
             <ImageView
-                android:id="@+id/imageview2"
-                android:src="@drawable/logo"
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-            />
+                android:src="@drawable/logo"/>
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageview2"-->
+<!--                android:src="@drawable/logo"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--            />-->
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linear4"

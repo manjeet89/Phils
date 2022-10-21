@@ -2,14 +2,14 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -44,6 +44,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Adapter.JobReplaceWithAdapter;
+import com.example.phils.MultipleItemSelectInSpinner.JobReplaceWithData;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.Spinner.CategorySpinner;
@@ -59,8 +61,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class UpdateRequisitionListActivity extends AppCompatActivity {
@@ -84,6 +86,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
     static String wokerValue[];
     static String wokerId[];
 
+
+    private ArrayList<JobReplaceWithData> jobReplaceWithDataArrayList = new ArrayList<>();
+    private JobReplaceWithAdapter jobReplaceWithAdapter;
+    private ArrayAdapter arrayAdapterReplaceWith;
 
     @Override
     public void onBackPressed() {
@@ -615,7 +621,7 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/get_stock_category_by_job_id",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/get_stock_category_by_job_id",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -655,10 +661,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -737,42 +743,6 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
                         dialog.dismiss();
 
 
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, categoryurl
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = categoryreq.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String category_name = jsonObject.optString("stock_category_name");
-//                                        String category_id = jsonObject.optString("stock_category_id");
-//                                        if(ss.equals(category_name)){
-//                                            String idea = category_id;
-//                                            setcategoryid.setText(idea);
-//                                            CategoryIdPass(idea);
-//                                            Toast.makeText(UpdateRequisitionListActivity.this, setcategoryid.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest1);
                     }
                 });
             }
@@ -794,7 +764,7 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/get_stock_category_type_by_job_id",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/get_stock_category_type_by_job_id",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -833,10 +803,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -857,36 +827,6 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         RequestQueue requestQueue1 = Volley.newRequestQueue(UpdateRequisitionListActivity.this);
         requestQueue1.add(request1);
 
-//        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, typeurl+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String stock_type_id= jsonObject.optString("stock_type_id");
-//                                String stock_type_name1= jsonObject.optString("stock_type_name");
-//                                typeList.add(stock_type_name1);
-//                                typeAdapter = new ArrayAdapter<>(UpdateRequisitionListActivity.this,
-//                                        android.R.layout.simple_list_item_1,typeList);
-//                                typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest1);
 
 
         typereq.setOnClickListener(new View.OnClickListener() {
@@ -947,45 +887,6 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
                         // Dismiss dialog
                         dialog.dismiss();
 
-
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.POST, typeurl+idea
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = typereq.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String stock_type_id= jsonObject.optString("stock_type_id");
-//                                        String stock_type_name= jsonObject.optString("stock_type_name");
-//                                        if(ss.equals(stock_type_name)){
-//                                            String idea = stock_type_id;
-//                                            setypeid.setText(idea);
-//                                            Toast.makeText(UpdateRequisitionListActivity.this, setypeid.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                            TypeIdPass(idea);
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest2);
                     }
                 });
             }
@@ -994,6 +895,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
 
     private void TypeIdPass(String idea) {
 //        Toast.makeText(this, idea, Toast.LENGTH_SHORT).show();
+
+        appConfig = new AppConfig(this);
+
+
         sizereq.setText("");
         sizeList.clear();
 
@@ -1003,7 +908,7 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/get_stock_size_by_type_id",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/get_stock_size_by_type_id",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1043,10 +948,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1065,36 +970,6 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
 
         RequestQueue requestQueue1 = Volley.newRequestQueue(UpdateRequisitionListActivity.this);
         requestQueue1.add(request1);
-
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, sizeurl+idea, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//
-//                            JSONArray jsonArray = response.getJSONArray("data");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                String stock_size_id= jsonObject.optString("stock_size_id");
-//                                String stock_size_name= jsonObject.optString("stock_size_name");
-//                                sizeList.add(stock_size_name);
-//                                sizeAdapter = new ArrayAdapter<>(UpdateRequisitionListActivity.this,
-//                                        android.R.layout.simple_list_item_1,sizeList);
-//                                sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//
-//        requestQueue.add(jsonObjectRequest);
 
 
         sizereq.setOnClickListener(new View.OnClickListener() {
@@ -1154,45 +1029,6 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
                         // Dismiss dialog
                         dialog.dismiss();
 
-
-//                            String s = select_category.getText().toString();
-//                            Toast.makeText(Add_Stock_Make_Activity.this, s, Toast.LENGTH_SHORT).show();
-
-//                        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.POST, sizeurl+idea
-//                                , null, new Response.Listener<JSONObject>() {
-//                            @Override
-//                            public void onResponse(JSONObject response) {
-//                                try {
-//                                    String ss = sizereq.getText().toString();
-//                                    JSONArray jsonArray = response.getJSONArray("data");
-//
-//                                    for (int i = 0; i < jsonArray.length(); i++) {
-//                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                        String stock_size_id= jsonObject.optString("stock_size_id");
-//                                        String stock_size_name= jsonObject.optString("stock_size_name");
-//                                        if(ss.equals(stock_size_name)){
-//                                            String idea = stock_size_id;
-//                                            setsizeid.setText(idea);
-//                                            //TypeIdPass(idea);
-//                                            Toast.makeText(UpdateRequisitionListActivity.this, setsizeid.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//
-//
-//                            }
-//
-//                        }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//
-//                            }
-//                        });
-//
-//                        requestQueue.add(jsonObjectRequest1);
                     }
                 });
             }
@@ -1202,88 +1038,62 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
 
     private void RequsistiionUser() {
 
+        appConfig = new AppConfig(this);
+
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
         String req_user_id = getIntent().getStringExtra("req_user_id");
         String user_employee_type = appConfig.getuser_employee_type();
 
-//        Toast.makeText(this, req_user_id, Toast.LENGTH_SHORT).show();
+        jobReplaceWithDataArrayList = new ArrayList<>();
 
-        StringRequest request4 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_welder_grinder_list",
+        StringRequest request4 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_welder_grinder_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            wokerValue = new String[jsonArray.length()];
-                            wokerId = new String[jsonArray.length()];
-                            wokerlenght = new boolean[wokerValue.length];
+                            int j=0;
 
                             int p=0;
-                            for(int i=0; i<jsonArray.length();i++)
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+
+                            //Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++)
                             {
+                                j++;
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String user_id = object.getString("user_id");
                                 String user_name = object.getString("user_full_name");
                                 String user_employee_id = object.getString("user_employee_id");
 
+                                JobReplaceWithData jobReplaceWithDataclass = new JobReplaceWithData();
 
-
-                                String [] array = req_user_id.split(",");
-
+                                String[] array = req_user_id.split(",");
+//
                                 for(int k=0;k<array.length;k++){
                                     if(user_id.equals(array[k])){
                                         p = Integer.parseInt(user_id);
                                     }
                                 }
+
                                 if(user_id.equals(String.valueOf(p)))
                                 {
                                     wokerList.add(user_id);
                                     wokerListvalue.add(user_name+" - "+user_employee_id);
-
-                                    wokerlenght[i]=true;
-                                }
-                                else
-                                {
-                                    wokerlenght[i]=false;
+                                    jobReplaceWithDataclass.setChecked(true);
                                 }
 
-                                wokerValue[i]=user_name+" - "+user_employee_id;
-                                wokerId[i]=user_id;
-
-
-//                                String[] WG = req_user_id.split(",");
-//                                for(String name : WG){
-//                                    if(user_id.equals(name))
-//                                    {
-////                                        wokerList.add(user_id);
-////                                        wokerListvalue.add(user_full_name+" - "+user_employee_id);
-//
-//                                        q=Integer.parseInt(user_id);
-////                                        wokerlenght[i] = true;
-////                                        Log.d("okccc",user_full_name);
-//                                    }
-//                                    //System.out.println(name);
-//
+                                jobReplaceWithDataclass.setId(user_id);
+                                jobReplaceWithDataclass.setName(user_name+"-"+user_employee_id);
+//                                if (i == 0) {
+//                                    jobReplaceWithDataclass.setChecked(true);
 //                                }
-//                                if(user_id.equals(String.valueOf(q)))
-//                                {
-//                                    wokerList.add(user_id);
-//                                    wokerListvalue.add(user_name+" - "+user_employee_id);
-//
-//                                    wokerlenght[i]=true;
-//                                }
-//                                else
-//                                {
-//                                    wokerlenght[i]=false;
-//                                }
+                                jobReplaceWithDataArrayList.add(jobReplaceWithDataclass);
 
                             }
                             String stringBuilder= String.join(",", wokerListvalue);
@@ -1292,13 +1102,20 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
                             req_user.setText(stringBuilder);
                             setReqUserid.setText(stringbuilder);
 
-//                            Collections.reverse(Arrays.asList(wokerValue));
-//                            Collections.reverse(Arrays.asList(wokerId));
+
+                            jobReplaceWithAdapter.setJobReplaceWithData(jobReplaceWithDataArrayList);
+                            arrayAdapterReplaceWith = new ArrayAdapter(UpdateRequisitionListActivity.this,
+                                    android.R.layout.simple_spinner_dropdown_item,jobReplaceWithDataArrayList);
+                            arrayAdapterReplaceWith.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+
 
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -1310,10 +1127,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1323,97 +1140,341 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         RequestQueue requestQueue4 = Volley.newRequestQueue(UpdateRequisitionListActivity.this);
         requestQueue4.add(request4);
 
+        jobReplaceWithAdapter = new JobReplaceWithAdapter(this,jobReplaceWithDataArrayList);
+
         req_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateRequisitionListActivity.this);
+                dialog = new Dialog(UpdateRequisitionListActivity.this);
 
-                // set title
-                builder.setTitle("Select Language");
+                // set custom dialog
+                dialog.setContentView(R.layout.demospinner1);
 
-                // set dialog non cancelable
-                builder.setCancelable(false);
+                // set custom height and width
+                dialog.getWindow().setLayout(950, 1500);
 
-                builder.setMultiChoiceItems(wokerValue, wokerlenght, new DialogInterface.OnMultiChoiceClickListener() {
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+
+                // show dialog
+                dialog.show();
+
+                // Initialize and assign variable
+                androidx.appcompat.widget.AppCompatButton btnGetSelected = dialog.findViewById(R.id.btnGetSelected);
+                androidx.appcompat.widget.AppCompatButton btnAdd = dialog.findViewById(R.id.btnAdd);
+                btnAdd.setVisibility(View.GONE);
+
+                androidx.recyclerview.widget.RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+                EditText editText =dialog.findViewById(R.id.edit_text);
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(UpdateRequisitionListActivity.this));
+                recyclerView.addItemDecoration(new DividerItemDecoration(UpdateRequisitionListActivity.this, LinearLayoutManager.VERTICAL));
+                jobReplaceWithAdapter = new JobReplaceWithAdapter(UpdateRequisitionListActivity.this,jobReplaceWithDataArrayList);
+                recyclerView.setAdapter(jobReplaceWithAdapter);
+
+
+                btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position  in lang list
-                            wokerList.add(wokerId[i]);
-                            wokerListvalue.add(wokerValue[i]);
+                    public void onClick(View view) {
+                        btnGetSelected.setVisibility(View.VISIBLE);
+                        btnAdd.setVisibility(View.GONE);
+                        editText.setText("");
 
-                            // Sort array list
-                            Collections.sort(wokerList);
+
+                    }
+                });
+
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                        arrayAdapterReplaceWith.getFilter().filter(charSequence);
+                        if(charSequence.toString().equals("")) {
+                            btnGetSelected.setVisibility(View.VISIBLE);
+                            ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+                            for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            jobReplaceWithAdapter.filterList(filEmployees);
+                            btnAdd.setVisibility(View.GONE);
+                        }
+                        else {
+                            ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+                            for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            jobReplaceWithAdapter.filterList(filEmployees);
+
+                            btnAdd.setVisibility(View.VISIBLE);
+                            btnGetSelected.setVisibility(View.GONE);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+//                        ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+//                        for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+//                            if(item.getName().toLowerCase(Locale.ROOT).contains(editable)
+//                                    || item.getName().toUpperCase(Locale.ROOT).contains(editable)){
+//                                filEmployees.add(item);
+//                            }
+//                        }
+//                        jobReplaceWithAdapter.filterList(filEmployees);
+                    }
+                });
+
+
+                btnGetSelected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (jobReplaceWithAdapter.getSelected().size() > 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            StringBuilder stringBuildername = new StringBuilder();
+
+                            for (int i = 0; i < jobReplaceWithAdapter.getSelected().size(); i++) {
+                                stringBuilder.append(jobReplaceWithAdapter.getSelected().get(i).getId());
+                                stringBuildername.append(jobReplaceWithAdapter.getSelected().get(i).getName());
+
+                                stringBuilder.append(",");
+                                stringBuildername.append(", ");
+                            }
+                            req_user.setText(stringBuildername.toString().trim());
+                            setReqUserid.setText(stringBuilder.toString().trim());
+                            //Toast.makeText(UpdateRequisitionListActivity.this, stringBuilder.toString().trim(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
 
                         } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            wokerList.remove(wokerId[i]);
-                            wokerListvalue.remove(wokerValue[i]);
-
-                        }
-                        Log.d("Nil", String.valueOf(wokerList));
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-//                        StringBuilder stringBuilder = new StringBuilder();
-                        String stringBuilder= String.join(",", wokerListvalue);
-                        String stringbuilder= String.join(",", wokerList);
-
-                        Log.d("nil",stringBuilder);
-                        Log.d("nil",stringbuilder);
-
-                        req_user.setText(stringBuilder);
-                        setReqUserid.setText(stringbuilder);
-
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < wokerlenght.length; j++) {
-                            // remove all selection
-                            wokerlenght[j] = false;
-                            // clear language list
-                            wokerListvalue.clear();
-                            wokerList.clear();
-                            // clear text view value
-                            req_user.setText("");
+                            Toast.makeText(UpdateRequisitionListActivity.this, "No Selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                // show dialog
-                builder.show();
-
             }
         });
+
+
+
+//        Toast.makeText(this, req_user_id, Toast.LENGTH_SHORT).show();
+
+//        StringRequest request4 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_welder_grinder_list",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//
+//                            wokerValue = new String[jsonArray.length()];
+//                            wokerId = new String[jsonArray.length()];
+//                            wokerlenght = new boolean[wokerValue.length];
+//
+//                            int p=0;
+//                            for(int i=0; i<jsonArray.length();i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String user_id = object.getString("user_id");
+//                                String user_name = object.getString("user_full_name");
+//                                String user_employee_id = object.getString("user_employee_id");
+//
+//
+//
+//                                String [] array = req_user_id.split(",");
+//
+//                                for(int k=0;k<array.length;k++){
+//                                    if(user_id.equals(array[k])){
+//                                        p = Integer.parseInt(user_id);
+//                                    }
+//                                }
+//                                if(user_id.equals(String.valueOf(p)))
+//                                {
+//                                    wokerList.add(user_id);
+//                                    wokerListvalue.add(user_name+" - "+user_employee_id);
+//
+//                                    wokerlenght[i]=true;
+//                                }
+//                                else
+//                                {
+//                                    wokerlenght[i]=false;
+//                                }
+//
+//                                wokerValue[i]=user_name+" - "+user_employee_id;
+//                                wokerId[i]=user_id;
+//
+//
+////                                String[] WG = req_user_id.split(",");
+////                                for(String name : WG){
+////                                    if(user_id.equals(name))
+////                                    {
+//////                                        wokerList.add(user_id);
+//////                                        wokerListvalue.add(user_full_name+" - "+user_employee_id);
+////
+////                                        q=Integer.parseInt(user_id);
+//////                                        wokerlenght[i] = true;
+//////                                        Log.d("okccc",user_full_name);
+////                                    }
+////                                    //System.out.println(name);
+////
+////                                }
+////                                if(user_id.equals(String.valueOf(q)))
+////                                {
+////                                    wokerList.add(user_id);
+////                                    wokerListvalue.add(user_name+" - "+user_employee_id);
+////
+////                                    wokerlenght[i]=true;
+////                                }
+////                                else
+////                                {
+////                                    wokerlenght[i]=false;
+////                                }
+//
+//                            }
+//                            String stringBuilder= String.join(",", wokerListvalue);
+//                            String stringbuilder = String.join(",",wokerList);
+//
+//                            req_user.setText(stringBuilder);
+//                            setReqUserid.setText(stringbuilder);
+//
+////                            Collections.reverse(Arrays.asList(wokerValue));
+////                            Collections.reverse(Arrays.asList(wokerId));
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(UpdateRequisitionListActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("Usertoken",token);
+//                headers.put("Userid", userId);
+//                headers.put("Projectlocationid", location);
+//                headers.put("Useremployeetype", user_employee_type);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue4 = Volley.newRequestQueue(UpdateRequisitionListActivity.this);
+//        requestQueue4.add(request4);
+//
+//        req_user.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Initialize alert dialog
+//                AlertDialog.Builder builder = new AlertDialog.Builder(UpdateRequisitionListActivity.this);
+//
+//                // set title
+//                builder.setTitle("Select Language");
+//
+//                // set dialog non cancelable
+//                builder.setCancelable(false);
+//
+//                builder.setMultiChoiceItems(wokerValue, wokerlenght, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+//                        // check condition
+//                        if (b) {
+//                            // when checkbox selected
+//                            // Add position  in lang list
+//                            wokerList.add(wokerId[i]);
+//                            wokerListvalue.add(wokerValue[i]);
+//
+//                            // Sort array list
+//                            Collections.sort(wokerList);
+//
+//                        } else {
+//                            // when checkbox unselected
+//                            // Remove position from langList
+//                            wokerList.remove(wokerId[i]);
+//                            wokerListvalue.remove(wokerValue[i]);
+//
+//                        }
+//                        Log.d("Nil", String.valueOf(wokerList));
+//                    }
+//                });
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // Initialize string builder
+////                        StringBuilder stringBuilder = new StringBuilder();
+//                        String stringBuilder= String.join(",", wokerListvalue);
+//                        String stringbuilder= String.join(",", wokerList);
+//
+//                        Log.d("nil",stringBuilder);
+//                        Log.d("nil",stringbuilder);
+//
+//                        req_user.setText(stringBuilder);
+//                        setReqUserid.setText(stringbuilder);
+//
+//                    }
+//                });
+//
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // dismiss dialog
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // use for loop
+//                        for (int j = 0; j < wokerlenght.length; j++) {
+//                            // remove all selection
+//                            wokerlenght[j] = false;
+//                            // clear language list
+//                            wokerListvalue.clear();
+//                            wokerList.clear();
+//                            // clear text view value
+//                            req_user.setText("");
+//                        }
+//                    }
+//                });
+//                // show dialog
+//                builder.show();
+//
+//            }
+//        });
 
 
     }
 
     private void JobNumber() {
 
+        appConfig = new AppConfig(this);
+
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_incomplete",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_incomplete",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1455,10 +1516,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1542,13 +1603,15 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
         seamnumber.setText("");
         seamList.clear();
 
+        appConfig = new AppConfig(this);
+
 
         String token = getIntent().getStringExtra("token");
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_incomplete",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_incomplete",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1594,10 +1657,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1718,6 +1781,8 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             progressDialog.setMessage("Loading... Please Wait!");
             progressDialog.show();
 
+            appConfig = new AppConfig(this);
+
 
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
@@ -1727,7 +1792,7 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
             String Id = getIntent().getStringExtra("id");
 
             // Toast.makeText(this, Id, Toast.LENGTH_SHORT).show();
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/update_requisition",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/update_requisition",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -1762,10 +1827,10 @@ public class UpdateRequisitionListActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token", token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

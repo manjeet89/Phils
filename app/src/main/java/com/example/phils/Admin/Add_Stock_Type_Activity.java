@@ -76,7 +76,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
     ArrayAdapter<String> categoryAdapter;
 
     RequestQueue requestQueue;
-    String url = "https://mployis.com/staging/api/stock/stock_category";
+    String url = "https://erp.philsengg.com/api/stock/stock_category";
 
     TextView location_save;
     AppConfig appConfig;
@@ -594,10 +594,10 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -621,7 +621,7 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                     dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
 
                     // set custom height and width
-                    dialog.getWindow().setLayout(950, 1000);
+                    dialog.getWindow().setLayout(950, 1100);
 
                     // set transparent background
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -777,13 +777,14 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
             String e5 = e2.toUpperCase(Locale.ROOT);
             String e6 = e3;
 
+            appConfig = new AppConfig(this);
 
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/add_stock_type",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/add_stock_type",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -813,10 +814,10 @@ public class Add_Stock_Type_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

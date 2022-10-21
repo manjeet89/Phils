@@ -3,6 +3,7 @@ package com.example.phils.Admin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -18,13 +19,13 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,18 +38,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.R;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
+import com.example.phils.Rought.Demo;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.onesignal.OneSignal;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     TextView locationtext;
     AppConfig appConfig;
     Dialog dialog;
+    Button demo;
 
     ProgressDialog progressDialog;
     static int z=0;
@@ -89,18 +88,92 @@ public class MainActivity extends AppCompatActivity {
 
 //    private static final String ONESIGNAL_APP_ID = "19014ed5-455e-422d-a4f9-3206946ab9cc";
 
+
+    //SwitchMaterial switchmaterial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        appConfig = new AppConfig(this);
+//
+//
+//        String ko = appConfig.getRequisition();
+//        Log.d("kooooo",ko);
+//
+//        if(appConfig.getRequisition().equals("true")){
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            setTheme(R.style.Theme_Dark);
+//
+//        }
+//        else{
+//            setTheme(R.style.Theme_Day);
+//        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        progressDialog = new ProgressDialog(this);
         appConfig = new AppConfig(this);
+        progressDialog = new ProgressDialog(this);
+        demo = findViewById(R.id.demo);
+        demo.setVisibility(View.GONE);
+        demo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), Demo.class));
+            }
+        });
+
+//        switchmaterial = findViewById(R.id.switchmaterial);
+//
+//        if(appConfig.getRequisition().equals("true")){
+//
+//            switchmaterial.setChecked(true);
+//
+//        }
+//        else{
+//            switchmaterial.setChecked(false);
+//
+//        }
+
+
 
         String token = appConfig.getuser_token();
         String location = appConfig.getLocationId();
         String locationName = appConfig.getLocation();
         Log.d("tokennn",token);
+
+
+//        switchmaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if(b)
+//                {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//
+//                    appConfig.SaveRequisition("true");
+//
+//                }
+//                else
+//                {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//                    appConfig.SaveRequisition("false");
+//
+//                }
+//            }
+//        });
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        String user_id = getIntent().getStringExtra("user_id");
 //        String user_email_id = getIntent().getStringExtra("user_email_id");
@@ -109,15 +182,15 @@ public class MainActivity extends AppCompatActivity {
 
         String user_id = appConfig.getuser_id();
         String user_email_id = appConfig.getuser_email_id();
-        progressDialog.setTitle("Welcome to Home Page");
-        progressDialog.setMessage("Please Wait!");
-        progressDialog.show();
+//        progressDialog.setTitle("Welcome to Home");
+//        progressDialog.setMessage("Please Wait!");
+//        progressDialog.show();
 
         String userId = appConfig.getuser_id();
         String user_employee_type = appConfig.getuser_employee_type();
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/location_list",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/location_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -129,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
-                           // Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                             if(message.equals("Invalid user request")){
                                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                                 appConfig.updateUserLoginStatus(false);
@@ -139,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                             else {
                                 String access_module = jsonObject.getString("access_module");
                                 appConfig.Saveaccess_module(access_module);
-                                progressDialog.dismiss();
+                                //progressDialog.dismiss();
                             }
                         }
                         catch (JSONException e) {
@@ -158,10 +231,10 @@ public class MainActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
 
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -363,6 +436,40 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
                     }
                 });
+
+//                SwitchMaterial switchMaterial = dialog.findViewById(R.id.switchmaterial);
+//
+//                 switchMaterial = dialog.findViewById(R.id.switchmaterial);
+//
+//
+//                if(appConfig.getRequisition().equals("true")){
+//
+//                    switchMaterial.setChecked(true);
+//
+//                }
+//                else{
+//                    switchMaterial.setChecked(false);
+//
+//                }
+//                switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                        if(b)
+//                {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//
+//                    appConfig.SaveRequisition("true");
+//
+//                }
+//                else
+//                {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//                    appConfig.SaveRequisition("false");
+//
+//                }
+//                    }
+//                });
 
             }
         });
@@ -698,75 +805,80 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void Grenerate() {
+//    private void Grenerate() {
+//
+//        String user_id = appConfig.getuser_id();
+//        String user_email_id = appConfig.getuser_email_id();
+//
+//        FirebaseMessaging.getInstance().getToken()
+//                .addOnCompleteListener(new OnCompleteListener<String>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<String> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.d("Fetching", String.valueOf(task.getException()));
+//                            return;
+//                        }
+//                        // Get new FCM registration token
+//                        String firebasetoken = task.getResult();
+//                        settoken.setText(firebasetoken);
+//
+//
+////                        Log.d("chalns",settoken.getText().toString());
+//                        // Log and toast
+////                        String msg = getString(R.string.msg_token_fmt, token);
+////                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//
+//
+//                    }
+//                });
+//        String firetoken = "settoken.getText().toString()";
+//        Log.d("chalns",firetoken);
+//
+//        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/login/update_firebase_user_token",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        JSONObject jsonObject = null;
+//                        try {
+//                            jsonObject = new JSONObject(response);
+//                            String message = jsonObject.getString("message");
+//                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+//                            //startActivity(new Intent(getApplicationContext(),MainActivity.class));
+//                            //progressDialog.dismiss();
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }) {
+//
+//            @Nullable
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("user_id", user_id);
+//                params.put("user_email_id", user_email_id);
+//                params.put("firebase_user_token", firetoken);
+//
+//                return params;
+//            }
+//
+//
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+//        requestQueue.add(request);
+//
+//    }
 
-        String user_id = appConfig.getuser_id();
-        String user_email_id = appConfig.getuser_email_id();
-
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.d("Fetching", String.valueOf(task.getException()));
-                            return;
-                        }
-                        // Get new FCM registration token
-                        String firebasetoken = task.getResult();
-                        settoken.setText(firebasetoken);
 
 
-//                        Log.d("chalns",settoken.getText().toString());
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 
-                    }
-                });
-        String firetoken = "settoken.getText().toString()";
-        Log.d("chalns",firetoken);
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
-                            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            //progressDialog.dismiss();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        //Toast.makeText(Add_Stock_Category_Activity.this, response, Toast.LENGTH_SHORT).show();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        }) {
-
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("user_id", user_id);
-                params.put("user_email_id", user_email_id);
-                params.put("firebase_user_token", firetoken);
-
-                return params;
-            }
-
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(request);
-
-    }
 }

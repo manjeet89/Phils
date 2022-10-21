@@ -583,7 +583,7 @@ public class TransfarStockListActivity extends AppCompatActivity {
         String location = getIntent().getStringExtra("location");
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/transfer_stock_details",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/transfer_stock_details",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -641,10 +641,10 @@ public class TransfarStockListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
             }
@@ -662,7 +662,7 @@ public class TransfarStockListActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(TransfarStockListActivity.this);
         requestQueue.add(request);
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_transfer_location",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_transfer_location",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -716,10 +716,10 @@ public class TransfarStockListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -817,7 +817,7 @@ public class TransfarStockListActivity extends AppCompatActivity {
              //if(Integer.parseInt(quantity) >=Integer.parseInt(quantityinsert.getText().toString()))
 
 
-             StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/transfer_stock",
+             StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/transfer_stock",
                      new Response.Listener<String>() {
                          @Override
                          public void onResponse(String response) {
@@ -846,10 +846,10 @@ public class TransfarStockListActivity extends AppCompatActivity {
                  @Override
                  public Map<String, String> getHeaders() throws AuthFailureError {
                      HashMap headers = new HashMap();
-                     headers.put("user_token", token);
-                     headers.put("user_id", userId);
-                     headers.put("project_location_id", location);
-                     headers.put("user_employee_type", user_employee_type);
+                     headers.put("Usertoken",token);
+                     headers.put("Userid", userId);
+                     headers.put("Projectlocationid", location);
+                     headers.put("Useremployeetype", user_employee_type);
 
                      return headers;
                  }

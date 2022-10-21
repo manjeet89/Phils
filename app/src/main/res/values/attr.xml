@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="dark_theme">
+        <attr name="background_color" format="color"/>
+        <attr name="relative1" format="color"/>
+        <attr name="nav" format="color"/>
+        <attr name="frame" format="color"/>
+        <attr name="listview" format="color"/>
+        <attr name="search" format="color"/>
+        <attr name="text_color" format="color"/>
+    </declare-styleable>
+</resources>

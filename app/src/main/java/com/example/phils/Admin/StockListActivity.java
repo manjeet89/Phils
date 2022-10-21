@@ -3,6 +3,7 @@ package com.example.phils.Admin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import com.example.phils.ResponseModels.ResponseModelStockList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,6 +84,22 @@ public class StockListActivity extends AppCompatActivity {
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        appConfig = new AppConfig(this);
+//
+//
+//        String ko = appConfig.getRequisition();
+//        Log.d("kooooo",ko);
+//
+//        if(appConfig.getRequisition().equals("true")){
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            setTheme(R.style.Theme_Dark);
+//
+//        }
+//        else{
+//            setTheme(R.style.Theme_Day);
+//        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_list);
 
@@ -201,6 +220,40 @@ public class StockListActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
                     }
                 });
+
+//                SwitchMaterial switchMaterial = dialog.findViewById(R.id.switchmaterial);
+//
+//                switchMaterial = dialog.findViewById(R.id.switchmaterial);
+//
+//
+//                if(appConfig.getRequisition().equals("true")){
+//
+//                    switchMaterial.setChecked(true);
+//
+//                }
+//                else{
+//                    switchMaterial.setChecked(false);
+//
+//                }
+//                switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                        if(b)
+//                        {
+//                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//
+//                            appConfig.SaveRequisition("true");
+//
+//                        }
+//                        else
+//                        {
+//                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//                            appConfig.SaveRequisition("false");
+//
+//                        }
+//                    }
+//                });
 
             }
         });
@@ -599,7 +652,7 @@ public class StockListActivity extends AppCompatActivity {
         String location = appConfig.getLocationId();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_list",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -693,10 +746,10 @@ public class StockListActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -822,7 +875,7 @@ public class StockListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         progressDialog.setMessage("Please Wait!");
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_delete",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_delete",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -851,10 +904,10 @@ public class StockListActivity extends AppCompatActivity {
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 HashMap headers = new HashMap();
-                                headers.put("user_token",token);
-                                headers.put("user_id", userId);
-                                headers.put("project_location_id", location);
-                                headers.put("user_employee_type", user_employee_type);
+                                headers.put("Usertoken",token);
+                                headers.put("Userid", userId);
+                                headers.put("Projectlocationid", location);
+                                headers.put("Useremployeetype", user_employee_type);
 
                                 return headers;
                             }

@@ -516,7 +516,7 @@ public class ReturnStock extends AppCompatActivity {
 
         String quantity = assignquantity.getText().toString();
         if(Integer.parseInt(QUANTITYset) >= Integer.parseInt(quantity)){
-            StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/return_stock",
+            StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/return_stock",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -544,10 +544,10 @@ public class ReturnStock extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

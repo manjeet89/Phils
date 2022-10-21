@@ -660,7 +660,7 @@ public class RequisitionReciverComplete extends AppCompatActivity {
 
         //Toast.makeText(this, String.valueOf(store), Toast.LENGTH_SHORT).show();
         //progressDialog.dismiss();
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/req_receiver_completed",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/req_receiver_completed",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -760,10 +760,10 @@ public class RequisitionReciverComplete extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

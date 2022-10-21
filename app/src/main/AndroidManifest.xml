@@ -15,118 +15,118 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Phils"
+        android:theme="@style/Theme.Day"
         tools:targetApi="31">
         <activity
-            android:name=".Admin.UpdateRequisitionListActivity"
+            android:name="com.example.phils.Admin.UpdateRequisitionListActivity"
             android:exported="false" />
         <activity
-            android:name=".RequsitionComplete"
+            android:name="com.example.phils.Admin.RequsitionComplete"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionReciverComplete"
+            android:name="com.example.phils.Admin.RequisitionReciverComplete"
             android:exported="false" />
         <activity
-            android:name=".Rought.ResponseModelReciverComplete"
+            android:name="com.example.phils.Rought.ResponseModelReciverComplete"
             android:exported="false" />
         <activity
-            android:name=".Admin.ReturnStock"
+            android:name="com.example.phils.Admin.ReturnStock"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionReciverList"
+            android:name="com.example.phils.Admin.RequisitionReciverList"
             android:exported="false" />
         <activity
-            android:name=".Admin.AssignStockRequisition"
+            android:name="com.example.phils.Admin.AssignStockRequisition"
             android:exported="false" />
         <activity
-            android:name=".Admin.UpdateUserActivity"
+            android:name="com.example.phils.Admin.UpdateUserActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionOnGoingActivity"
+            android:name="com.example.phils.Admin.RequisitionOnGoingActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.AddUserActivity"
+            android:name="com.example.phils.Admin.AddUserActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.TransfarStockListActivity"
+            android:name="com.example.phils.Admin.TransfarStockListActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionChangeStatusActivity"
+            android:name="com.example.phils.Admin.RequisitionChangeStatusActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.OtherRequisitionAddActivity"
+            android:name="com.example.phils.Admin.OtherRequisitionAddActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.JobReplaceUseerActivity"
+            android:name="com.example.phils.Admin.JobReplaceUseerActivity"
             android:exported="false" />
         <activity
-            android:name=".JobList_Update"
+            android:name="com.example.phils.Rought.JobList_Update"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_JobList_Activity"
+            android:name="com.example.phils.Admin.Update_JobList_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_JobSize_Activity"
+            android:name="com.example.phils.Admin.Update_JobSize_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_JobCategory_Activity"
+            android:name="com.example.phils.Admin.Update_JobCategory_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockList_Activity"
+            android:name="com.example.phils.Admin.Update_StockList_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.TwoStepVerification"
+            android:name="com.example.phils.Admin.TwoStepVerification"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Job_List_Activity"
+            android:name="com.example.phils.Admin.Add_Job_List_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockUom_Activity"
+            android:name="com.example.phils.Admin.Update_StockUom_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockMake_Activity"
+            android:name="com.example.phils.Admin.Update_StockMake_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionAddActivity"
+            android:name="com.example.phils.Admin.RequisitionAddActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionReceiverActivity"
+            android:name="com.example.phils.Admin.RequisitionReceiverActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RequisitionListActivity"
+            android:name="com.example.phils.Admin.RequisitionListActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockSize_Activity"
+            android:name="com.example.phils.Admin.Update_StockSize_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockType_Activity"
+            android:name="com.example.phils.Admin.Update_StockType_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Update_StockCategory_Activity"
+            android:name="com.example.phils.Admin.Update_StockCategory_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.RolesAndPrivilegesActivity"
+            android:name="com.example.phils.Admin.RolesAndPrivilegesActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ChangePasswordActivity"
+            android:name="com.example.phils.Admin.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ProfileActivity"
+            android:name="com.example.phils.Admin.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ProjectLocationActivity"
+            android:name="com.example.phils.Admin.ProjectLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Notification_Activity"
+            android:name="com.example.phils.Admin.Notification_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Replace_User_Job_Activity"
+            android:name="com.example.phils.Admin.Replace_User_Job_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Assign_user_Job_Activity"
+            android:name="com.example.phils.Admin.Assign_user_Job_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.LoginActivity"
+            android:name="com.example.phils.Admin.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -135,73 +135,73 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Rought.Demo"
+            android:name="com.example.phils.Rought.Demo"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_List_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_List_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_UOM_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_UOM_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_Make_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_Make_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ConsumptionDetailActivity"
+            android:name="com.example.phils.Admin.ConsumptionDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ConsumptionActivity"
+            android:name="com.example.phils.Admin.ConsumptionActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.ReportsActivity"
+            android:name="com.example.phils.Admin.ReportsActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Job_Size_Activity"
+            android:name="com.example.phils.Admin.Add_Job_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Job_Category_Activity"
+            android:name="com.example.phils.Admin.Add_Job_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Job_List_Activity"
+            android:name="com.example.phils.Admin.Job_List_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Job_Size_Activity"
+            android:name="com.example.phils.Admin.Job_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Job_Category_Activity"
+            android:name="com.example.phils.Admin.Job_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_Size_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_Size_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_Type_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_Type_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.Add_Stock_Category_Activity"
+            android:name="com.example.phils.Admin.Add_Stock_Category_Activity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockListActivity"
+            android:name="com.example.phils.Admin.StockListActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockUomActivity"
+            android:name="com.example.phils.Admin.StockUomActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockMakeActivity"
+            android:name="com.example.phils.Admin.StockMakeActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockSizeActivity"
+            android:name="com.example.phils.Admin.StockSizeActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockTypeActivity"
+            android:name="com.example.phils.Admin.StockTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.StockCategoryActivity"
+            android:name="com.example.phils.Admin.StockCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.UserActivity"
+            android:name="com.example.phils.Admin.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".Admin.MainActivity"
+            android:name="com.example.phils.Admin.MainActivity"
             android:exported="false" />
     </application>
 

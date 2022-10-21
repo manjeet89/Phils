@@ -28,4 +28,10 @@
 
     <string name="access_module">access_module</string>
 
+
+<!--    both-->
+    <string name="Requisitionsave">requisitionsave</string>
+    <string name="managername">managername</string>
+
+
 </resources>

@@ -696,7 +696,7 @@ public class RequisitionReciverList extends AppCompatActivity {
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/receiver_on_going",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/receiver_on_going",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -706,7 +706,7 @@ public class RequisitionReciverList extends AppCompatActivity {
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
-                            Toast.makeText(RequisitionReciverList.this, message, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(RequisitionReciverList.this, message, Toast.LENGTH_SHORT).show();
                             String data1 = jsonObject.getString("data");
                             if(data1.equals("false")) {
                                 Toast.makeText(RequisitionReciverList.this, "No Data Available", Toast.LENGTH_SHORT).show();
@@ -801,10 +801,10 @@ public class RequisitionReciverList extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

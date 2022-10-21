@@ -710,7 +710,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         String location = getIntent().getStringExtra("location");
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_employee_category",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_employee_category",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -755,10 +755,10 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -893,6 +893,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
         }
 
     private void Insert() {
+        appConfig = new AppConfig(this);
 
 
         String e1 =  setcategoryid.getText().toString().trim();
@@ -944,7 +945,7 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
             String location = getIntent().getStringExtra("location");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/add_stock_category",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/add_stock_category",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -972,10 +973,10 @@ public class Add_Stock_Category_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

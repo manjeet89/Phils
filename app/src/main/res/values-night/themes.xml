@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Phils" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#575859</item>
         <!-- Customize your theme here. -->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+        <item name="background_color">#000000</item>
+        <item name="relative1">#000000</item>
+        <item name="nav">#000000 </item>
+        <item name="frame">@color/black</item>
+        <item name="listview">@color/black</item>
+        <item name="search">#000000</item>
+
+
     </style>
 </resources>

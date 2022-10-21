@@ -39,10 +39,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.NotificationAdapterClass;
-import com.example.phils.Adapter.StockCategoryAdapterClass;
 import com.example.phils.R;
 import com.example.phils.ResponseModels.ResponseModelNotification;
-import com.example.phils.ResponseModels.ResponseModelStockCategory;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -555,7 +553,7 @@ public class Notification_Activity extends AppCompatActivity {
         String location = appConfig.getLocationId();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/notification",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/notification",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -567,44 +565,48 @@ public class Notification_Activity extends AppCompatActivity {
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
+                            String data1 = jsonObject.getString("data");
 
-                            if(message.equals("Invalid user request")){
-                                Toast.makeText(Notification_Activity.this, message, Toast.LENGTH_SHORT).show();
-                                appConfig.updateUserLoginStatus(false);
-                                startActivity(new Intent(Notification_Activity.this,LoginActivity.class));
-                                finish();
+                            if(data1.equals("false"))
+                            {
+                                Toast.makeText(Notification_Activity.this, "No Data ", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
                             else {
 
-                                JSONArray jsonArray = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    j++;
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    String sn = String.valueOf(j);
-                                    String noti_user_id = object.getString("noti_id");
-                                    String url_created = object.getString("url_created");
-                                    String noti_message = object.getString("noti_message");
+                                if (message.equals("Invalid user request")) {
+                                    Toast.makeText(Notification_Activity.this, message, Toast.LENGTH_SHORT).show();
+                                    appConfig.updateUserLoginStatus(false);
+                                    startActivity(new Intent(Notification_Activity.this, LoginActivity.class));
+                                    finish();
+                                } else {
 
-                                    status = object.getString("noti_status");
-                                    if(status.equals(String.valueOf(0)))
-                                    {
-                                        status = "Unread";
+                                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        j++;
+                                        JSONObject object = jsonArray.getJSONObject(i);
+                                        String sn = String.valueOf(j);
+                                        String noti_user_id = object.getString("noti_id");
+                                        String url_created = object.getString("url_created");
+                                        String noti_message = object.getString("noti_message");
+
+                                        status = object.getString("noti_status");
+                                        if (status.equals(String.valueOf(0))) {
+                                            status = "Unread";
+                                        } else {
+                                            status = "Read";
+                                        }
+
+                                        responseModelNotification = new ResponseModelNotification(sn, noti_user_id, url_created, noti_message, status);
+                                        data.add(responseModelNotification);
+                                        notificationAdapterClass.notifyDataSetChanged();
+                                        progressDialog.dismiss();
+
+
                                     }
-                                    else
-                                    {
-                                        status = "Read";
-                                    }
-
-                                    responseModelNotification = new ResponseModelNotification(sn,noti_user_id,url_created,noti_message,status);
-                                    data.add(responseModelNotification);
-                                    notificationAdapterClass.notifyDataSetChanged();
-                                    progressDialog.dismiss();
-
-
-
                                 }
                             }
-
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -622,10 +624,10 @@ public class Notification_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -739,7 +741,7 @@ public class Notification_Activity extends AppCompatActivity {
                         String userId = appConfig.getuser_id();
                         String location = appConfig.getLocationId();
                         String user_employee_type= appConfig.getuser_employee_type();
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/notification/remove_notification",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/notification/remove_notification",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -769,10 +771,10 @@ public class Notification_Activity extends AppCompatActivity {
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 HashMap headers = new HashMap();
-                                headers.put("user_token",token);
-                                headers.put("user_id", userId);
-                                headers.put("project_location_id", location);
-                                headers.put("user_employee_type", user_employee_type);
+                                headers.put("Usertoken",token);
+                                headers.put("Userid", userId);
+                                headers.put("Projectlocationid", location);
+                                headers.put("Useremployeetype", user_employee_type);
 
                                 return headers;
                             }
@@ -804,7 +806,7 @@ public class Notification_Activity extends AppCompatActivity {
                         String userId = appConfig.getuser_id();
                         String location = appConfig.getLocationId();
                         String user_employee_type= appConfig.getuser_employee_type();
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/notification/mark_notification",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/notification/mark_notification",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -834,10 +836,10 @@ public class Notification_Activity extends AppCompatActivity {
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 HashMap headers = new HashMap();
-                                headers.put("user_token",token);
-                                headers.put("user_id", userId);
-                                headers.put("project_location_id", location);
-                                headers.put("user_employee_type", user_employee_type);
+                                headers.put("Usertoken",token);
+                                headers.put("Userid", userId);
+                                headers.put("Projectlocationid", location);
+                                headers.put("Useremployeetype", user_employee_type);
 
                                 return headers;
                             }

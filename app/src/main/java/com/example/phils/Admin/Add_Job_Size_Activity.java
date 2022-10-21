@@ -211,9 +211,6 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
 
-
-
-
         String access_module = appConfig.getaccess_module().trim();
 //        String access_module = getIntent().getStringExtra("access_module");
 //
@@ -262,7 +259,7 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
             MenuItem menuItem = menu.findItem(R.id.requisitionnav);
             menuItem.setVisible(false);
         }
-//
+
         if(requisitionlist.equals("requisition-list")){
             MenuItem menuItem = menu.findItem(R.id.resqu_list);
             menuItem.setVisible(true);
@@ -294,7 +291,7 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
             MenuItem menuItem = menu.findItem(R.id.jobnav);
             menuItem.setVisible(false);
         }
-//
+
         if(jobcategorylist.equals("job-category-list")){
             MenuItem menuItem = menu.findItem(R.id.category_job);
             menuItem.setVisible(true);
@@ -571,6 +568,9 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
         });
     }
     private void Insert() {
+
+        appConfig = new AppConfig(this);
+
         String e2 = category_name.getText().toString().trim();
         String e3 = check_status.getText().toString().trim();
 
@@ -610,7 +610,7 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
             String location = getIntent().getStringExtra("location");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/add_job_size",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/add_job_size",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -640,11 +640,10 @@ public class Add_Job_Size_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
-
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
                     return headers;
                 }
 

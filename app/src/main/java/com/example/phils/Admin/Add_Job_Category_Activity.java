@@ -610,12 +610,14 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
             String e5 = e2;
             String e6 = e3;
 
+            appConfig = new AppConfig(this);
+
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/add_job_category",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/add_job_category",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -645,11 +647,10 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
-
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
                     return headers;
                 }
 
@@ -657,8 +658,8 @@ public class Add_Job_Category_Activity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String> params = new HashMap<String,String>();
-                    params.put("job_category_name",e5);
-                    params.put("job_category_status",e6);
+                    params.put("jobcategoryname",e5);
+                    params.put("jobcategorystatus",e6);
                     return  params;
                 }
 

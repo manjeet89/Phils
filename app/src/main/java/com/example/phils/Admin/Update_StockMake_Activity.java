@@ -568,6 +568,10 @@ public class Update_StockMake_Activity extends AppCompatActivity {
     }
 
     private void Insert() {
+
+        appConfig = new AppConfig(this);
+
+
         String e1 =  make_name_add.getText().toString().trim();
         String e3 = stock_size_status.getText().toString().trim();
         if(TextUtils.isEmpty(e1))
@@ -608,7 +612,7 @@ public class Update_StockMake_Activity extends AppCompatActivity {
             String location = getIntent().getStringExtra("location");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock_make",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/update_stock_make",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -638,10 +642,10 @@ public class Update_StockMake_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

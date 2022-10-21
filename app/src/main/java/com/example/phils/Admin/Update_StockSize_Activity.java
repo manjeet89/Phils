@@ -65,9 +65,9 @@ public class Update_StockSize_Activity extends AppCompatActivity {
     Dialog dialog;
     ImageView img,profile;
 
-    String categoryurl = "https://mployis.com/staging/api/stock/stock_category";
-    String categoryIdurl="https://mployis.com/staging/api/stock/get_stock_type_from_category_id";
-    String sizeurl = "https://mployis.com/staging/api/stock/update_stock_size";
+    String categoryurl = "https://erp.philsengg.com/api/stock/stock_category";
+    String categoryIdurl="https://erp.philsengg.com/api/stock/get_stock_type_from_category_id";
+    String sizeurl = "https://erp.philsengg.com/api/stock/update_stock_size";
 
 
     ArrayList<StockTypeSpinner> stockTypeSpinners = new ArrayList<StockTypeSpinner>();
@@ -548,20 +548,21 @@ public class Update_StockSize_Activity extends AppCompatActivity {
 
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
+                            String data1 = jsonObject.getString("data");
 
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
-                                j++;
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String stock_category_id = object.getString("stock_category_id");
-                                String stock_category_name = object.getString("stock_category_name");
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    j++;
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    String stock_category_id = object.getString("stock_category_id");
+                                    String stock_category_name = object.getString("stock_category_name");
 
-                                categorySpinners.add(new CategorySpinner(stock_category_id,stock_category_name));
-                                spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Update_StockSize_Activity.this,
-                                        android.R.layout.simple_spinner_dropdown_item,categorySpinners);
-                                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
- }
+                                    categorySpinners.add(new CategorySpinner(stock_category_id, stock_category_name));
+                                    spinnerArrayAdapter = new ArrayAdapter<CategorySpinner>(Update_StockSize_Activity.this,
+                                            android.R.layout.simple_spinner_dropdown_item, categorySpinners);
+                                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                            }
 
                         }
                         catch (JSONException e) {
@@ -578,10 +579,10 @@ public class Update_StockSize_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -601,7 +602,7 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650, 800);
+                dialog.getWindow().setLayout(950, 1100);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -671,7 +672,7 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner_status);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650,800);
+                dialog.getWindow().setLayout(950,1100);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -754,6 +755,9 @@ public class Update_StockSize_Activity extends AppCompatActivity {
             progressDialog.setMessage("Loading... Please Wait!");
             progressDialog.show();
 
+            appConfig = new AppConfig(this);
+
+
             String token = getIntent().getStringExtra("token");
             String userId = getIntent().getStringExtra("userId");
             String location = getIntent().getStringExtra("location");
@@ -787,10 +791,10 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }
@@ -840,20 +844,23 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
+                            String data1 = jsonObject.getString("data");
+                            if(data1.equals("false")) {
+                                Toast.makeText(Update_StockSize_Activity.this, "No Data In Stock Type", Toast.LENGTH_SHORT).show();
+                            }else {
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for(int i=0;i<jsonArray.length();i++)
-                            {
+                            for(int i=0;i<jsonArray.length();i++) {
                                 j++;
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String stock_type_id = object.getString("stock_type_id");
                                 String stock_type_name = object.getString("stock_type_name");
 
 
-                                stockTypeSpinners.add(new StockTypeSpinner(stock_type_id,stock_type_name));
+                                stockTypeSpinners.add(new StockTypeSpinner(stock_type_id, stock_type_name));
                                 StockTypeSpinnerAdpter = new ArrayAdapter<StockTypeSpinner>(Update_StockSize_Activity.this,
-                                        android.R.layout.simple_list_item_1,stockTypeSpinners );
+                                        android.R.layout.simple_list_item_1, stockTypeSpinners);
                                 StockTypeSpinnerAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+                            }
                             }
                         }
                         catch (JSONException e) {
@@ -879,10 +886,10 @@ public class Update_StockSize_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
 
@@ -904,7 +911,7 @@ public class Update_StockSize_Activity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650, 800);
+                dialog.getWindow().setLayout(950, 1100);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

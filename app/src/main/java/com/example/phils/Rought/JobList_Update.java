@@ -1,4 +1,4 @@
-package com.example.phils;
+package com.example.phils.Rought;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Admin.LoginActivity;
+import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
 import com.example.phils.Spinner.ProjectManagerSpinner;
 
@@ -43,7 +44,7 @@ public class JobList_Update extends AppCompatActivity {
     ArrayAdapter<ProjectManagerSpinner> projectManagerAdapter;
     Dialog dialog;
     TextView jobCategory,jobsize,projectmanager,status_check;
-    String url = "https://mployis.com/staging/api/job/job_project_manager";
+    String url = "https://erp.philsengg.com/api/job/job_project_manager";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,12 @@ public class JobList_Update extends AppCompatActivity {
         String userId = getIntent().getStringExtra("userId");
         String location = getIntent().getStringExtra("location");
 
+        String user_employee_type = appConfig.getuser_employee_type();
         //Toast.makeText(this, token +userId +location, Toast.LENGTH_SHORT).show();
 
 
 
-        StringRequest request3 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_project_manager",
+        StringRequest request3 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_project_manager",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -118,9 +120,10 @@ public class JobList_Update extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

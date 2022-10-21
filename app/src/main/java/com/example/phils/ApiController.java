@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiController {
-    private static final String url ="https://mployis.com/staging/api/";
+    private static final String url ="https://erp.philsengg.com/api/";
             //"https://investment-wizards.com/manjeet/Phils_Stock/";
     private static ApiController apiController;
     private static Retrofit retrofit;

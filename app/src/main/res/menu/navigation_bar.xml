@@ -91,14 +91,6 @@
                 android:title="Requisition Receiver"
                 android:icon="@drawable/ic_baseline_wysiwyg_24"/>
 
-            <item
-                android:title="  "/>
-
-            <item
-                android:title="  "/>
-
-            <item
-                android:title="  "/>
 
         </menu>
     </item>

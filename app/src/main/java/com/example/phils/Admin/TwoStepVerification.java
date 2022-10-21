@@ -173,7 +173,7 @@ public class TwoStepVerification extends AppCompatActivity {
 
         String number =   first.getText().toString()+second.getText().toString()+third.getText().toString()+fourth.getText().toString();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/verification",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/login/verification",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -275,7 +275,7 @@ public class TwoStepVerification extends AppCompatActivity {
 //                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/login/update_firebase_user_token",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {

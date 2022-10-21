@@ -63,7 +63,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
     ArrayList<UserLocationSpinner> locationList = new ArrayList<>();
     ArrayAdapter<UserLocationSpinner> locationAdapter;
     RequestQueue requestQueue;
-    String url = "https://mployis.com/staging/api/job/location_list";
+    String url = "https://erp.philsengg.com/api/job/location_list";
     AppConfig appConfig;
     TextView location_save;
 
@@ -564,10 +564,10 @@ public class ProjectLocationActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -645,7 +645,7 @@ public class ProjectLocationActivity extends AppCompatActivity {
         String locationName = setlocation.getText().toString();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/set_location",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/set_location",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -689,10 +689,10 @@ public class ProjectLocationActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
             }

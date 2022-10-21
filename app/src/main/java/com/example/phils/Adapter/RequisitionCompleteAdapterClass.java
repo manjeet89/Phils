@@ -1,5 +1,6 @@
 package com.example.phils.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,13 @@ public class RequisitionCompleteAdapterClass extends RecyclerView.Adapter<Requis
         holder.quantity.setText(data.get(position).getAssign_quantity());
         holder.reqqun.setText(data.get(position).getReq_quantity());
         holder.byap.setText(data.get(position).getReq_manager_id());
+        if(data.get(position).getReq_manager_id().equals("Default")){
+
+//            holder.req_approved_by.setTextColor(Color.parseColor("#151b26"));
+
+        }else {
+            holder.byap.setTextColor(Color.parseColor("#2118d6"));
+        }
         holder.maanger.setText(data.get(position).getReq_manager_status());
         holder.comm.setText(data.get(position).getReq_manager_comment());
     }

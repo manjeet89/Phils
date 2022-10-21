@@ -52,6 +52,13 @@ public class RequisitionAdapterClass extends RecyclerView.Adapter<RequisitionAda
         holder.req_quantity_assign.setText(data.get(position).getAssign_quantity());
         holder.req_quantity_required.setText(data.get(position).getReq_quantity());
         holder.req_approved_by.setText(data.get(position).getReq_manager_id());
+        if(data.get(position).getReq_manager_id().equals("Default")){
+
+//            holder.req_approved_by.setTextColor(Color.parseColor("#151b26"));
+
+        }else {
+            holder.req_approved_by.setTextColor(Color.parseColor("#2118d6"));
+        }
         holder.manager_status.setText(data.get(position).getReq_manager_status());
     }
 

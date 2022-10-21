@@ -39,7 +39,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.phils.Adapter.RequisitionAdapterClass;
 import com.example.phils.R;
-import com.example.phils.RequsitionComplete;
 import com.example.phils.ResponseModels.ResponseModelRequisitionList;
 import com.example.phils.Shareprefered.AppConfig;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -55,7 +54,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+
 public class RequisitionOnGoingActivity extends AppCompatActivity {
+
 
     ArrayList<String> wokerList = new ArrayList<>();
 
@@ -81,6 +82,15 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
     TextView locationtext;
     Dialog dialog;
 
+    TextView getmanagerid,getmanagername;
+
+    static boolean[] manager;
+    ArrayList<String> managerlist = new ArrayList<>();
+    ArrayList<String> managerlistvalue   = new ArrayList<>();
+
+    static String managerid[];
+    static String managername[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +100,10 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
         location_save = findViewById(R.id.location_save);
         String location_save1 = appConfig.getLocation();
         location_save.setText(location_save1);
+
+        getmanagerid = findViewById(R.id.getmanagerid);
+        getmanagername =findViewById(R.id.getmanagername);
+
 
         setmanagername = findViewById(R.id.setmanagername);
         locationtext = findViewById(R.id.locationtext);
@@ -495,6 +509,13 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
+
+
         recview = findViewById(R.id.recview);
 
         checklist = findViewById(R.id.checklist);
@@ -513,13 +534,13 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
             }
         });
 
-//        Button complete = findViewById(R.id.complete);
-//        complete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
-//            }
-//        });
+        Button complete = findViewById(R.id.complete);
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RequsitionComplete.class));
+            }
+        });
 
 
         add_reqlist = findViewById(R.id.add_reqlist);
@@ -585,6 +606,10 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
         recview.setAdapter(requisitionAdapterClass);
 
     }
+
+
+
+
 
     private void fileList(String newText) {
 
@@ -691,9 +716,19 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
 
 
     private void fatchdata() {
+
+        appConfig = new AppConfig(this);
+        String spi = appConfig.getRequisition();
+        String spname = appConfig.getManagerName();
+//
+//        Log.d("ssssss",spi);
+//        Log.d("ssssss",spname);
+
         progressDialog = new ProgressDialog(RequisitionOnGoingActivity.this);
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
+
+
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
@@ -702,7 +737,7 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
 
         //Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requisition_on_going",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requisition_on_going",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -714,6 +749,9 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                             String assign_quantity;
                             String req_manager_id;
                             String stringBuilder;
+
+                            List<String> Ping = new ArrayList<>();
+
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
                             if(message.equals("Invalid user request")){
@@ -773,75 +811,27 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                             }
                                             else
                                             {
+                                                int value = Integer.parseInt(req_manager_id) - 5;
+                                                String[] arrayid = spi.split(",");
+                                                String[] arrayname = spname.split(",");
 
-//                                                String token = appConfig.getuser_token();
-//                                                String userId = appConfig.getuser_id();
-//                                                String location = appConfig.getLocationId();
-//                                                String user_employee_type = appConfig.getuser_employee_type();
-//                                               String  reqid = object.getString("req_manager_id");
-//
-//                                                setmanagername.setText("");
-//
-//                                                StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/user_list",
-//                                                        new com.android.volley.Response.Listener<String>() {
-//                                                            @Override
-//                                                            public void onResponse(String response) {
-//
-//                                                                try {
-//
-//                                                                    JSONObject jsonObject = new JSONObject(response);
-//                                                                    String message = jsonObject.getString("message");
-//
-//                                                                    //Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
-//                                                                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-//                                                                    for (int i = 0; i < jsonArray.length(); i++) {
-//
-//                                                                        JSONObject object = jsonArray.getJSONObject(i);
-//                                                                        String user_id = object.getString("user_id");
-//                                                                       // setmanagername.setText(managerid);
-//
-//                                                                        // Log.d("managername",setmanagername.getText().toString());
-//                                                                        //oast.makeText(RequisitionOnGoingActivity.this, setmanagername.getText().toString(), Toast.LENGTH_SHORT).show();
-//                                                                        if(user_id.equals(reqid)) {
-//                                                                            String user_full_name = object.getString("user_full_name");
-//                                                                            Log.d("managername", user_full_name);
-//                                                                        }
-//
-//                                                                    }
-//
-//                                                                }
-//                                                                catch (JSONException e) {
-//                                                                    e.printStackTrace();
-//                                                                }
-//
-//
-//                                                            }
-//                                                        }, new Response.ErrorListener() {
-//                                                    @Override
-//                                                    public void onErrorResponse(VolleyError error) {
-//                                                        Toast.makeText(RequisitionOnGoingActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                    }
-//                                                })
-//                                                {
-//                                                    @Override
-//                                                    public Map<String, String> getHeaders() throws AuthFailureError {
-//                                                        HashMap headers = new HashMap();
-//                                                        headers.put("user_token",token);
-//                                                        headers.put("user_id", userId);
-//                                                        headers.put("project_location_id", location);
-//                                                        headers.put("user_employee_type", user_employee_type);
-//
-//                                                        return headers;
-//                                                        //return super.getHeaders();
-//                                                    }
-//                                                };
-//
-//                                                RequestQueue requestQueue = Volley.newRequestQueue(RequisitionOnGoingActivity.this);
-//                                                requestQueue.add(request);
+                                                String printname ="";
+                                                for(int k=0;k<arrayid.length;k++){
+                                                   // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
+
+                                                    if(value==k){
+
+                                                        printname = arrayname[k];
+                                                        String printid = arrayid[k];
+
+                                                        Log.d("apppp",printname +"/"+printid);
+                                                    }
+                                                }
+                                                req_manager_id = printname;
 
                                             }
 
-                                           // ManagerNameGet(req_manager_id);
+
 
                                             String req_manager_comment = object.getString("req_manager_comment");
                                             req_manager_status = object.getString("req_manager_status");
@@ -877,14 +867,14 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                                 assign_quantity = "0";
                                             }
 
-                                            if(0>=Integer.parseInt(assign_quantity)) {
-                                                Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+                                            if(0>=(Double)Double.parseDouble(assign_quantity)) {
+//                                                Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
                                                 progressDialog.dismiss();
 
                                             }else{
-                                                if (Integer.parseInt(assign_quantity) == Integer.parseInt(req_quantity)) {
+                                                if ((Double)Double.parseDouble(assign_quantity)==(Double) Double.parseDouble(req_quantity)) {
 
-                                                    Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(RequisitionOnGoingActivity.this, "No Data Available", Toast.LENGTH_SHORT).show();
                                                     progressDialog.dismiss();
                                                 } else {
                                                     j++;
@@ -897,9 +887,6 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                                             job_number, user_full_name, user_employee_id, assign_quantity, req_user_id_details);
                                                     data.add(responseModelRequisitionList);
                                                     requisitionAdapterClass.notifyDataSetChanged();
-                                                    Toast.makeText(RequisitionOnGoingActivity.this, " Data Available", Toast.LENGTH_SHORT).show();
-
-
                                                     progressDialog.dismiss();
 
                                                 }
@@ -927,10 +914,10 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -941,18 +928,18 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
         requestQueue.add(request);
 
     }
+    // static String user_full_name1 ="";
 
-    private void ManagerNameGet(String managerid) {
+    public String Koi(String manager){
+
+        appConfig = new AppConfig(this);
 
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocationId();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        setmanagername.setText("");
-//        Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/user_list",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/user_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -962,37 +949,20 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
 
-                            //Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String user_id = object.getString("user_id");
-                                setmanagername.setText(managerid);
-
-                               // Log.d("managername",setmanagername.getText().toString());
-                                //oast.makeText(RequisitionOnGoingActivity.this, setmanagername.getText().toString(), Toast.LENGTH_SHORT).show();
-                                if(user_id.equals(managerid)){
-                                    String user_full_name = object.getString("user_full_name");
-                                    Log.d("managername",user_full_name);
-
-                                     //finish();
-                                }else if(managerid.equals("1")){
-                                    String user_full_name = "Phils ERP";
-                                    Log.d("managername",user_full_name);
-
-                                   // finish();
+                                if(user_id.equals(manager))
+                                {
+                                    String  user_full_name1 = object.getString("user_full_name");
                                 }
-                               // return req_id;
-
                             }
-
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -1004,18 +974,103 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
-                //return super.getHeaders();
             }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(RequisitionOnGoingActivity.this);
         requestQueue.add(request);
+
+     //   Log.d("103333",ManagerName.getName());
+
+
+
+        // user_full_name1
+
+       // int n = Integer.parseInt(appConfig.getRequisition());
+      //  Log.d("jack",appConfig.getRequisition());
+       // Log.d("polic",managerName.getName());
+        //Log.d("theet",wheel);
+        return manager;
+    }
+
+
+    private void ManagerNameGet(String managerid) {
+
+//        appConfig = new AppConfig(this);
+//
+//        String token = appConfig.getuser_token();
+//        String userId = appConfig.getuser_id();
+//        String location = appConfig.getLocationId();
+//        String user_employee_type = appConfig.getuser_employee_type();
+//
+//        setmanagername.setText("");
+////        Toast.makeText(this, token+"/"+userId, Toast.LENGTH_SHORT).show();
+//
+//        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/user_list",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String message = jsonObject.getString("message");
+//
+//                            //Toast.makeText(RequisitionOnGoingActivity.this, message, Toast.LENGTH_SHORT).show();
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String user_id = object.getString("user_id");
+//
+//                                if(user_id.equals(managerid)){
+//                                    String user_full_name = object.getString("user_full_name");
+//                                    Log.d("managername",user_full_name);
+//                                    appConfig.SaveRequisition(user_full_name);
+//                                    //setmanagername.setText(user_full_name);
+//
+//
+//                                }
+//
+//                            }
+//
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(RequisitionOnGoingActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("Usertoken",token);
+//                headers.put("Userid", userId);
+//                headers.put("Projectlocationid", location);
+//                headers.put("Useremployeetype", user_employee_type);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(RequisitionOnGoingActivity.this);
+//        requestQueue.add(request);
+
 
     }
 

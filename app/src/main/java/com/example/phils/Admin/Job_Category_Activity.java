@@ -648,12 +648,14 @@ public class Job_Category_Activity extends AppCompatActivity {
         progressDialog.setMessage("Loading... Please Wait!");
         progressDialog.show();
 
+        appConfig = new AppConfig(this);
+
         String token = appConfig.getuser_token();
         String userId = appConfig.getuser_id();
         String location = appConfig.getLocation();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_category",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_category",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -717,10 +719,10 @@ public class Job_Category_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -736,6 +738,8 @@ public class Job_Category_Activity extends AppCompatActivity {
             listener = new JobCategoryAdapterClass.RecycleViewClickListener() {
                 @Override
                 public void onClick(View v, int position) {
+
+
                     String kk = data.get(position).getJob_category_id();
                     String Jobname =data.get(position).getJob_category_name();
                     String jobstatus = data.get(position).getJob_category_status();

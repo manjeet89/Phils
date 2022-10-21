@@ -104,10 +104,9 @@ public class LoginActivity extends AppCompatActivity {
         } else {
 
             progressDialog.setMessage("Loading... Please Wait!");
-            progressDialog.setIcon(R.drawable.ic_baseline_autorenew_24);
             progressDialog.show();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/login",
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -203,6 +202,7 @@ public class LoginActivity extends AppCompatActivity {
                                             appConfig.SaveLocation(location_name);
                                             appConfig.SaveLocationId(project_location_id);
                                             appConfig.Saveaccess_module(access_module);
+                                            appConfig.SaveRequisition("true");
 
 
                                         }
@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
 
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/login/update_firebase_user_token",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/login/update_firebase_user_token",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {

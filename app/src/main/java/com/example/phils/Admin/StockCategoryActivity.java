@@ -425,6 +425,7 @@ public class StockCategoryActivity extends AppCompatActivity {
                         break;
 
                     case R.id.user:
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                         break;
 
@@ -524,14 +525,14 @@ public class StockCategoryActivity extends AppCompatActivity {
 
 
 
-            swipe = findViewById(R.id.swipeLayout);
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-               startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
-                swipe.setRefreshing(false);
-            }
-        });
+//            swipe = findViewById(R.id.swipeLayout);
+//        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//               startActivity(new Intent(getApplicationContext(),StockCategoryActivity.class));
+//                swipe.setRefreshing(false);
+//            }
+//        });
 
 
 
@@ -618,7 +619,7 @@ public class StockCategoryActivity extends AppCompatActivity {
 //
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_category",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_category",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -691,10 +692,10 @@ public class StockCategoryActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
 
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

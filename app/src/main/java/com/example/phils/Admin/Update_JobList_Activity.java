@@ -2,14 +2,14 @@ package com.example.phils.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -44,6 +44,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.phils.Adapter.ConsumblesAdater;
+import com.example.phils.MultipleItemSelectInSpinner.ConsumblesiItemData;
+import com.example.phils.Adapter.JobReplaceWithAdapter;
+import com.example.phils.MultipleItemSelectInSpinner.JobReplaceWithData;
 import com.example.phils.Spinner.ProjectManagerSpinner;
 import com.example.phils.R;
 import com.example.phils.Shareprefered.AppConfig;
@@ -57,9 +61,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Update_JobList_Activity extends AppCompatActivity {
@@ -113,6 +117,17 @@ public class Update_JobList_Activity extends AppCompatActivity {
     Button btnnotification;
     ImageView img,profile;
     TextView locationtext;
+
+
+
+    private ArrayList<ConsumblesiItemData> consumblesiItemDataArrayList = new ArrayList<>();
+    private ConsumblesAdater consumblesAdater;
+    private ArrayAdapter arrayAdaptertext;
+
+
+    private ArrayList<JobReplaceWithData> jobReplaceWithDataArrayList = new ArrayList<>();
+    private JobReplaceWithAdapter jobReplaceWithAdapter;
+    private ArrayAdapter arrayAdapterReplaceWith;
 
 
     @Override
@@ -607,51 +622,59 @@ public class Update_JobList_Activity extends AppCompatActivity {
 //        }
 //        Log.d("ok", String.valueOf(p));
 
-        StringRequest request11 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/stock_type",
+
+
+
+
+
+        consumblesiItemDataArrayList = new ArrayList<>();
+
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_type",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            listValue = new String[jsonArray.length()];
-                            listId = new String[jsonArray.length()];
-                            selectedLanguage = new boolean[listValue.length];
-
+                            int j=0;
                             int p = 0;
-                            for(int i=0; i<jsonArray.length();i++)
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+
+                            Toast.makeText(Update_JobList_Activity.this, message, Toast.LENGTH_SHORT).show();
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++)
                             {
+                                j++;
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String emp_type_id = object.getString("stock_type_id");
-                                String emp_type_name = object.getString("stock_type_name");
+                                String stock_type_id = object.getString("stock_type_id");
+                                String stock_type_name = object.getString("stock_type_name");
+
+                                ConsumblesiItemData consumblesiItemDataclass = new ConsumblesiItemData();
+
 
                                 String[] array = ln.split(",");
-
+//
                                 for(int k=0;k<array.length;k++){
-                                    if(emp_type_id.equals(array[k])){
-                                        p = Integer.parseInt(emp_type_id);
+                                    if(stock_type_id.equals(array[k])){
+                                        p = Integer.parseInt(stock_type_id);
                                     }
                                 }
 
-                                if(emp_type_id.equals(String.valueOf(p)))
+                                if(stock_type_id.equals(String.valueOf(p)))
                                 {
-                                    langList.add(emp_type_id);
-                                    langListvalue.add(emp_type_name);
-
-                                    selectedLanguage[i]=true;
-                                }
-                                else
-                                {
-                                    selectedLanguage[i]=false;
+                                    langList.add(stock_type_id);
+                                    langListvalue.add(stock_type_name);
+                                    consumblesiItemDataclass.setChecked(true);
                                 }
 
-                                listValue[i]=emp_type_name;
-                                listId[i]=emp_type_id;
+
+                               // Log.d("butter",stock_type_id);
+                                consumblesiItemDataclass.setId(stock_type_id);
+                                consumblesiItemDataclass.setName(stock_type_name);
+//                                if (i == 0) {
+//                                    consumblesiItemDataclass.setChecked(true);
+//                                }
+                                consumblesiItemDataArrayList.add(consumblesiItemDataclass);
 
                             }
                             String stringBuilder= String.join(",", langListvalue);
@@ -660,13 +683,21 @@ public class Update_JobList_Activity extends AppCompatActivity {
                             consumbles_item.setText(stringBuilder);
                             setconsum.setText(stringbuilder);
 
-//                            Collections.reverse(Arrays.asList(listValue));
-//                            Collections.reverse(Arrays.asList(listId));
+                            Collections.reverse(consumblesiItemDataArrayList);
+                            consumblesAdater.setConsumblesiItemData(consumblesiItemDataArrayList);
+
+                            arrayAdaptertext = new ArrayAdapter(Update_JobList_Activity.this,
+                                    android.R.layout.simple_spinner_dropdown_item,consumblesiItemDataArrayList);
+                            arrayAdaptertext.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+
 
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -678,105 +709,323 @@ public class Update_JobList_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
             }
         };
 
-        RequestQueue requestQueue11 = Volley.newRequestQueue(Update_JobList_Activity.this);
-        requestQueue11.add(request11);
+        RequestQueue requestQueue1 = Volley.newRequestQueue(Update_JobList_Activity.this);
+        requestQueue1.add(request1);
 
+        consumblesAdater = new ConsumblesAdater(this,consumblesiItemDataArrayList);
 
 
 
         consumbles_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
 
-                // set title
-                builder.setTitle("Select Language");
+                dialog = new Dialog(Update_JobList_Activity.this);
 
-                // set dialog non cancelable
-                builder.setCancelable(false);
+                // set custom dialog
+                dialog.setContentView(R.layout.demospinner1);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(950, 1500);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+
+                // show dialog
+                dialog.show();
+
+                // Initialize and assign variable
+                androidx.appcompat.widget.AppCompatButton btnGetSelected = dialog.findViewById(R.id.btnGetSelected);
+                androidx.appcompat.widget.AppCompatButton btnAdd = dialog.findViewById(R.id.btnAdd);
+                btnAdd.setVisibility(View.GONE);
 
 
-                builder.setMultiChoiceItems(listValue, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
+                androidx.recyclerview.widget.RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+                EditText editText =dialog.findViewById(R.id.edit_text);
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(Update_JobList_Activity.this));
+                recyclerView.addItemDecoration(new DividerItemDecoration(Update_JobList_Activity.this, LinearLayoutManager.VERTICAL));
+                consumblesAdater = new ConsumblesAdater(Update_JobList_Activity.this,consumblesiItemDataArrayList);
+                recyclerView.setAdapter(consumblesAdater);
+
+
+                btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                       // Log.d("just",listValue[i]);
-                        if (b) {
-                            // when checkbox selected
-                            // Add position  in lang list
-                            langList.add(listId[i]);
-                            langListvalue.add(listValue[i]);
-
-                            //Log.d("Nilesh",listId[i]);
+                    public void onClick(View view) {
+                        btnGetSelected.setVisibility(View.VISIBLE);
+                        btnAdd.setVisibility(View.GONE);
+                        editText.setText("");
 
 
-                            // Sort array list
-                            Collections.sort(langList);
+                    }
+                });
+
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                        arrayAdaptertext.getFilter().filter(charSequence);
+
+                        if(charSequence.toString().equals("")) {
+                            btnGetSelected.setVisibility(View.VISIBLE);
+
+                            ArrayList<ConsumblesiItemData> filEmployees= new ArrayList<>();
+                            for (ConsumblesiItemData item: consumblesiItemDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            consumblesAdater.filterList(filEmployees);
+                            btnAdd.setVisibility(View.GONE);
+                        }
+                        else {
+                            ArrayList<ConsumblesiItemData> filEmployees= new ArrayList<>();
+                            for (ConsumblesiItemData item: consumblesiItemDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            consumblesAdater.filterList(filEmployees);
+
+                            btnAdd.setVisibility(View.VISIBLE);
+                            btnGetSelected.setVisibility(View.GONE);
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+//                        ArrayList<ConsumblesiItemData> filEmployees= new ArrayList<>();
+//                        for (ConsumblesiItemData item: consumblesiItemDataArrayList){
+//                            if(item.getName().toLowerCase(Locale.ROOT).contains(editable)
+//                                    || item.getName().toUpperCase(Locale.ROOT).contains(editable)){
+//                                filEmployees.add(item);
+//                            }
+//                        }
+//                        consumblesAdater.filterList(filEmployees);
+
+                    }
+                });
+
+
+                btnGetSelected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (consumblesAdater.getSelected().size() > 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            StringBuilder stringBuildername = new StringBuilder();
+
+                            for (int i = 0; i < consumblesAdater.getSelected().size(); i++) {
+                                stringBuilder.append(consumblesAdater.getSelected().get(i).getId());
+                                stringBuildername.append(consumblesAdater.getSelected().get(i).getName());
+
+                                stringBuilder.append(",");
+                                stringBuildername.append(" , ");
+                            }
+                            consumbles_item.setText(stringBuildername.toString().trim());
+                            setconsum.setText(stringBuilder.toString().trim());
+
+                          //  Toast.makeText(Update_JobList_Activity.this, stringBuilder.toString().trim(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
 
                         } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            langList.remove(listId[i]);
-                            langListvalue.remove(listValue[i]);
-
-                        }
-                        //Log.d("Nil", String.valueOf(langList));
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-//                        StringBuilder stringBuilder = new StringBuilder();
-                        String stringBuilder= String.join(",", langListvalue);
-                        String stringbuilder = String.join(",",langList);
-                        Log.d("nil",stringBuilder);
-                        Log.d("nil",stringbuilder);
-
-                        consumbles_item.setText(stringBuilder);
-                        setconsum.setText(stringbuilder);
-
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < selectedLanguage.length; j++) {
-                            // remove all selection
-                            selectedLanguage[j] = false;
-                            // clear language list
-                            langListvalue.clear();
-                            langList.clear();
-                            // clear text view value
-                            consumbles_item.setText("");
+                            Toast.makeText(Update_JobList_Activity.this, "No Selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                // show dialog
-                builder.show();
-
             }
         });
+
+
+//        StringRequest request11 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/stock_type",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//
+//                            listValue = new String[jsonArray.length()];
+//                            listId = new String[jsonArray.length()];
+//                            selectedLanguage = new boolean[listValue.length];
+//
+//                            int p = 0;
+//                            for(int i=0; i<jsonArray.length();i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String emp_type_id = object.getString("stock_type_id");
+//                                String emp_type_name = object.getString("stock_type_name");
+//
+//                                String[] array = ln.split(",");
+//
+//                                for(int k=0;k<array.length;k++){
+//                                    if(emp_type_id.equals(array[k])){
+//                                        p = Integer.parseInt(emp_type_id);
+//                                    }
+//                                }
+//
+//                                if(emp_type_id.equals(String.valueOf(p)))
+//                                {
+//                                    langList.add(emp_type_id);
+//                                    langListvalue.add(emp_type_name);
+//
+//                                    selectedLanguage[i]=true;
+//                                }
+//                                else
+//                                {
+//                                    selectedLanguage[i]=false;
+//                                }
+//
+//                                listValue[i]=emp_type_name;
+//                                listId[i]=emp_type_id;
+//
+//                            }
+//                            String stringBuilder= String.join(",", langListvalue);
+//                            String stringbuilder = String.join(",",langList);
+//
+//                            consumbles_item.setText(stringBuilder);
+//                            setconsum.setText(stringbuilder);
+//
+////                            Collections.reverse(Arrays.asList(listValue));
+////                            Collections.reverse(Arrays.asList(listId));
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("Usertoken",token);
+//                headers.put("Userid", userId);
+//                headers.put("Projectlocationid", location);
+//                headers.put("Useremployeetype", user_employee_type);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue11 = Volley.newRequestQueue(Update_JobList_Activity.this);
+//        requestQueue11.add(request11);
+//
+//
+//
+//
+//        consumbles_item.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Initialize alert dialog
+//                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
+//
+//                // set title
+//                builder.setTitle("Select Language");
+//
+//                // set dialog non cancelable
+//                builder.setCancelable(false);
+//
+//
+//                builder.setMultiChoiceItems(listValue, selectedLanguage, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+//                        // check condition
+//                       // Log.d("just",listValue[i]);
+//                        if (b) {
+//                            // when checkbox selected
+//                            // Add position  in lang list
+//                            langList.add(listId[i]);
+//                            langListvalue.add(listValue[i]);
+//
+//                            //Log.d("Nilesh",listId[i]);
+//
+//
+//                            // Sort array list
+//                            Collections.sort(langList);
+//
+//                        } else {
+//                            // when checkbox unselected
+//                            // Remove position from langList
+//                            langList.remove(listId[i]);
+//                            langListvalue.remove(listValue[i]);
+//
+//                        }
+//                        //Log.d("Nil", String.valueOf(langList));
+//                    }
+//                });
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // Initialize string builder
+////                        StringBuilder stringBuilder = new StringBuilder();
+//                        String stringBuilder= String.join(",", langListvalue);
+//                        String stringbuilder = String.join(",",langList);
+//                        Log.d("nil",stringBuilder);
+//                        Log.d("nil",stringbuilder);
+//
+//                        consumbles_item.setText(stringBuilder);
+//                        setconsum.setText(stringbuilder);
+//
+//                    }
+//                });
+//
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // dismiss dialog
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // use for loop
+//                        for (int j = 0; j < selectedLanguage.length; j++) {
+//                            // remove all selection
+//                            selectedLanguage[j] = false;
+//                            // clear language list
+//                            langListvalue.clear();
+//                            langList.clear();
+//                            // clear text view value
+//                            consumbles_item.setText("");
+//                        }
+//                    }
+//                });
+//                // show dialog
+//                builder.show();
+//
+//            }
+//        });
 
 
 
@@ -789,60 +1038,57 @@ public class Update_JobList_Activity extends AppCompatActivity {
 //            Log.d("ok", name);
 //
 //        }
-        StringRequest request12 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_welder_grinder_list",
+
+
+
+
+        jobReplaceWithDataArrayList = new ArrayList<>();
+
+        StringRequest request4 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_welder_grinder_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         try {
-
-                            JSONObject jsonObject = new JSONObject(response);
-                            //String message = jsonObject.getString("message");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                            wokerId = new String[jsonArray.length()];
-                            wokerValue = new String[jsonArray.length()];
-                            wokerlenght = new boolean[wokerValue.length];
-
-                            //selectedLanguage = new boolean[listValue.length];
-
+                            int j=0;
                             int q=0;
-                            for(int i=0; i<jsonArray.length();i++)
+                            JSONObject jsonObject = new JSONObject(response);
+                            String message = jsonObject.getString("message");
+
+                            //Toast.makeText(Assign_user_Job_Activity.this, message, Toast.LENGTH_SHORT).show();
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for(int i=0;i<jsonArray.length();i++)
                             {
+                                j++;
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String user_id = object.getString("user_id");
-                                String user_full_name = object.getString("user_full_name");
+                                String user_name = object.getString("user_full_name");
                                 String user_employee_id = object.getString("user_employee_id");
 
-                                String[] WG = WelgerGrinder.split(",");
-                                for(String name : WG){
-                                    if(user_id.equals(name))
-                                    {
-//                                        wokerList.add(user_id);
-//                                        wokerListvalue.add(user_full_name+" - "+user_employee_id);
+                                JobReplaceWithData jobReplaceWithDataclass = new JobReplaceWithData();
 
-                                        q=Integer.parseInt(user_id);
-//                                        wokerlenght[i] = true;
-//                                        Log.d("okccc",user_full_name);
+
+                                String[] array = WelgerGrinder.split(",");
+//
+                                for(int k=0;k<array.length;k++){
+                                    if(user_id.equals(array[k])){
+                                        p = Integer.parseInt(user_id);
                                     }
-                                    //System.out.println(name);
-
                                 }
-                                if(user_id.equals(String.valueOf(q)))
+
+                                if(user_id.equals(String.valueOf(p)))
                                 {
                                     wokerList.add(user_id);
-                                    wokerListvalue.add(user_full_name+" - "+user_employee_id);
-
-                                    wokerlenght[i]=true;
-                                }
-                                else
-                                {
-                                    wokerlenght[i]=false;
+                                    wokerListvalue.add(user_name+" - "+user_employee_id);
+                                    jobReplaceWithDataclass.setChecked(true);
                                 }
 
-                                wokerValue[i]=user_full_name+" - "+user_employee_id;
-                                wokerId[i]=user_id;
+
+
+                                jobReplaceWithDataclass.setId(user_id);
+                                jobReplaceWithDataclass.setName(user_name+"-"+user_employee_id);
+
+                                jobReplaceWithDataArrayList.add(jobReplaceWithDataclass);
 
                             }
                             String stringBuilder= String.join(",", wokerListvalue);
@@ -851,13 +1097,21 @@ public class Update_JobList_Activity extends AppCompatActivity {
                             worker_w_r.setText(stringBuilder);
                             setweldergrinder.setText(stringbuilder);
 
-//                            Collections.reverse(Arrays.asList(wokerValue));
-//                            Collections.reverse(Arrays.asList(wokerId));
+                           // Collections.reverse(jobReplaceWithDataArrayList);
+
+                            jobReplaceWithAdapter.setJobReplaceWithData(jobReplaceWithDataArrayList);
+                            arrayAdapterReplaceWith = new ArrayAdapter(Update_JobList_Activity.this,
+                                    android.R.layout.simple_spinner_dropdown_item,jobReplaceWithDataArrayList);
+                            arrayAdapterReplaceWith.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+
+
 
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -869,18 +1123,329 @@ public class Update_JobList_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
             }
         };
 
-        RequestQueue requestQueue12 = Volley.newRequestQueue(Update_JobList_Activity.this);
-        requestQueue12.add(request12);
+        RequestQueue requestQueue4 = Volley.newRequestQueue(Update_JobList_Activity.this);
+        requestQueue4.add(request4);
+
+        jobReplaceWithAdapter = new JobReplaceWithAdapter(this,jobReplaceWithDataArrayList);
+
+        worker_w_r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog = new Dialog(Update_JobList_Activity.this);
+
+                // set custom dialog
+                dialog.setContentView(R.layout.demospinner1);
+
+                // set custom height and width
+                dialog.getWindow().setLayout(950, 1500);
+
+                // set transparent background
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+
+                // show dialog
+                dialog.show();
+
+                // Initialize and assign variable
+                androidx.appcompat.widget.AppCompatButton btnGetSelected = dialog.findViewById(R.id.btnGetSelected);
+                androidx.appcompat.widget.AppCompatButton btnAdd = dialog.findViewById(R.id.btnAdd);
+                btnAdd.setVisibility(View.GONE);
+
+                androidx.recyclerview.widget.RecyclerView recyclerView = dialog.findViewById(R.id.recyclerView);
+                EditText editText =dialog.findViewById(R.id.edit_text);
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(Update_JobList_Activity.this));
+                recyclerView.addItemDecoration(new DividerItemDecoration(Update_JobList_Activity.this, LinearLayoutManager.VERTICAL));
+                jobReplaceWithAdapter = new JobReplaceWithAdapter(Update_JobList_Activity.this,jobReplaceWithDataArrayList);
+                recyclerView.setAdapter(jobReplaceWithAdapter);
+
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        btnGetSelected.setVisibility(View.VISIBLE);
+                        btnAdd.setVisibility(View.GONE);
+                        editText.setText("");
+
+
+                    }
+                });
+
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                        arrayAdapterReplaceWith.getFilter().filter(charSequence);
+
+                        if(charSequence.toString().equals("")) {
+                            btnGetSelected.setVisibility(View.VISIBLE);
+
+                            ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+                            for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            jobReplaceWithAdapter.filterList(filEmployees);
+                            btnAdd.setVisibility(View.GONE);
+                        }
+                        else {
+                            ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+                            for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+                                if(item.getName().toLowerCase(Locale.ROOT).contains(charSequence)
+                                        || item.getName().toUpperCase(Locale.ROOT).contains(charSequence)){
+                                    filEmployees.add(item);
+                                }
+                            }
+                            jobReplaceWithAdapter.filterList(filEmployees);
+                            btnAdd.setVisibility(View.VISIBLE);
+                            btnGetSelected.setVisibility(View.GONE);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+//                        ArrayList<JobReplaceWithData> filEmployees= new ArrayList<>();
+//                        for (JobReplaceWithData item: jobReplaceWithDataArrayList){
+//                            if(item.getName().toLowerCase(Locale.ROOT).contains(editable)
+//                                    || item.getName().toUpperCase(Locale.ROOT).contains(editable)){
+//                                filEmployees.add(item);
+//                            }
+//                        }
+//                        jobReplaceWithAdapter.filterList(filEmployees);
+                        }
+                });
+
+
+                btnGetSelected.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (jobReplaceWithAdapter.getSelected().size() > 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            StringBuilder stringBuildername = new StringBuilder();
+
+                            for (int i = 0; i < jobReplaceWithAdapter.getSelected().size(); i++) {
+                                stringBuilder.append(jobReplaceWithAdapter.getSelected().get(i).getId());
+                                stringBuildername.append(jobReplaceWithAdapter.getSelected().get(i).getName());
+
+                                stringBuilder.append(",");
+                                stringBuildername.append(", ");
+                            }
+                            worker_w_r.setText(stringBuildername.toString().trim());
+                            setweldergrinder.setText(stringBuilder.toString().trim());
+                            //Toast.makeText(Update_JobList_Activity.this, stringBuilder.toString().trim(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+
+                        } else {
+                            Toast.makeText(Update_JobList_Activity.this, "No Selection", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+//        StringRequest request12 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_welder_grinder_list",
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            //String message = jsonObject.getString("message");
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+//
+//                            wokerId = new String[jsonArray.length()];
+//                            wokerValue = new String[jsonArray.length()];
+//                            wokerlenght = new boolean[wokerValue.length];
+//
+//                            //selectedLanguage = new boolean[listValue.length];
+//
+//                            int q=0;
+//                            for(int i=0; i<jsonArray.length();i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String user_id = object.getString("user_id");
+//                                String user_full_name = object.getString("user_full_name");
+//                                String user_employee_id = object.getString("user_employee_id");
+//
+//                                String[] WG = WelgerGrinder.split(",");
+//                                for(String name : WG){
+//                                    if(user_id.equals(name))
+//                                    {
+////                                        wokerList.add(user_id);
+////                                        wokerListvalue.add(user_full_name+" - "+user_employee_id);
+//
+//                                        q=Integer.parseInt(user_id);
+////                                        wokerlenght[i] = true;
+////                                        Log.d("okccc",user_full_name);
+//                                    }
+//                                    //System.out.println(name);
+//
+//                                }
+//                                if(user_id.equals(String.valueOf(q)))
+//                                {
+//                                    wokerList.add(user_id);
+//                                    wokerListvalue.add(user_full_name+" - "+user_employee_id);
+//
+//                                    wokerlenght[i]=true;
+//                                }
+//                                else
+//                                {
+//                                    wokerlenght[i]=false;
+//                                }
+//
+//                                wokerValue[i]=user_full_name+" - "+user_employee_id;
+//                                wokerId[i]=user_id;
+//
+//                            }
+//                            String stringBuilder= String.join(",", wokerListvalue);
+//                            String stringbuilder = String.join(",",wokerList);
+//
+//                            worker_w_r.setText(stringBuilder);
+//                            setweldergrinder.setText(stringbuilder);
+//
+////                            Collections.reverse(Arrays.asList(wokerValue));
+////                            Collections.reverse(Arrays.asList(wokerId));
+//
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(Update_JobList_Activity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap headers = new HashMap();
+//                headers.put("Usertoken",token);
+//                headers.put("Userid", userId);
+//                headers.put("Projectlocationid", location);
+//                headers.put("Useremployeetype", user_employee_type);
+//
+//                return headers;
+//                //return super.getHeaders();
+//            }
+//        };
+//
+//        RequestQueue requestQueue12 = Volley.newRequestQueue(Update_JobList_Activity.this);
+//        requestQueue12.add(request12);
+//
+//
+//
+//
+//
+//        worker_w_r.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Initialize alert dialog
+//                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
+//
+//                // set title
+//                builder.setTitle("Select Language");
+//
+//                // set dialog non cancelable
+//                builder.setCancelable(false);
+//
+//                builder.setMultiChoiceItems(wokerValue, wokerlenght, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+//                        // check condition
+//                        if (b) {
+//                            // when checkbox selected
+//                            // Add position  in lang list
+//                            wokerList.add(wokerId[i]);
+//                            wokerListvalue.add(wokerValue[i]);
+//
+//                            Log.d("Nilesh",wokerId[i]);
+//
+//
+//                            // Sort array list
+//                            Collections.sort(wokerList);
+//
+//                        } else {
+//                            // when checkbox unselected
+//                            // Remove position from langList
+//                            wokerList.remove(wokerId[i]);
+//                            wokerListvalue.remove(wokerValue[i]);
+//
+//                        }
+//                        Log.d("Nil", String.valueOf(wokerList));
+//                    }
+//                });
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // Initialize string builder
+////                        StringBuilder stringBuilder = new StringBuilder();
+//                        String stringBuilder= String.join(",", wokerListvalue);
+//                        String stringbuilder= String.join(",", wokerList);
+//
+//                        Log.d("nil",stringBuilder);
+//                        Log.d("nil",stringbuilder);
+//
+//                        worker_w_r.setText(stringBuilder);
+//                        setweldergrinder.setText(stringbuilder);
+//
+//                    }
+//                });
+//
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // dismiss dialog
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        // use for loop
+//                        for (int j = 0; j < wokerlenght.length; j++) {
+//                            // remove all selection
+//                            wokerlenght[j] = false;
+//                            // clear language list
+//                            wokerListvalue.clear();
+//                            wokerList.clear();
+//                            // clear text view value
+//                            worker_w_r.setText("");
+//                        }
+//                    }
+//                });
+//                // show dialog
+//                builder.show();
+//
+//            }
+//        });
 
 
 
@@ -889,12 +1454,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_category",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_category",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -943,10 +1503,10 @@ public class Update_JobList_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1019,7 +1579,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
 
 
-        StringRequest request2 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_size",
+        StringRequest request2 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_size",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1076,10 +1636,10 @@ public class Update_JobList_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1153,7 +1713,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
         });
 
 
-        StringRequest request3 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_project_manager",
+        StringRequest request3 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_project_manager",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1209,10 +1769,10 @@ public class Update_JobList_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -1293,88 +1853,6 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
 
 
-        worker_w_r.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(Update_JobList_Activity.this);
-
-                // set title
-                builder.setTitle("Select Language");
-
-                // set dialog non cancelable
-                builder.setCancelable(false);
-
-                builder.setMultiChoiceItems(wokerValue, wokerlenght, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        // check condition
-                        if (b) {
-                            // when checkbox selected
-                            // Add position  in lang list
-                            wokerList.add(wokerId[i]);
-                            wokerListvalue.add(wokerValue[i]);
-
-                            Log.d("Nilesh",wokerId[i]);
-
-
-                            // Sort array list
-                            Collections.sort(wokerList);
-
-                        } else {
-                            // when checkbox unselected
-                            // Remove position from langList
-                            wokerList.remove(wokerId[i]);
-                            wokerListvalue.remove(wokerValue[i]);
-
-                        }
-                        Log.d("Nil", String.valueOf(wokerList));
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Initialize string builder
-//                        StringBuilder stringBuilder = new StringBuilder();
-                        String stringBuilder= String.join(",", wokerListvalue);
-                        String stringbuilder= String.join(",", wokerList);
-
-                        Log.d("nil",stringBuilder);
-                        Log.d("nil",stringbuilder);
-
-                        worker_w_r.setText(stringBuilder);
-                        setweldergrinder.setText(stringbuilder);
-
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // dismiss dialog
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // use for loop
-                        for (int j = 0; j < wokerlenght.length; j++) {
-                            // remove all selection
-                            wokerlenght[j] = false;
-                            // clear language list
-                            wokerListvalue.clear();
-                            wokerList.clear();
-                            // clear text view value
-                            worker_w_r.setText("");
-                        }
-                    }
-                });
-                // show dialog
-                builder.show();
-
-            }
-        });
 
 
         arrayList1=new ArrayList<>();
@@ -1440,6 +1918,9 @@ public class Update_JobList_Activity extends AppCompatActivity {
 
     private void DataInsert() {
 
+        appConfig = new AppConfig(this);
+
+
         String jobclintdata = jobclint.getText().toString().trim();
         String jobnumberdata = jobnumber.getText().toString().trim();
         String categorydata = setcategoryid.getText().toString().trim();
@@ -1451,6 +1932,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
         String statusdata = status_check.getText().toString().trim();
 
 
+       // Log.d("cunsumsss",consumabledata+"/"+setwelgridata);
         if (TextUtils.isEmpty(jobclintdata)) {
             jobclint.setError("Please Enter Job Name");
             Toast.makeText(Update_JobList_Activity.this, "Please Enter Job Name", Toast.LENGTH_SHORT).show();
@@ -1502,7 +1984,7 @@ public class Update_JobList_Activity extends AppCompatActivity {
             String Id = getIntent().getStringExtra("id");
 
            // Toast.makeText(this, Id, Toast.LENGTH_SHORT).show();
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/update_job",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/update_job",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -1537,10 +2019,10 @@ public class Update_JobList_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token", token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

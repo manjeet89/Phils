@@ -574,7 +574,7 @@ public class AssignStockRequisition extends AppCompatActivity {
                         String user_employee_type = appConfig.getuser_employee_type();
 
                         //Toast.makeText(AssignStockRequisition.this, s+"/"+id+"/"+p+"/"+ass, Toast.LENGTH_SHORT).show();
-                        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requistion_assign_stock",
+                        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requistion_assign_stock",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -603,10 +603,10 @@ public class AssignStockRequisition extends AppCompatActivity {
                             @Override
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 HashMap headers = new HashMap();
-                                headers.put("user_token", token);
-                                headers.put("user_id", userId);
-                                headers.put("project_location_id", location);
-                                headers.put("user_employee_type", user_employee_type);
+                                headers.put("Usertoken",token);
+                                headers.put("Userid", userId);
+                                headers.put("Projectlocationid", location);
+                                headers.put("Useremployeetype", user_employee_type);
 
                                 return headers;
                             }
@@ -723,7 +723,7 @@ public class AssignStockRequisition extends AppCompatActivity {
         String req_id = getIntent().getStringExtra("id");
         //Toast.makeText(this, token+"/"+userId+"/"+location+"/"+useremptype+"/"+req_id, Toast.LENGTH_SHORT).show();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/requisition/requistion_avaiable_stock",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/requisition/requistion_avaiable_stock",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -777,24 +777,25 @@ public class AssignStockRequisition extends AppCompatActivity {
                                     String assign_quantity = object.getString("assign_quantity");
 
                                     if(stock_quantity.equals("0")) {
+
                                     }else{
-                                        int sum=0;
+                                        Double sum=0.0;
                                         if(assign_quantity.equals("null")) {
                                             int k = 0;
                                             int p = 0;
-                                             sum = Integer.valueOf(stock_quantity) - 0;
+                                             sum = Double.valueOf(stock_quantity) - 0;
                                         }
                                         else
                                         {
-                                            sum = Integer.valueOf(stock_quantity) - Integer.valueOf(assign_quantity);
+                                            sum = Double.valueOf(stock_quantity) - Double.valueOf(assign_quantity);
                                         }
 //
-                                        int q = sum;
+                                        Double q = sum;
 //
 //                                        Toast.makeText(AssignStockRequisition.this, String.valueOf(p), Toast.LENGTH_SHORT).show();
                                         String AvailableStock = String.valueOf(q);
 //
-                                        if(sum == 0){
+                                        if(sum == 0.0){
 
                                         }else {
                                             responseModelAssignRequisition = new ResponseModelAssignRequisition(AvailableStock, stock_id, stock_location_id, stock_category_id, stock_type_id, stock_size_id,
@@ -828,10 +829,10 @@ public class AssignStockRequisition extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", useremptype);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
                 return headers;
                 //return super.getHeaders();
             }
@@ -849,7 +850,7 @@ public class AssignStockRequisition extends AppCompatActivity {
         requestQueue.add(request);
 
 
-        StringRequest request12 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/job_welder_grinder_list",
+        StringRequest request12 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/job_welder_grinder_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -890,10 +891,10 @@ public class AssignStockRequisition extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();

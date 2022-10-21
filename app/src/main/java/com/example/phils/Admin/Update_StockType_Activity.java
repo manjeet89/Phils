@@ -73,7 +73,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
     ArrayAdapter<String> categoryAdapter;
 
     RequestQueue requestQueue;
-    String url = "https://mployis.com/staging/api/stock/stock_category";
+    String url = "https://erp.philsengg.com/api/stock/stock_category";
 
     TextView location_save;
     AppConfig appConfig;
@@ -589,10 +589,10 @@ public class Update_StockType_Activity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -616,7 +616,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_searchable_spinner_stock_type);
 
                 // set custom height and width
-                dialog.getWindow().setLayout(650, 800);
+                dialog.getWindow().setLayout(950, 1100);
 
                 // set transparent background
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -743,6 +743,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
 
     private void Insert() {
 
+        appConfig = new AppConfig(this);
 
 
         String e1 = id12.getText().toString().trim();
@@ -780,7 +781,7 @@ public class Update_StockType_Activity extends AppCompatActivity {
 
 
 
-            StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/stock/update_stock_type",
+            StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/stock/update_stock_type",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -813,10 +814,10 @@ public class Update_StockType_Activity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token",token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

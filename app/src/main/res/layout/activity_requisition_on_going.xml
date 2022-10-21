@@ -7,11 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".Admin.RequisitionOnGoingActivity">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/setmanagername"
-        android:visibility="invisible"/>
+        android:textStyle="bold"
+        android:visibility="invisible"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,6 +138,18 @@
             android:layout_margin="5sp"
             android:textStyle="bold"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/getmanagerid"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/getmanagername"
+                android:visibility="gone"/>
+
     </LinearLayout>
 
 
@@ -147,6 +164,7 @@
             android:layout_marginBottom="55dp"
             android:background="@drawable/curve_shap"
             android:orientation="vertical">
+
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search"
@@ -187,6 +205,8 @@
                     android:text="Consumable Requisition"
                     android:textColor="@color/white"
                     android:textSize="7sp" />
+
+
             </LinearLayout>
 
             <TextView
@@ -221,14 +241,14 @@
                     android:text="On Going"
                     android:textColor="#41b6e0" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/complete"-->
-<!--                    android:layout_width="125dp"-->
-<!--                    android:layout_height="41dp"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:backgroundTint="@color/white"-->
-<!--                    android:text="Completed"-->
-<!--                    android:textColor="@color/black" />-->
+                <Button
+                    android:id="@+id/complete"
+                    android:layout_width="125dp"
+                    android:layout_height="41dp"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="@color/white"
+                    android:text="Completed"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -419,7 +439,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
+
                 </LinearLayout>
+
 
 
             </HorizontalScrollView>

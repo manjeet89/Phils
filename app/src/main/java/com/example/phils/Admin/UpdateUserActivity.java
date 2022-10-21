@@ -729,7 +729,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         String location = appConfig.getLocationId();
         String user_employee_type = appConfig.getuser_employee_type();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/job/location_list",
+        StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/job/location_list",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -776,10 +776,10 @@ public class UpdateUserActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
                 //return super.getHeaders();
@@ -844,7 +844,7 @@ public class UpdateUserActivity extends AppCompatActivity {
 
         //Toast.makeText(this, userId+location+token, Toast.LENGTH_SHORT).show();
 
-        StringRequest request1 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/user_employee_type_list",
+        StringRequest request1 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/user_employee_type_list",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -891,10 +891,10 @@ public class UpdateUserActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
             }
@@ -966,7 +966,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         });
 
 //        Toast.makeText(this, userId+location+token, Toast.LENGTH_SHORT).show();
-        StringRequest request2 = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/reporting_manager_list",
+        StringRequest request2 = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/reporting_manager_list",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1018,10 +1018,10 @@ public class UpdateUserActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap headers = new HashMap();
-                headers.put("user_token",token);
-                headers.put("user_id", userId);
-                headers.put("project_location_id", location);
-                headers.put("user_employee_type", user_employee_type);
+                headers.put("Usertoken",token);
+                headers.put("Userid", userId);
+                headers.put("Projectlocationid", location);
+                headers.put("Useremployeetype", user_employee_type);
 
                 return headers;
             }
@@ -1145,6 +1145,8 @@ public class UpdateUserActivity extends AppCompatActivity {
                 Status = "0";
             }
             String st = Status;
+            appConfig = new AppConfig(this);
+
             //Toast.makeText(this, st+email+Gender+Username+Password, Toast.LENGTH_SHORT).show();
             String token = appConfig.getuser_token();
             String userId = appConfig.getuser_id();
@@ -1152,7 +1154,7 @@ public class UpdateUserActivity extends AppCompatActivity {
             String id = getIntent().getStringExtra("id");
             String user_employee_type = appConfig.getuser_employee_type();
 
-            StringRequest request = new StringRequest(Request.Method.POST, "https://mployis.com/staging/api/user/add_user",
+            StringRequest request = new StringRequest(Request.Method.POST, "https://erp.philsengg.com/api/user/add_user",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -1188,10 +1190,10 @@ public class UpdateUserActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap headers = new HashMap();
-                    headers.put("user_token", token);
-                    headers.put("user_id", userId);
-                    headers.put("project_location_id", location);
-                    headers.put("user_employee_type", user_employee_type);
+                    headers.put("Usertoken",token);
+                    headers.put("Userid", userId);
+                    headers.put("Projectlocationid", location);
+                    headers.put("Useremployeetype", user_employee_type);
 
                     return headers;
                 }

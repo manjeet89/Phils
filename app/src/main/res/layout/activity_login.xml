@@ -12,16 +12,18 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:id="@+id/settoken"/>
-<LinearLayout
-     android:layout_width="match_parent"
+
+    <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="5dp"
         android:padding="8dp"
-        android:background="#FFCC80"
+        android:background="#ffffff"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -29,57 +31,37 @@
     <LinearLayout
         android:id="@+id/linear3"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:padding="8dp"
-        android:background="#FFCC80"
+        android:background="#ffffff"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/textview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Welcome to Phils ERP"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#EF6C00"/>
-        <TextView
-            android:id="@+id/textview3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Discover Amazing Phils Erp\n     with great build tools"
-            android:textSize="18sp"
-            android:textColor="#EF6C00"/>
+
         <ImageView
-            android:id="@+id/imageview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:scaleType="center"/>
+            android:src="@drawable/logo"/>
+
+
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linear4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/textview4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Sign In to Phils ERP"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:textColor="#000000"/>
+
+
         <LinearLayout
             android:id="@+id/linear5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
+            android:background="@color/white"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -96,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textSize="14sp"
+
                 android:fontFamily="sans-serif"
                 android:textColor="#000000"
                 android:hint="Enter Username "
@@ -130,8 +113,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
-                android:background="#03A9F4"
+                android:backgroundTint="#1ca6eb"
                 android:text="Submit"
+                android:textStyle="bold"
                 android:fontFamily="sans-serif"
                 android:textSize="16sp"
                 android:textColor="#FFFFFF"/>
