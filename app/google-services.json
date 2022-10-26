@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1065845554806",
+    "project_id": "phils-894f5",
+    "storage_bucket": "phils-894f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065845554806:android:c12511e452ad8981dfa957",
+        "android_client_info": {
+          "package_name": "com.example.phils"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065845554806-e7rdboq7d3q8d8eng9nlu61lrs9kk3em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT3ysFKXBYee-rF6xYDsECfIbhq-n6OMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065845554806-e7rdboq7d3q8d8eng9nlu61lrs9kk3em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
