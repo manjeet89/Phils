@@ -1140,7 +1140,7 @@ public class RequisitionListActivity extends AppCompatActivity {
                                                 }
                                                 else
                                                 {
-                                                    int value = Integer.parseInt(req_manager_id) - 5;
+                                                    int value = Integer.parseInt(req_manager_id);
                                                     String[] arrayid = spi.split(",");
                                                     String[] arrayname = spname.split(",");
 
@@ -1148,7 +1148,10 @@ public class RequisitionListActivity extends AppCompatActivity {
                                                     for(int k=0;k<arrayid.length;k++){
                                                         // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
 
-                                                        if(value==k){
+                                                        String ok = arrayid[k].trim();
+                                                        int che = 0;
+                                                        //    che = Integer.parseInt(ok);
+                                                        if(value==Integer.parseInt(ok)){
 
                                                             printname = arrayname[k];
                                                             String printid = arrayid[k];

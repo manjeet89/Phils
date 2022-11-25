@@ -771,6 +771,8 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                         finish();
                                     } else {
 
+
+
                                         JSONArray jsonArray = jsonObject.getJSONArray("data");
                                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -811,15 +813,18 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                             }
                                             else
                                             {
-                                                int value = Integer.parseInt(req_manager_id) - 5;
+                                                int value = Integer.parseInt(req_manager_id);
                                                 String[] arrayid = spi.split(",");
                                                 String[] arrayname = spname.split(",");
 
                                                 String printname ="";
                                                 for(int k=0;k<arrayid.length;k++){
-                                                   // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
-
-                                                    if(value==k){
+                                                    // Log.d("apppp",arrayname[k]+"/"+arrayid[k]);
+                                                    //Log.d("TAGmm", "onResponse: "+req_manager_id);
+                                                    String ok = arrayid[k].trim();
+                                                    int che = 0;
+                                                //    che = Integer.parseInt(ok);
+                                                    if(value==Integer.parseInt(ok)){
 
                                                         printname = arrayname[k];
                                                         String printid = arrayid[k];
@@ -828,7 +833,6 @@ public class RequisitionOnGoingActivity extends AppCompatActivity {
                                                     }
                                                 }
                                                 req_manager_id = printname;
-
                                             }
 
 
